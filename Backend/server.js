@@ -7,6 +7,13 @@ require("dotenv").config();
 const app = express();
 app.use(express.json());
 app.use(cors());
+// server.js
+const path = require("path");
+app.use(express.static(path.join(__dirname, "frontend")));
+
+app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend", "index.html"));
+});
 
 console.log("🔹 Server script running...");
 
