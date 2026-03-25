@@ -9,10 +9,13 @@ app.use(express.json());
 app.use(cors());
 // server.js
 const path = require("path");
-app.use(express.static(path.join(__dirname, "Frontend")));
 
+// Serve frontend as static
+app.use(express.static(path.join(__dirname, "..", "Frontend")));
+
+// Serve index.html for root
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "Frontend", "index.html"));
+    res.sendFile(path.join(__dirname, "..", "Frontend", "index.html"));
 });
 
 console.log("🔹 Server script running...");
