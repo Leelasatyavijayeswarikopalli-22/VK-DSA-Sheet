@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>VK DSA Patterns</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKOFFsJGCOcjQLwjZMUQUI6VlECrn0G4gDRQ&s">
+</div>
+    <div class="menu-item" onclick="goHome()">🏠 Home</div>
+    <div class="menu-item">🔍 Search</div>
+    <div class="menu-item" onclick="openBooks()">📖 Books</div>
+    <div class="menu-item" onclick="openLinks()">🔗 Links</div>
+    <div class="menu-item" onclick="openNotes()">📝 Notes</div>
+    <button id="addProblemBtn" onclick="addProblem()" style="display:none;">Add Problem</button>
+    <button onclick="adminLogin()">Admin Login</button>
+</div>
+
+<!-- Main -->
+<div class="main">
+<h2>All DSA Patterns To Solve Any Problem</h2>
+
+<div class="tabs">
+    <span class="tab active" onclick="switchTab(this)">Arrays</span>
+    <span class="tab" onclick="switchTab(this)">BinarySearch</span>
+    <span class="tab" onclick="switchTab(this)">Strings</span>
+</div>
+<!-- Floating Login/Signup Button -->
+<button id="loginBtn">Login / Sign Up</button>
+
+<div id="progressContainer">
+    <div class="progress-circle" id="progressText">0/0</div>
+
+    <div class="platform-icons">
+
+    <!-- Row 1 -->
+ <div class="icon-row">
+    <div class="icon-box">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" title="LeetCode">
+        <span>LC</span>
+    </div>
+
+    <div class="icon-box">
+        <img src="https://static.takeuforward.org/content/tuf_logo_F-nFV4asTo" title="TUF">
+        <span>TUF</span>
+    </div>
+</div>
+
+<div class="icon-row">
+    <div class="icon-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" title="GFG">
+        <span>GFG</span>
+    </div>
+
+    <div class="icon-box">
+        <img src="https://sta.codeforces.com/s/0/favicon-32x32.png" title="Codeforces">
+        <span>CF</span>
+    </div>
+</div>
+
+<div class="icon-row center-row">
+    <div class="icon-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png" title="HackerRank">
+        <span>HR</span>
+    </div>
+</div>
+
+</div>
+</div>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-header">
+            <h2>Welcome to DSA Patterns Hub</h2>
+            <p>Sign in or create an account to save your progress</p>
+        </div>
+        <div class="modal-body">
+            <!-- Toggle Tabs -->
+            <div class="tab-switch">
+                <button id="loginTab" class="active">Login</button>
+                <button id="signupTab">Sign Up</button>
+            </div>
+            <!-- Login Form -->
+            <form id="loginForm">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <!-- Signup Form -->
+            <form id="signupForm" style="display:none;">
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email ID" required>
+                <input type="password" placeholder="Password" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="text" placeholder="University Name" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- NOTES PAGE -->
+<div id="notesPage" style="display:none;">
+    <h2>📒 My Notes</h2>
+
+    <div class="upload-box">
+        <input type="file" id="fileInput" accept="application/pdf,image/*">
+        <button onclick="uploadFile()">Upload</button>
+    </div>
+
+    <div id="notesContainer" class="notes-container"></div>
+</div>
+<!-- LINKS PAGE -->
+<div id="linksPage" style="display:none;">
+    <h2>🔗 My Links</h2>
+
+    <div class="upload-box">
+        <input type="text" id="linkInput" placeholder="Enter URL">
+        <button onclick="addLink()">Add Link</button>
+    </div>
+
+    <div id="linksContainer" class="links-container"></div>
+</div>
+<!-- BOOKS PAGE -->
+<div id="booksPage" style="display:none;">
+    <h2>📖 My Books</h2>
+
+    <div class="upload-box">
+        <input type="text" id="bookNameInput" placeholder="Enter Book Name">
+        <input type="file" id="bookFileInput" accept="application/pdf,image/*">
+        <button onclick="addBook()">Add Book</button>
+    </div>
+
+    <div id="booksContainer" class="books-container"></div>
+</div>
+<!-- Arrays Sections -->
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Two Pointers</span>
+        <span>0/9</span>
+    </div>
+    <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+        <div class="problem">
+            <span class="title">Two Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/two-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+        <div class="problems-container">
+
+    <!-- 3 Sum -->
+    <div class="problem">
+        <span class="title">Three Sum</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/3sum/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty medium">Medium</div>
+    </div>
+
+    <!-- 4 Sum -->
+    <div class="problem">
+        <span class="title">Four Sum</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/4sum/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty medium">Medium</div>
+    </div>
+
+    <!-- Remove Duplicates -->
+    <div class="problem">
+        <span class="title">Remove Duplicates from Sorted Array</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty easy">Easy</div>
+    </div>
+
+    <!-- Move Zeroes -->
+    <div class="problem">
+        <span class="title">Move Zeroes</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/move-zeroes/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty easy">Easy</div>
+    </div>
+
+    <!-- Merge Sorted Array -->
+    <div class="problem">
+        <span class="title">Merge Sorted Array</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/merge-sorted-array/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty easy">Easy</div>
+    </div>
+
+    <!-- Longest Mountain -->
+    <div class="problem">
+        <span class="title">Longest Mountain in Array</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/longest-mountain-in-array/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty medium">Medium</div>
+    </div>
+
+    <!-- Minimum Window Sort -->
+    <div class="problem">
+        <span class="title">Minimum Window Sort</span>
+        <div class="center">
+            <a href="https://www.geeksforgeeks.org/minimum-length-unsorted-subarray-sorting-which-makes-the-complete-array-sorted/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty medium">Medium</div>
+    </div>
+
+    <!-- Squares of Sorted Array -->
+    <div class="problem">
+        <span class="title">Squares of a Sorted Array</span>
+        <div class="center">
+            <a href="https://leetcode.com/problems/squares-of-a-sorted-array/" target="_blank">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+            </a>
+        </div>
+        <div class="done"><input type="checkbox"></div>
+        <div class="revision"><input type="checkbox"></div>
+        <div class="difficulty easy">Easy</div>
+    </div>
+    
+
+</div>
+    </div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Sliding Window</span>
+        <span>0/1</span>
+    </div>
+    <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Problem 1 -->
+        <div class="problem">
+    <span class="title">Maximum Consecutive Ones</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/max-consecutive-ones/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+          </div>
+</div>
+ 
+<!-- Array Traversal Section -->
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Rotate Array</span>
+        <span>0/8</span>
+    </div>
+    <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Right Rotate by K (LEETCODE) -->
+<div class="problem">
+    <span class="title">Rotate Array (Right Rotate by K)</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/rotate-array/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Right Rotate by One (TUF) -->
+<div class="problem">
+    <span class="title">Right Rotate Array by One</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/right-rotate-array-by-one-place/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Left Rotate by K (TUF) -->
+<div class="problem">
+    <span class="title">Left Rotate Array by K Places</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/left-rotate-the-array-by-k-places/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Left Rotate by One (TUF) -->
+<div class="problem">
+    <span class="title">Left Rotate Array by One</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/left-rotate-the-array-by-one/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Search in Rotated Sorted Array (LEETCODE) -->
+<div class="problem">
+    <span class="title">Search in Rotated Sorted Array</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Find Minimum (LEETCODE) -->
+<div class="problem">
+    <span class="title">Find Minimum in Rotated Sorted Array</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Find Rotation Count (TUF) -->
+<div class="problem">
+    <span class="title">Find Rotation Count</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/find-rotation-count-of-sorted-and-rotated-array/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Check if Sorted and Rotated (LEETCODE) -->
+<div class="problem">
+    <span class="title">Check if Array is Sorted and Rotated</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+    </div>
+</div>
+ 
+<!-- Array Traversal Section -->
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Array Traversal</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Largest Element (TUF) -->
+<div class="problem">
+    <span class="title">Largest Element</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/largest-element-in-array/" target="_blank">
+            <div class="tuf-badge">TUF</div>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Second Largest (TUF) -->
+<div class="problem">
+    <span class="title">Second Largest Element</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/find-second-smallest-and-second-largest-element-in-an-array/" target="_blank">
+            <div class="tuf-badge">TUF</div>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Check Sorted and Rotated (LeetCode) -->
+<div class="problem">
+    <span class="title">Check if Array is Sorted and Rotated</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/check-if-array-is-sorted-and-rotated/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Rearrange by Sign (LeetCode) -->
+<div class="problem">
+    <span class="title">Rearrange Array Elements by Sign</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/rearrange-array-elements-by-sign/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+<!-- Majority Element (LeetCode) -->
+<div class="problem">
+    <span class="title">Majority Element</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/majority-element/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Leaders in Array (TUF) -->
+<div class="problem">
+    <span class="title">Leaders in Array</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/leaders-in-an-array/" target="_blank">
+            <div class="tuf-badge">TUF</div>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+
+
+<!-- Contains Duplicate (LeetCode) -->
+<div class="problem">
+    <span class="title">Contains Duplicate</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/contains-duplicate/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+<!-- Union of Two Sorted Arrays (TUF) -->
+<div class="problem">
+    <span class="title">Union of Two Sorted Arrays</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/union-of-two-sorted-arrays/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+
+
+          </div>
+</div>
+
+<!-- Binary Search Sections -->
+<div class="section" data-category="BinarySearch" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Binary Search</span>
+        <span>0/3</span>
+    </div>
+   <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+        <div class="problem">
+            <span class="title">Binary Search</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/binary-search/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+        <div class="problem">
+            <span class="title">First Bad Version</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/first-bad-version/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+        <div class="problem">
+            <span class="title">Search in Rotated Sorted Array</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/search-in-rotated-sorted-array/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Brute Force Subarray</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<div class="problem">
+    <span class="title">Longest Subarray with Sum K</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/longest-subarray-with-given-sum-k/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+<div class="problem">
+    <span class="title">Longest Subarray with Zero Sum</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/longest-subarray-with-0-sum/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+<div class="problem">
+    <span class="title">Count Subarrays Sum Equals K</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/subarray-sum-equals-k/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+<div class="problem">
+    <span class="title">Count Subarrays with Given XOR K</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/count-subarrays-with-given-xor-k/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty hard">Hard</div>
+</div>
+<!-- Subarray with Given Sum (GFG) -->
+<div class="problem">
+    <span class="title">Indexes Of Subarray</span>
+    <div class="center">
+        <a href="https://www.geeksforgeeks.org/problems/subarray-with-given-sum-1587115621/1?page=1&category=Arrays&sortBy=submissions" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+<!-- Maximum Subarray (LeetCode) -->
+<div class="problem">
+    <span class="title">Maximum Subarray</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/maximum-subarray/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+</div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Bit Manipulation</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Single Number (LeetCode) -->
+<div class="problem">
+    <span class="title">Single Number</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/single-number/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+
+<!-- Find Missing Number (TUF) -->
+<div class="problem">
+    <span class="title">Find Missing Number</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/find-the-missing-number-in-an-array/" target="_blank">
+            <div class="tuf-badge">TUF</div>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+</div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Linear Search</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Linear Search (TUF) -->
+<div class="problem">
+    <span class="title">Linear Search</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/linear-search-in-c/" target="_blank">
+            <div class="tuf-badge">TUF</div>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty easy">Easy</div>
+</div>
+</div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Sorting</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Sort Colors (LeetCode) -->
+<div class="problem">
+    <span class="title">Sort Colors</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/sort-colors/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+<!-- Median of Two Sorted Arrays (LeetCode) -->
+<div class="problem">
+    <span class="title">Median of Two Sorted Arrays</span>
+    <div class="center">
+        <a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty hard">Hard</div>
+</div>
+</div>
+</div>
+<div class="section" data-category="Arrays" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Hashing</span>
+        <span>0/7</span>
+    </div>
+ <div class="progress">
+    <div class="progress-bar done-bar"></div>
+</div>
+
+<div class="progress">
+    <div class="progress-bar revision-bar"></div>
+</div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+<!-- Find Missing and Repeating Number (TUF) -->
+<div class="problem">
+    <span class="title">Find Missing and Repeating Number</span>
+    <div class="center">
+        <a href="https://takeuforward.org/data-structure/find-the-repeating-and-missing-numbers/" target="_blank">
+            <span class="tuf-badge">TUF</span>
+        </a>
+    </div>
+    <div class="done"><input type="checkbox"></div>
+    <div class="revision"><input type="checkbox"></div>
+    <div class="difficulty medium">Medium</div>
+</div>
+</div>
+</div>
+<script src="script.js" defer></script>
+</body>
+</html>
