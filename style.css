@@ -1,0 +1,784 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: linear-gradient(-45deg, #0b1220, #121a2e, #1b2550, #0b1220);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+}
+
+html {
+    background-color: #0b1220; /* prevents white flash */
+}
+
+body {
+    overflow-x: hidden; /* removes side white scroll */
+}
+body {
+    margin: 0;
+    font-family: Arial;
+    color: white;
+    background: linear-gradient(-45deg, #0b1220, #121a2e, #1b2550, #0b1220);
+    background-size: 400% 400%;
+    animation: gradientMove 12s ease infinite;
+}
+@keyframes gradientMove {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+.sidebar, .card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+body::before {
+    content:"";
+    position:fixed;
+    width:300px;
+    height:300px;
+    background: radial-gradient(circle, rgba(0,150,255,0.2), transparent);
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+}
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #0f1b2d;
+    position: fixed;
+    padding: 20px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.menu-item {
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    background: #1c2a40;
+}
+
+/* Main */
+.main {
+    margin-left: 240px;
+    padding: 20px;
+    padding-right: 140px;  /* 🔥 THIS fixes merging */
+}
+
+/* ADD THIS 👇 (important fix) */
+@media screen and (min-width: 768px) {
+    .main {
+        margin-left: 260px; /* adds visible gap from sidebar */
+    }
+}
+
+/* Tabs */
+.tabs {
+    margin-top: 10px;
+}
+
+.tab {
+    display: inline-block;
+    padding: 10px 15px;
+    border: 1px solid #2a3a5a;
+    border-radius: 8px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.tab.active {
+    background: #1c2a40;
+}
+
+/* Section */
+.section {
+    margin-top: 15px;
+    background: linear-gradient(90deg,#111c33,#0d1627);
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress {
+    height: 6px;
+    background: #2a3a5a;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 6px;
+    width: 0%;
+    background: orange;
+    border-radius: 5px;
+}
+
+/* Hidden content */
+.content {
+    display: none;
+    margin-top: 10px;
+}
+
+.header-row span:nth-child(n+2),
+.problem div:not(:first-child) {
+    text-align: center;
+}
+.done, .revision, .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-weight: 500;
+}
+
+.center a {
+    text-decoration: none;
+}
+#homeWidgets {
+    display: none;
+}
+body.home-active #homeWidgets {
+    display: block;
+}
+.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.icon:hover {
+    transform: scale(1.2);
+}
+
+.done, .revision {
+    display: flex;
+    justify-content: center;
+}
+
+.difficulty {
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.easy {
+    background: #123d2b;
+    color: #00ff9c;
+}
+
+.medium {
+    background: #3d2f12;
+    color: orange;
+}
+
+.hard {
+    background: #3d1212;
+    color: red;
+}
+
+/* Header Row */
+/* Header Row */
+.header-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr; /* SAME AS BELOW */
+    padding: 10px;
+    font-size: 13px;
+    color: #aaa;
+    border-bottom: 1px solid #2a3a5a;
+    align-items: center;
+}
+
+/* Problem Row */
+.problem {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr; /* MUST MATCH */
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid #1c2a40;
+    font-size: 14px;
+}
+
+.tuf-badge {
+    background: linear-gradient(135deg, #ff7a18, #ffb347);
+    color: black;
+    font-weight: bold;
+    font-size: 11px;
+    padding: 5px 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: center;
+    width: 30px;
+}
+
+.tuf-badge:hover {
+    transform: scale(1.1);
+}
+
+/* Custom Checkboxes */
+.done input[type="checkbox"],
+.revision input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 24px;
+    height: 24px;
+    border: 2px solid orange;
+    border-radius: 6px;
+    background-color: #0b1220;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.done input[type="checkbox"]:hover,
+.revision input[type="checkbox"]:hover {
+    border-color: #ff9c42;
+    background-color: #0f1b2d;
+}
+
+.done input[type="checkbox"]:checked::after,
+.revision input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    top: 0;
+    left: 4px;
+    font-size: 18px;
+    color: #00ff9c;
+    transition: all 0.2s ease;
+}
+.done-bar {
+    background: orange;
+}
+
+.revision-bar {
+    background: #00bfff; /* blue */
+}
+/* Notes Page */
+#notesPage {
+    background: linear-gradient(135deg, #1a0f2e, #0b1220);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.upload-box {
+    margin: 15px 0;
+}
+
+.upload-box input {
+    padding: 8px;
+    background: #0f1b2d;
+    border: 1px solid #2a3a5a;
+    color: white;
+    border-radius: 6px;
+}
+
+.upload-box button {
+    padding: 8px 15px;
+    margin-left: 10px;
+    background: orange;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.notes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+
+.note-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.note-card a {
+    color: orange;
+    display: block;
+    margin-top: 10px;
+}
+#notesPage, #linksPage {
+    margin-top: 20px;
+}
+#linksPage {
+    background: linear-gradient(135deg, #0f2e1a, #0b1220);
+}
+/* Books cards */
+.book-card {
+    background: #0f1b2d;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-card p {
+    margin: 0;
+    font-weight: 500;
+}
+
+.book-card a {
+    background: orange;
+    padding: 5px 10px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: black;
+}
+/* Container for Notes/Books/Links */
+.notes-container, .books-container, .links-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Individual card */
+.note-card, .book-card, .link-card {
+    background: #1b263b;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden; /* prevents content overflow */
+    max-width: 100%;  /* keeps card inside container */
+    word-break: break-word;
+    gap: 12px;
+    transition: transform 0.2s;
+}
+
+.note-card:hover, .book-card:hover, .link-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, #1c2b45, #16203a);
+}
+
+/* PDF/Image inside card */
+.note-card img, .book-card img {
+    max-width: 100%;    /* responsive */
+    max-height: 120px;  /* prevent large images */
+    object-fit: contain; /* maintain aspect ratio */
+    border-radius: 8px;
+}
+
+/* File name or title */
+.note-card p, .book-card p, .link-card p {
+    font-weight: 600;
+    margin: 8px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; /* long names don't break layout */
+    width: 100%;
+}
+
+/* Buttons inside cards */
+.card-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap; /* wrap on small screens */
+    width: 100%;
+}
+.card-buttons button, .card-buttons a {
+    flex: 1;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Specific colors */
+.card-buttons a {
+    background: #0d6efd;
+    color: #fff;
+}
+.card-buttons button {
+    background: #dc3545;
+    color: #fff;
+}
+/* Floating Login Button */
+#loginBtn {
+    position: fixed;
+    top: 20px;
+    right: 30px;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg,#0a84ff,#5afdfd);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    transition: 0.3s;
+    z-index: 1001;
+}
+#loginBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(6px) brightness(0.85);
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s;
+}
+
+/* Modal Content */
+.modal-content {
+    background: linear-gradient(145deg,#1b263b,#16203a);
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 380px;
+    max-width: 90%;
+    color: white;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    transform: translateY(-20px);
+    animation: slideIn 0.4s forwards;
+}
+
+/* Header */
+.modal-header h2 {
+    margin: 0 0 5px 0;
+    font-size: 22px;
+    font-weight: 700;
+}
+.modal-header p {
+    margin: 0 0 20px 0;
+    font-size: 14px;
+    color: #c0c0c0;
+}
+
+/* Tabs */
+.tab-switch {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+.tab-switch button {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 50px;
+    margin: 0 5px;
+}
+.tab-switch button.active {
+    background: linear-gradient(45deg,#0a84ff,#5afdfd);
+    color: #000;
+}
+
+/* Forms */
+.modal-body form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.modal-body input {
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+.modal-body input::placeholder {
+    color: #ccc;
+}
+.modal-body button {
+    padding: 12px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg,#0a84ff,#5afdfd);
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.modal-body button:hover {
+    transform: scale(1.03);
+}
+
+/* Close */
+.close {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 26px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 700;
+}
+/* Container for all cards */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Individual card */
+
+
+/* Card title / name */
+.card p {
+    font-weight: 600;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 12px;
+    word-break: break-all; /* handle long URLs */
+}
+
+/* Buttons container */
+.card-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Buttons styling */
+.card-buttons button, .card-buttons a {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+/* Open / view buttons */
+.card-buttons a {
+    background-color: #0d6efd;
+    color: #fff;
+}
+.card-buttons a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Remove button */
+.card-buttons button {
+    background-color: #dc3545;
+    color: #fff;
+}
+.card-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Input + add button section */
+.input-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.input-section input[type="text"],
+.input-section input[type="file"] {
+    flex: 1 1 200px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background: #0b1220;
+    color: #fff;
+}
+
+.input-section button {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #ffa500;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+.input-section button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+/* COMMON STYLE FOR ALL PAGES */
+#notesPage, #booksPage, #linksPage {
+    background: linear-gradient(135deg, #7bab20, #0b1220);
+    padding: 25px;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+/* OPTIONAL: Different accents for each (looks premium) */
+#linksPage {
+    background: linear-gradient(135deg, #2ca857, #0b1220);
+}
+
+#booksPage {
+    background: linear-gradient(135deg, #117a9d, #0b1220);
+}
+#loginBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 50px;
+    background: linear-gradient(45deg,#0a84ff,#5afdfd);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    z-index: 1001;
+}
+/* Logo container */
+.logo img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    transform: scale(1);   /* 🔥 zooms image inside */
+}
+
+/* Make image circular & small */
+.logo img {
+    width: 100px;          /* 👈 control size here */
+    height: 100px;         /* MUST be same for circle */
+    border-radius: 50%;   /* makes it circle */
+    object-fit: cover;    /* fills circle properly */
+    border: 2px solid #0a84ff; /* optional nice border */
+}
+.logo img:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+#progressContainer {
+    position: fixed;
+    top: 110px;
+    right: 30px;
+    z-index: 1000;
+
+    display: flex;              /* 🔥 stack items */
+    flex-direction: column;
+    align-items: center;        /* center everything */
+}
+.section {
+    margin-right: 120px;  /* 🔥 prevents overlap without shifting whole layout */
+}
+.progress-circle {
+    width: 150px;
+    height: 150px;              /* ✅ SAME as width */
+    border-radius: 50%;        /* ✅ perfect circle */
+    background: #1c2a40;
+    border: 3px solid orange;
+    margin-bottom: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+    color: #00ff9c;
+    font-size: 30px;
+
+    box-shadow: 0 0 15px rgba(255,165,0,0.3); /* 🔥 glow */
+}
+.platform-icons img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+.platform-icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 60px;   /* increase from 28px */
+}
+.icon-row {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+.platform-icons img:hover {
+    transform: scale(1.15);
+    transition: 0.2s;
+}
+.center-row {
+    justify-content: center;
+}
+.icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.icon-box span {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 600;
+}
+
+.icon-box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+@media screen and (max-width: 600px) {
+    #loginBtn {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn { from {opacity:0} to {opacity:1} }
+@keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
