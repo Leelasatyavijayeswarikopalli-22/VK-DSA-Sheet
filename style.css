@@ -772,6 +772,58 @@ body.home-active #homeWidgets {
     height: 40px;
     object-fit: contain;
 }
+.history-btn{
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:#ffb400;
+    color:black;
+    font-weight:bold;
+    cursor:pointer;
+    margin-right:15px;
+}
+
+.history-popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:9999;
+}
+
+.history-box{
+    width:70%;
+    background:#111827;
+    color:white;
+    padding:25px;
+    border-radius:20px;
+}
+
+.history-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.history-box table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-box th,
+.history-box td{
+    padding:15px;
+    border-bottom:1px solid #333;
+}
 @media screen and (max-width: 600px) {
     #loginBtn {
         padding: 8px 14px;
