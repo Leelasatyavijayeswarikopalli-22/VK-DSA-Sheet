@@ -43,6 +43,10 @@
             <span class="tab" onclick="switchTab(this)">Strings</span>
         </div>
 
+        <button class="history-btn" onclick="openHistory()">
+   Practice History
+</button>
+
         <!-- LOGIN BUTTON -->
         <button id="loginBtn">Login / Sign Up</button>
 
@@ -1081,6 +1085,44 @@
     </div>
 
     <script src="script.js" defer></script>
+    <div id="historyPopup" class="history-popup">
+
+   <div class="history-box">
+
+      <div class="history-header">
+         <h2>Practice History</h2>
+
+         <button onclick="closeHistory()">X</button>
+      </div>
+
+      <table>
+         <thead>
+            <tr>
+               <th>Problem</th>
+               <th>Status</th>
+               <th>Difficulty</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            <tr>
+               <td>Two Sum</td>
+               <td>Accepted</td>
+               <td>Easy</td>
+            </tr>
+
+            <tr>
+               <td>Three Sum</td>
+               <td>Accepted</td>
+               <td>Medium</td>
+            </tr>
+         </tbody>
+
+      </table>
+
+   </div>
+
+</div>
 
 </body>
 
