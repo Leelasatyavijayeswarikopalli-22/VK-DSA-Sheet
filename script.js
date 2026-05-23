@@ -452,4 +452,88 @@ function updateGlobalProgress() {
 }
 toggleAddButton();
 loadProblems();
+function markDone(checkbox, problemName, difficulty) {
 
+    if (checkbox.checked) {
+
+        let history =
+            JSON.parse(localStorage.getItem("practiceHistory")) || [];
+
+        const problemData = {
+            name: problemName,
+            difficulty: difficulty,
+            time: new Date().getTime()
+        };
+
+        history.unshift(problemData);
+
+        localStorage.setItem(
+            "practiceHistory",
+            JSON.stringify(history)
+        );
+
+    }
+
+    loadHistory();
+}
+
+function openHistory() {
+
+    document.getElementById("historyPopup").style.display = "flex";
+
+    loadHistory();
+}
+
+function closeHistory() {
+
+    document.getElementById("historyPopup").style.display = "none";
+}
+
+function getTimeAgo(timestamp) {
+
+    const seconds =
+        Math.floor((new Date().getTime() - timestamp) / 1000);
+
+    if (seconds < 60)
+        return `${seconds} seconds ago`;
+
+    const minutes = Math.floor(seconds / 60);
+
+    if (minutes < 60)
+        return `${minutes} minutes ago`;
+
+    const hours = Math.floor(minutes / 60);
+
+    if (hours < 24)
+        return `${hours} hours ago`;
+
+    const days = Math.floor(hours / 24);
+
+    if (days === 1)
+        return `Yesterday`;
+
+    return `${days} days ago`;
+}
+
+function loadHistory() {
+
+    let history =
+        JSON.parse(localStorage.getItem("practiceHistory")) || [];
+
+    let tableBody =
+        document.getElementById("historyTableBody");
+
+    tableBody.innerHTML = "";
+
+    history.forEach(item => {
+
+        tableBody.innerHTML += `
+            <tr>
+                <td>${getTimeAgo(item.time)}</td>
+                <td>${item.name}</td>
+                <td>Accepted</td>
+                <td>${item.difficulty}</td>
+            </tr>
+        `;
+    });
+}
