@@ -27,7 +27,7 @@
             Add Problem
         </button>
 
-        <button onclick="adminLogin()">Admin Login</button>
+      
 
     </div>
 
@@ -129,6 +129,13 @@
                         <button type="submit">Login</button>
 
                     </form>
+                    <input type="text" id="adminUsername" placeholder="Admin Username">
+
+<input type="password" id="adminPassword" placeholder="Admin Password">
+
+<button type="button" id="adminLoginBtn">
+    Admin Login
+</button>
 
                     <!-- SIGNUP FORM -->
                     <form id="signupForm" style="display:none;">
@@ -250,12 +257,10 @@
                     </div>
 
                     <div class="done">
-                        <input
+                       <input
    type="checkbox"
-   onchange="markDone(this,
-   'Two Sum',
-   'Easy')"
-/>st
+   onchange="markDone(this,'Two Sum','Easy')"
+/>
                     </div>
 
                     <div class="revision">
@@ -285,7 +290,9 @@
                     </div>
 
                     <div class="done">
-                        <input type="checkbox">
+                       <input
+type="checkbox"
+onchange="markDone(this,'Three Sum','Medium')">
                     </div>
 
                     <div class="revision">
@@ -315,7 +322,9 @@
                     </div>
 
                     <div class="done">
-                        <input type="checkbox">
+                       <input
+type="checkbox"
+onchange="markDone(this,'Three Sum','Medium')">
                     </div>
 
                     <div class="revision">
@@ -335,7 +344,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Remove Duplicates from Sorted Array','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty easy">Easy</div>
     </div>
@@ -347,7 +358,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Move Zeroes','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty easy">Easy</div>
     </div>
@@ -360,7 +373,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Merge Sorted Array','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty easy">Easy</div>
     </div>
@@ -373,7 +388,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Longest Mountain in Array','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty medium">Medium</div>
     </div>
@@ -386,7 +403,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty medium">Medium</div>
     </div>
@@ -399,7 +418,9 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
             </a>
         </div>
-        <div class="done"><input type="checkbox"></div>
+        <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Squares of a Sorted Array','Medium')"></div>
         <div class="revision"><input type="checkbox"></div>
         <div class="difficulty easy">Easy</div>
     </div>
@@ -449,7 +470,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Maximum Consecutive Ones','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -485,7 +508,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Rotate Array ( Right Rotate by K)','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -498,7 +523,9 @@
             <span class="tuf-badge">TUF</span>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Right Rotate Array By One','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -511,8 +538,12 @@
             <span class="tuf-badge">TUF</span>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
-    <div class="revision"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Three Sum','Medium')"></div>
+    <div class="revision"><input
+type="checkbox"
+onchange="markDone(this,'Left Rotate Array by K Places','Medium')"></div>
     <div class="difficulty medium">Medium</div>
 </div>
 
@@ -524,7 +555,9 @@
             <span class="tuf-badge">TUF</span>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Left Rotate Array by One','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -537,7 +570,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Search in Rotated Array','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -550,7 +585,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Find Minimum in Rotated Sorted Array','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -563,7 +600,9 @@
             <span class="tuf-badge">TUF</span>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Find Rotation Count','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -576,7 +615,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Check if Array is Sorted and Rotated','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -613,7 +654,9 @@
             <div class="tuf-badge">TUF</div>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Largest Element','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -626,7 +669,9 @@
             <div class="tuf-badge">TUF</div>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Second Largest Element ','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -639,7 +684,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Check if Array is Sorted and Rotated','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -652,7 +699,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Rerrange Array Elements by Sign','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -665,7 +714,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Majority Element','Medium')">></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -678,7 +729,9 @@
             <div class="tuf-badge">TUF</div>
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Leaders in Array','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty medium">Medium</div>
 </div>
@@ -692,7 +745,9 @@
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Contains DDuplicate','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -703,8 +758,9 @@
         <a href="https://takeuforward.org/data-structure/union-of-two-sorted-arrays/" target="_blank">
             <span class="tuf-badge">TUF</span>
         </a>
-    </div>
-    <div class="done"><input type="checkbox"></div>
+    </div><input
+type="checkbox"
+onchange="markDone(this,'Union of Two Sorted Arrays','Medium')"><input type="checkbox"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -717,7 +773,9 @@
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
         </a>
     </div>
-    <div class="done"><input type="checkbox"></div>
+    <div class="done"><input
+type="checkbox"
+onchange="markDone(this,'Best Time to Buy and Sell Stock','Medium')"></div>
     <div class="revision"><input type="checkbox"></div>
     <div class="difficulty easy">Easy</div>
 </div>
@@ -1090,7 +1148,7 @@
     </div>
 
     <script src="script.js" defer></script>
-    <div id="historyPopup" class="history-popup">
+    
 
    <div class="history-box">
 
@@ -1100,54 +1158,29 @@
          <button onclick="closeHistory()">X</button>
       </div>
 
-      <table>
-         <thead>
-            <tr>
-               <th>Problem</th>
-               <th>Status</th>
-               <th>Difficulty</th>
-            </tr>
-         </thead>
+    <table>
 
-        
+   <thead>
+      <tr>
+         <th>Last Submitted</th>
+         <th>Problem</th>
+         <th>Status</th>
+         <th>Difficulty</th>
+      </tr>
+   </thead>
 
-      </table>
+   <tbody id="historyTableBody">
 
-   </div>
+   </tbody>
 
-</div>
-    <div id="historyPopup" class="history-popup">
-
-   <div class="history-box">
-
-      <div class="history-header">
-
-         <h2>Practice History</h2>
-
-         <button onclick="closeHistory()">X</button>
-
-      </div>
-
-      <table>
-
-         <thead>
-            <tr>
-               <th>Last Submitted</th>
-               <th>Problem</th>
-               <th>Status</th>
-               <th>Difficulty</th>
-            </tr>
-         </thead>
-
-         <tbody id="historyTableBody">
-
-         </tbody>
-
-      </table>
+</table>
 
    </div>
 
 </div>
+    
+
+ 
 
 </body>
 
