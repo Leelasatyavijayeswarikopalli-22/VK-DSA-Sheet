@@ -250,7 +250,12 @@
                     </div>
 
                     <div class="done">
-                        <input type="checkbox">
+                        <input
+   type="checkbox"
+   onchange="markDone(this,
+   'Two Sum',
+   'Easy')"
+/>st
                     </div>
 
                     <div class="revision">
@@ -1105,6 +1110,38 @@
          </thead>
 
         
+
+      </table>
+
+   </div>
+
+</div>
+    <div id="historyPopup" class="history-popup">
+
+   <div class="history-box">
+
+      <div class="history-header">
+
+         <h2>Practice History</h2>
+
+         <button onclick="closeHistory()">X</button>
+
+      </div>
+
+      <table>
+
+         <thead>
+            <tr>
+               <th>Last Submitted</th>
+               <th>Problem</th>
+               <th>Status</th>
+               <th>Difficulty</th>
+            </tr>
+         </thead>
+
+         <tbody id="historyTableBody">
+
+         </tbody>
 
       </table>
 
