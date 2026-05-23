@@ -1,20 +1,33 @@
 // Modal elements
 const loginBtn = document.getElementById('loginBtn');
 const modal = document.getElementById('loginModal');
-const closeBtn = modal.querySelector('.close');
+const closeBtn = modal ? modal.querySelector('.close') : null;
 const loginTab = document.getElementById('loginTab');
 const signupTab = document.getElementById('signupTab');
 const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 
 // Open modal
-loginBtn.addEventListener('click', () => modal.style.display = 'block');
 
-// Close modal
-closeBtn.addEventListener('click', () => modal.style.display = 'none');
-window.addEventListener('click', e => { if(e.target == modal) modal.style.display = 'none'; });
+if(loginBtn && modal){
+    loginBtn.addEventListener('click', () => {
+        modal.style.display = 'block';
+    });
+}
 
+if(closeBtn && modal){
+    closeBtn.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', e => {
+        if(e.target == modal){
+            modal.style.display = 'none';
+        }
+    });
+}
 // Switch tabs
+if(loginTab && signupTab && loginForm && signupForm){
 loginTab.addEventListener('click', () => {
     loginTab.classList.add('active');
     signupTab.classList.remove('active');
@@ -27,8 +40,9 @@ signupTab.addEventListener('click', () => {
     signupForm.style.display = 'flex';
     loginForm.style.display = 'none';
 });
-
+}
 // Login actions
+if(loginForm){
 loginForm.addEventListener('submit', async e => {
     e.preventDefault();
 
@@ -40,6 +54,7 @@ loginForm.addEventListener('submit', async e => {
         headers:{ "Content-Type":"application/json" },
         body: JSON.stringify({username,password})
     });
+    
 
     if(res.ok){
         alert("Admin logged in");
@@ -48,6 +63,7 @@ loginForm.addEventListener('submit', async e => {
         alert("Invalid credentials");
     }
 });
+    }
 // Toggle section
 function toggleSection(section, event) {
     if(event.target.tagName === 'INPUT') return; // ignore clicks on checkboxes
@@ -117,7 +133,7 @@ function uploadFile() {
             <p>${file.name}</p>
             <div class="card-buttons">
                 <a href="${url}" target="_blank">View Image</a>
-                <button onclick="this.closest('.card').remove()">Remove</button>
+                <button onclick="this.closest('.card').remove(); saveNotes();">Remove</button>
             </div>
         `;
     } else {
@@ -125,13 +141,14 @@ function uploadFile() {
             <p>${file.name}</p>
             <div class="card-buttons">
                 <a href="${url}" target="_blank">Open PDF</a>
-                <button onclick="this.closest('.card').remove()">Remove</button>
+                <button onclick="this.closest('.card').remove(); saveNotes();">Remove</button>
             </div>
         `;
     }
 
     container.appendChild(card);
     input.value = ""; // reset input
+    saveNotes();
 }
 // Save checkbox state
 document.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach((chk, idx) => {
@@ -140,30 +157,13 @@ document.querySelectorAll('.done input[type="checkbox"], .revision input[type="c
         const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
         const type = chk.closest('.done') ? 'done' : 'revision';
 
-        // Get existing storage
         let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
         data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
         localStorage.setItem('checkboxes', JSON.stringify(data));
     });
 });
 // Default load
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.section').forEach(section => {
-        // hide non-Arrays sections initially
-        if (section.dataset.category !== 'Arrays') section.style.display = 'none';
 
-        // add event listeners to all checkboxes
-        section.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach(checkbox => {
-           checkbox.addEventListener('change', () => {
-    updateProgress(section);
-    updateGlobalProgress(); // 🔥 ADD THIS LINE
-});
-        });
-
-        // initialize progress bars for the section
-        updateProgress(section);
-    });
-});
 // LOAD CHECKBOXES AND UPDATE BARS
 function loadCheckboxesAndProgress() {
     const data = JSON.parse(localStorage.getItem('checkboxes')) || {};
@@ -183,14 +183,9 @@ function loadCheckboxesAndProgress() {
 }
 
 // CALL ON DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    loadCheckboxesAndProgress();
-    updateGlobalProgress();
-
-});
 
 // Call on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', loadCheckboxes);
+
 // OPEN LINKS PAGE
 function openLinks() {
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
@@ -204,9 +199,7 @@ window.isAdmin = false;
 window.username = "";
 
 // Admin login
-function adminLogin() {
-    const username = prompt("Username");
-    const password = prompt("Password");
+function adminLogin(username, password) {
 
     fetch("http://localhost:5000/admin-login", {
         method: "POST",
@@ -225,7 +218,6 @@ function adminLogin() {
         }
     });
 }
-
 // Toggle Add button visibility
 function toggleAddButton() {
     const btn = document.getElementById("addProblemBtn");
@@ -266,11 +258,12 @@ function addLink() {
         <p>${url}</p>
         <div class="card-buttons">
             <a href="${url}" target="_blank">Open Link</a>
-            <button onclick="this.closest('.card').remove()">Remove</button>
+            <button onclick="this.closest('.card').remove(); saveLinks();">Remove</button>
         </div>
     `;
     container.appendChild(card);
     input.value = "";
+    saveLinks();
 }
 // OPEN BOOKS PAGE
 function openBooks() {
@@ -307,13 +300,14 @@ function addBook() {
         <p>${name}</p>
         <div class="card-buttons">
             <a href="${url}" target="_blank">Open PDF</a>
-            <button onclick="this.closest('.card').remove()">Remove</button>
+           <button onclick="this.closest('.card').remove(); saveBooks();">Remove</button>
         </div>
     `;
     container.appendChild(card);
 
     nameInput.value = "";
     fileInput.value = "";
+    saveBooks();
 }
 
 function updateProgress(section) {
@@ -345,21 +339,10 @@ function updateProgress(section) {
     headerCount.textContent = `${doneCount}/${total}`;
 }
 // Save checkbox state
-document.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach((chk, idx) => {
-    chk.addEventListener('change', () => {
-        const sectionName = chk.closest('.section').querySelector('.section-header span').innerText;
-        const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
-        const type = chk.closest('.done') ? 'done' : 'revision';
 
-        // Get existing storage
-        let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
-        data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
-        localStorage.setItem('checkboxes', JSON.stringify(data));
-    });
-});
 function saveNotes() {
     const notes = [];
-    document.querySelectorAll('#notesContainer .note-card').forEach(n => {
+    document.querySelectorAll('#notesContainer .card').forEach(n => {
         notes.push(n.innerHTML);
     });
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -367,7 +350,7 @@ function saveNotes() {
 
 function saveLinks() {
     const links = [];
-    document.querySelectorAll('#linksContainer .note-card').forEach(l => {
+    document.querySelectorAll('#linksContainer .card').forEach(l => {
         links.push(l.innerHTML);
     });
     localStorage.setItem('links', JSON.stringify(links));
@@ -375,7 +358,7 @@ function saveLinks() {
 
 function saveBooks() {
     const books = [];
-    document.querySelectorAll('#booksContainer .book-card').forEach(b => {
+    document.querySelectorAll('#booksContainer .card').forEach(b => {
         books.push(b.innerHTML);
     });
     localStorage.setItem('books', JSON.stringify(books));
@@ -390,17 +373,34 @@ function loadNotesLinksBooks() {
     const linksContainer = document.getElementById('linksContainer');
     const booksContainer = document.getElementById('booksContainer');
 
-    notes.forEach(n => { const div = document.createElement('div'); div.classList.add('note-card'); div.innerHTML = n; notesContainer.appendChild(div); });
-    links.forEach(l => { const div = document.createElement('div'); div.classList.add('note-card'); div.innerHTML = l; linksContainer.appendChild(div); });
-    books.forEach(b => { const div = document.createElement('div'); div.classList.add('book-card'); div.innerHTML = b; booksContainer.appendChild(div); });
-}
+    notes.forEach(n => {
+        const div = document.createElement('div');
+        div.classList.add('card');
+        div.innerHTML = n;
+        notesContainer.appendChild(div);
+    });
 
+    links.forEach(l => {
+        const div = document.createElement('div');
+        div.classList.add('card');
+        div.innerHTML = l;
+        linksContainer.appendChild(div);
+    });
+
+    books.forEach(b => {
+        const div = document.createElement('div');
+        div.classList.add('card');
+        div.innerHTML = b;
+        booksContainer.appendChild(div);
+    });
+}
 // CALL load on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', loadNotesLinksBooks);
+
 function loadProblems() {
     fetch("/problems")
     .then(res => res.json())
     .then(data => {
+        document.querySelectorAll(".dynamic-problem").forEach(el => el.remove());
         data.forEach(p => {
             const sections = document.querySelectorAll(`.section[data-category="${p.category}"]`);
             sections.forEach(sec => {
@@ -408,14 +408,25 @@ function loadProblems() {
                 if (header === p.section) {
                     const container = sec.querySelector(".content");
                     const div = document.createElement("div");
-                    div.className = "problem";
+                    div.className = "problem dynamic-problem";
                     div.innerHTML = `
                         <span>${p.title}</span>
                         <a href="${p.link}" target="_blank">Solve</a>
-                        <label class="done"><input type="checkbox"></label>
+                        <label class="done">
+<input type="checkbox"
+onchange="markDone(this,'${p.title}','Medium')">
+</label>
                         <label class="revision"><input type="checkbox"></label>
                     `;
                     container.appendChild(div);
+                    const checkboxes = div.querySelectorAll('input[type="checkbox"]');
+
+checkboxes.forEach(chk => {
+    chk.addEventListener('change', () => {
+        updateProgress(sec);
+        updateGlobalProgress();
+    });
+});
                 }
             });
         });
@@ -423,15 +434,25 @@ function loadProblems() {
 }
 
 // Modal login button
-document.getElementById("adminLoginBtn").addEventListener("click", () => {
-    const username = document.getElementById("adminUsername").value;
-    const password = document.getElementById("adminPassword").value;
-    adminLogin(username, password);
-});
+const adminBtn = document.getElementById("adminLoginBtn");
+
+if(adminBtn){
+    adminBtn.addEventListener("click", () => {
+        const username = document.getElementById("adminUsername").value;
+        const password = document.getElementById("adminPassword").value;
+
+        adminLogin(username, password);
+    });
+}
+
 
 // ... rest of your existing checkbox and progress code remains unchanged
 function updateGlobalProgress() {
-    const activeTab = document.querySelector('.tab.active').textContent.replace(/\s/g,'');
+   const active = document.querySelector('.tab.active');
+
+if(!active) return;
+
+const activeTab = active.textContent.replace(/\s/g,'');
 
     const sections = document.querySelectorAll(`.section[data-category="${activeTab}"]`);
 
@@ -450,8 +471,7 @@ function updateGlobalProgress() {
 
     document.getElementById("progressText").innerText = `${done}/${total}`;
 }
-toggleAddButton();
-loadProblems();
+
 function markDone(checkbox, problemName, difficulty) {
 
     if (checkbox.checked) {
@@ -537,3 +557,34 @@ function loadHistory() {
         `;
     });
 }
+document.addEventListener('DOMContentLoaded', () => {
+
+    loadCheckboxesAndProgress();
+
+    loadNotesLinksBooks();
+
+    loadProblems();
+
+    updateGlobalProgress();
+
+    document.querySelectorAll('.section').forEach(section => {
+
+        if(section.dataset.category !== 'Arrays'){
+            section.style.display = 'none';
+        }
+
+        section.querySelectorAll(
+            '.done input[type="checkbox"], .revision input[type="checkbox"]'
+        ).forEach(checkbox => {
+
+            checkbox.addEventListener('change', () => {
+                updateProgress(section);
+                updateGlobalProgress();
+            });
+
+        });
+
+        updateProgress(section);
+    });
+
+});
