@@ -932,6 +932,9 @@ body.home-active #homeWidgets {
     transform: scale(1.15);
     transition: 0.2s;
 }
+.section:first-of-type{
+    margin-top: 30px;
+}
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
 @keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
