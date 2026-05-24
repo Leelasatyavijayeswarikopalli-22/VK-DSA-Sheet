@@ -82,6 +82,11 @@ function toggleSection(section, event) {
         ? 'none'
         : 'block';
 }
+document.addEventListener('DOMContentLoaded', () => {
+
+    localStorage.removeItem("practiceHistory");
+
+});
 // Tab switching
 
 function switchTab(tab) {
