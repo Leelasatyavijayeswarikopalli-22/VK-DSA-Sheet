@@ -44,7 +44,7 @@ body::before {
 }
 /* Sidebar */
 .sidebar {
-width: 210px;
+width: 220px;
 height: 100vh;
 padding: 28px 20px;
 background: rgba(10,20,40,0.85);
@@ -70,9 +70,9 @@ border-right: 1px solid rgba(255,255,255,0.08);
 
 /* Main */
 .main {
-margin-left: 280px;   /* more gap from sidebar */
-padding: 40px 60px;
-padding-right: 260px; /* space for right panel */
+margin-left: 250px;
+padding: 18px 30px;
+padding-right: 230px;
 max-width: 1200px;
 }
 /* ADD THIS 👇 (important fix) */
@@ -105,15 +105,15 @@ transform: translateY(-2px);
     background: #1c2a40;
 }
 h1 {
-margin-bottom: 28px;
-font-size: 46px;
+margin-bottom: 16px;
+font-size: 28px;
 }
 /* Section */
 .section {
 background: rgba(8,15,35,0.45);
-padding: 18px 22px;
+padding: 14px 18px;
+margin-bottom: 18px;
 border-radius: 18px;
-margin-bottom: 26px;
 box-shadow: 0 4px 18px rgba(0,0,0,0.25);
 }
 .section-header {
