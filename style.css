@@ -732,7 +732,7 @@ body.home-active #homeWidgets {
 /* ✅ RIGHT SIDE COLUMN — CLEAN VERTICAL LAYOUT */
 #progressContainer {
     position: fixed;
-    top: 450px;
+    top: 180px;
     right: 40px;
     z-index: 1000;
     gap:40px;
