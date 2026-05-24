@@ -494,7 +494,6 @@ const activeTab = active.textContent.replace(/\s/g,'');
 
     document.getElementById("progressText").innerText = `${done}/${total}`;
 }
-
 function markDone(checkbox, problemName, difficulty) {
 
     const section = checkbox.closest('.section');
@@ -502,10 +501,10 @@ function markDone(checkbox, problemName, difficulty) {
     updateProgress(section);
     updateGlobalProgress();
 
-    if (checkbox.checked) {
+    let history =
+        JSON.parse(localStorage.getItem("practiceHistory")) || [];
 
-        let history =
-            JSON.parse(localStorage.getItem("practiceHistory")) || [];
+    if (checkbox.checked) {
 
         const problemData = {
             name: problemName,
@@ -515,11 +514,17 @@ function markDone(checkbox, problemName, difficulty) {
 
         history.unshift(problemData);
 
-        localStorage.setItem(
-            "practiceHistory",
-            JSON.stringify(history)
+    } else {
+
+        history = history.filter(
+            item => item.name !== problemName
         );
     }
+
+    localStorage.setItem(
+        "practiceHistory",
+        JSON.stringify(history)
+    );
 
     loadHistory();
 }
