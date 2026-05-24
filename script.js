@@ -563,9 +563,16 @@ function getTimeAgo(timestamp) {
     if (days === 1)
         return `Yesterday`;
 
-    return `${days} days ago`;
-}
+    if (days < 7)
+        return `${days} days ago`;
 
+    const date = new Date(timestamp);
+
+    return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric'
+    });
+}
 function loadHistory() {
 
     let history =
