@@ -85,7 +85,7 @@ body::before {
     margin-left:240px;   /* sidebar width + gap */
     padding:20px 35px;
 
-     /* space for right progress */
+    padding-right:240px; /* space for right progress */
     width:auto;          /* remove calc */
     box-sizing:border-box;
 }
@@ -991,34 +991,7 @@ margin-top:15px;
 
 }
 
-/* FIX WHITE SPACE / OVERFLOW */
-html, body {
-    width: 100%;
-    overflow-x: hidden;
-}
 
-/* Main content */
-.main{
-    margin-left: 240px;
-    padding-right: 0;   /* REMOVE huge right padding */
-    width: calc(100% - 240px);
-    box-sizing: border-box;
-}
-
-/* Right fixed widgets */
-#progressContainer{
-    right: 10px;
-    top: 350px;   /* reduce */
-}
-
-#calendarContainer{
-    right: 10px;
-}
-
-/* Prevent fixed items creating overflow */
-*{
-    box-sizing:border-box;
-}
 
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
