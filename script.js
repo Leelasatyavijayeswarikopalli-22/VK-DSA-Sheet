@@ -687,3 +687,144 @@ function attachStaticCheckboxListeners() {
         });
     });
 }
+function loadCalendar() {
+
+    const monthYear =
+        document.getElementById("monthYear");
+
+    const calendarDays =
+        document.getElementById("calendarDays");
+
+    const now = new Date();
+
+    let year = now.getFullYear();
+    let month = now.getMonth();
+
+    let firstDay =
+        new Date(year, month, 1).getDay();
+
+    let totalDays =
+        new Date(year, month + 1, 0).getDate();
+
+    monthYear.innerText =
+        now.toLocaleString('default',
+        { month:'long', year:'numeric' });
+
+    calendarDays.innerHTML = "";
+
+    let saved =
+        JSON.parse(
+        localStorage.getItem("doneDates")
+        ) || [];
+
+
+    for(let i=0;i<firstDay;i++){
+
+        calendarDays.innerHTML +=
+        "<div></div>";
+
+    }
+
+
+    for(let day=1; day<=totalDays; day++){
+
+        let div =
+        document.createElement("div");
+
+        div.classList.add("day");
+
+        div.innerText = day;
+
+
+        let today =
+        new Date();
+
+        if(
+        day===today.getDate()
+        &&
+        month===today.getMonth()
+        ){
+
+            div.classList.add("today");
+
+        }
+
+
+        let dateString =
+        `${year}-${month+1}-${day}`;
+
+
+        if(saved.includes(dateString)){
+
+            div.classList.add("done");
+
+            div.innerHTML =
+            "✓";
+
+        }
+
+
+        calendarDays.appendChild(div);
+
+    }
+
+}
+
+
+loadCalendar();
+
+
+
+/* SAVE DATE WHEN DONE CHECKBOX CLICKED */
+
+document
+.querySelectorAll(
+'.done input[type="checkbox"]'
+)
+.forEach(box=>{
+
+box.addEventListener(
+'change',
+
+function(){
+
+if(this.checked){
+
+let now =
+new Date();
+
+let date =
+`${now.getFullYear()}-${
+now.getMonth()+1
+}-${
+now.getDate()
+}`;
+
+
+let saved =
+JSON.parse(
+localStorage.getItem(
+"doneDates"
+)
+) || [];
+
+
+if(!saved.includes(date)){
+
+saved.push(date);
+
+localStorage.setItem(
+"doneDates",
+
+JSON.stringify(saved)
+);
+
+}
+
+loadCalendar();
+
+}
+
+});
+
+});
