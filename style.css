@@ -996,27 +996,24 @@ margin-top:15px;
 
 /* CALENDAR */
 #calendarContainer{
+    position: fixed;
 
-    position:fixed;
+    top: 50%;
+    right: 25px;
 
-    top:150px;          /* below buttons */
-    right:25px;
+    transform: translateY(-50%);
 
-    width:180px;
-    padding:18px;
+    width: 180px;
+    padding: 18px;
 
-    background:#1b2238;
+    background: #1b2238;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    z-index:1000;
+    z-index: 1000;
 
-    box-shadow:
-    0 0 15px rgba(0,0,0,.35);
-
+    box-shadow: 0 0 15px rgba(0,0,0,.35);
 }
-
-
 /* Month text */
 .calendar-header{
 
