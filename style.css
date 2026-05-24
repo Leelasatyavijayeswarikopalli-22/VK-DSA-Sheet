@@ -992,7 +992,184 @@ margin-top:15px;
 }
 
 
+/* day */
 
+/* CALENDAR */
+#calendarContainer{
+
+    position:fixed;
+
+    top:150px;          /* below buttons */
+    right:25px;
+
+    width:180px;
+    padding:18px;
+
+    background:#1b2238;
+
+    border-radius:20px;
+
+    z-index:1000;
+
+    box-shadow:
+    0 0 15px rgba(0,0,0,.35);
+
+}
+
+
+/* Month text */
+.calendar-header{
+
+text-align:center;
+
+font-size:18px;
+font-weight:600;
+
+margin-bottom:15px;
+
+}
+
+
+/* S M T W */
+.weekdays{
+
+display:grid;
+
+grid-template-columns:
+repeat(7,1fr);
+
+font-size:14px;
+
+text-align:center;
+
+color:#aaa;
+
+margin-bottom:12px;
+
+}
+
+
+/* Dates grid */
+#calendarDays{
+
+display:grid;
+
+grid-template-columns:
+repeat(7,1fr);
+
+gap:8px;
+
+justify-items:center;
+
+}
+
+
+/* Individual day */
+.day{
+
+width:26px;
+height:26px;
+
+display:flex;
+
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+font-size:15px;
+
+position:relative;
+
+}
+
+
+/* Today */
+.day.today{
+
+background:#2ecc71;
+color:white;
+
+}
+
+
+/* Solved day */
+.day.done{
+
+background:#0a84ff;
+
+color:white;
+
+}
+
+
+/* Tick */
+.tick{
+
+position:absolute;
+
+bottom:-5px;
+right:-3px;
+
+font-size:10px;
+
+color:#00ff9c;
+
+font-weight:bold;
+
+}
+
+/* today */
+.day.today{
+
+    background:#2ecc71;
+
+}
+
+
+/* solved */
+.day.done{
+
+    background:#0a84ff;
+
+    color:white;
+
+}
+.day{
+    position:relative;
+    width:35px;
+    height:35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+}
+/* TODAY */
+.today{
+
+background:#2ecc71;
+color:white;
+
+}
+
+
+/* TICK */
+.tick{
+
+position:absolute;
+
+bottom:-5px;
+right:-4px;
+
+font-size:11px;
+
+color:#00ff9c;
+
+font-weight:bold;
+
+}
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
 @keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
