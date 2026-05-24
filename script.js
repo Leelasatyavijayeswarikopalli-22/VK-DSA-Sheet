@@ -523,17 +523,22 @@ function markDone(checkbox, problemName, difficulty) {
 
     loadHistory();
 }
+let historyInterval;
+
 function openHistory() {
 
     document.getElementById("historyPopup").style.display = "flex";
 
     loadHistory();
+
+    historyInterval = setInterval(() => {
+        loadHistory();
+    }, 1000);
 }
 
-function closeHistory() {
 
-    document.getElementById("historyPopup").style.display = "none";
-}
+
+
 
 function getTimeAgo(timestamp) {
 
