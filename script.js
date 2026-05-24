@@ -164,20 +164,7 @@ function uploadFile() {
     saveNotes();
 }
 // Save checkbox state
-document.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach((chk, idx) => {
-    chk.addEventListener('change', () => {
-        const sectionName = chk.closest('.section').querySelector('.section-header span').innerText;
-        const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
-        const type =
-    chk.closest('.done') !== null
-    ? 'done'
-    : 'revision';
 
-        let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
-        data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
-        localStorage.setItem('checkboxes', JSON.stringify(data));
-    });
-});
 // Default load
 
 // LOAD CHECKBOXES AND UPDATE BARS
@@ -420,7 +407,9 @@ async function loadProblems() {
 
     const data = await res.json();
 
-    document.querySelectorAll(".dynamic-problem").forEach(el => el.remove());
+    document
+        .querySelectorAll(".dynamic-problem")
+        .forEach(el => el.remove());
 
     data.forEach(p => {
 
@@ -435,11 +424,14 @@ async function loadProblems() {
 
             if (header === p.section) {
 
-                const container = sec.querySelector(".content");
+                const container =
+                    sec.querySelector(".content");
 
-                const div = document.createElement("div");
+                const div =
+                    document.createElement("div");
 
-                div.className = "problem dynamic-problem";
+                div.className =
+                    "problem dynamic-problem";
 
                 div.innerHTML = `
                     <span>${p.title}</span>
@@ -449,8 +441,7 @@ async function loadProblems() {
                     </a>
 
                     <label class="done">
-                        <input type="checkbox"
-                        onchange="markDone(this,'${p.title}','Medium')">
+                        <input type="checkbox">
                     </label>
 
                     <label class="revision">
@@ -459,75 +450,108 @@ async function loadProblems() {
                 `;
 
                 container.appendChild(div);
+
+                // LOAD SAVED CHECKBOX STATE
+
                 const savedData =
-    JSON.parse(localStorage.getItem('checkboxes')) || {};
+                    JSON.parse(
+                        localStorage.getItem("checkboxes")
+                    ) || {};
 
-const sectionName =
-    sec.querySelector('.section-header span').innerText;
+                const sectionName =
+                    sec.querySelector(
+                        ".section-header span"
+                    ).innerText;
 
-const problemIndex =
-    Array.from(sec.querySelectorAll('.problem')).indexOf(div);
+                const problemIndex =
+                    Array.from(
+                        sec.querySelectorAll(".problem")
+                    ).indexOf(div);
 
-const doneKey =
-    `${sectionName}-${problemIndex}-done`;
+                const doneKey =
+                    `${sectionName}-${problemIndex}-done`;
 
-const revisionKey =
-    `${sectionName}-${problemIndex}-revision`;
+                const revisionKey =
+                    `${sectionName}-${problemIndex}-revision`;
 
-const doneCheckbox =
-    div.querySelector('.done input[type="checkbox"]');
+                const doneCheckbox =
+                    div.querySelector(
+                        '.done input[type="checkbox"]'
+                    );
 
-const revisionCheckbox =
-    div.querySelector('.revision input[type="checkbox"]');
+                const revisionCheckbox =
+                    div.querySelector(
+                        '.revision input[type="checkbox"]'
+                    );
 
-if(doneCheckbox){
-    doneCheckbox.checked =
-        savedData[doneKey] || false;
-}
+                if(doneCheckbox){
+                    doneCheckbox.checked =
+                        savedData[doneKey] || false;
+                }
 
-if(revisionCheckbox){
-    revisionCheckbox.checked =
-        savedData[revisionKey] || false;
-}
+                if(revisionCheckbox){
+                    revisionCheckbox.checked =
+                        savedData[revisionKey] || false;
+                }
+
+                // ADD EVENT LISTENERS
 
                 const checkboxes =
-                    div.querySelectorAll('input[type="checkbox"]');
+                    div.querySelectorAll(
+                        'input[type="checkbox"]'
+                    );
 
                 checkboxes.forEach(chk => {
 
-                    chk.addEventListener('change', () => {
+                    chk.addEventListener(
+                        "change",
+                        () => {
 
-                        const sectionName =
-                            sec.querySelector('.section-header span').innerText;
+                            const sectionName =
+                                sec.querySelector(
+                                    ".section-header span"
+                                ).innerText;
 
-                        const problemIndex =
-                            Array.from(
-                                sec.querySelectorAll('.problem')
-                            ).indexOf(div);
+                            const problemIndex =
+                                Array.from(
+                                    sec.querySelectorAll(".problem")
+                                ).indexOf(div);
 
-                        const type =
-                            chk.closest('.done') !== null
-                            ? 'done'
-                            : 'revision';
+                            const type =
+                                chk.closest(".done")
+                                ? "done"
+                                : "revision";
 
-                        let saved =
-                            JSON.parse(
-                                localStorage.getItem('checkboxes')
-                            ) || {};
+                            let saved =
+                                JSON.parse(
+                                    localStorage.getItem("checkboxes")
+                                ) || {};
 
-                        saved[
-                            `${sectionName}-${problemIndex}-${type}`
-                        ] = chk.checked;
+                            saved[
+                                `${sectionName}-${problemIndex}-${type}`
+                            ] = chk.checked;
 
-                        localStorage.setItem(
-                            'checkboxes',
-                            JSON.stringify(saved)
-                        );
+                            localStorage.setItem(
+                                "checkboxes",
+                                JSON.stringify(saved)
+                            );
 
-                        updateProgress(sec);
+                            updateProgress(sec);
 
-                        updateGlobalProgress();
-                    });
+                            updateGlobalProgress();
+
+                            // HISTORY
+
+                            if(chk.closest(".done")){
+
+                                markDone(
+                                    chk,
+                                    p.title,
+                                    "Medium"
+                                );
+                            }
+                        }
+                    );
                 });
 
                 updateProgress(sec);
