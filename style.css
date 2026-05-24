@@ -460,7 +460,7 @@ body.home-active #homeWidgets {
 #loginBtn {
     position: fixed;
     top: 20px;
-    right: 80px;
+    right: 20px;
     padding: 12px 20px;
     font-size: 16px;
     border: none;
@@ -733,7 +733,7 @@ body.home-active #homeWidgets {
 #progressContainer {
     position: fixed;
     top: 140px;
-    right: 25px;
+    right: 20px;
     z-index: 1000;
     gap:40px;
     display: flex;              /* 🔥 stack items */
@@ -838,7 +838,7 @@ body.home-active #homeWidgets {
     position: fixed;
 
     top: 80px;       /* below login button */
-    right: 80px;     /* same alignment as login */
+    right: 20px;     /* same alignment as login */
 
     padding: 10px 18px;
     font-size: 14px;
