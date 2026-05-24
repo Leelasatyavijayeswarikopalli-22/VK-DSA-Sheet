@@ -43,13 +43,20 @@ body::before {
     transform:translate(-50%,-50%);
 }
 /* Sidebar */
-.sidebar {
-width: 220px;
-height: 100vh;
-padding: 28px 20px;
-background: rgba(10,20,40,0.85);
-backdrop-filter: blur(12px);
-border-right: 1px solid rgba(255,255,255,0.08);
+.sidebar{
+    position: fixed;      /* IMPORTANT */
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+
+    padding: 28px 20px;
+    background: rgba(10,20,40,0.85);
+    backdrop-filter: blur(12px);
+
+    border-right:1px solid rgba(255,255,255,0.08);
+    overflow-y:auto;
+    box-sizing:border-box;
 }
 .logo {
     font-size: 24px;
@@ -69,12 +76,13 @@ border-right: 1px solid rgba(255,255,255,0.08);
 }
 
 /* Main */
-.main {
-margin-left: 250px;
-padding: 20px 35px;
-padding-right: 260px;
-width: calc(100% - 250px);
-box-sizing: border-box;
+.main{
+    margin-left:240px;   /* sidebar width + gap */
+    padding:20px 35px;
+
+    padding-right:240px; /* space for right progress */
+    width:auto;          /* remove calc */
+    box-sizing:border-box;
 }
 .sidebar {
 top: 0;
@@ -83,11 +91,7 @@ box-sizing: border-box;
 overflow-y: auto;
 }
 /* ADD THIS 👇 (important fix) */
-@media screen and (min-width: 768px) {
-    .main {
-        margin-left: 260px; /* adds visible gap from sidebar */
-    }
-}
+
 
 /* Tabs */
 .tabs {
@@ -722,7 +726,7 @@ body.home-active #homeWidgets {
 #progressContainer {
     position: fixed;
     top: 130px;
-    right: 50px;
+    right: 40px;
     z-index: 1000;
     gap:40px;
     display: flex;              /* 🔥 stack items */
