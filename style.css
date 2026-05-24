@@ -726,48 +726,55 @@ body.home-active #homeWidgets {
 
 /* CIRCLE */
 .progress-circle {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
+    width: 150px;
+    height: 150px;              /* ✅ SAME as width */
+    border-radius: 50%;        /* ✅ perfect circle */
     background: #1c2a40;
     border: 3px solid orange;
+    margin-bottom: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
+
     font-weight: bold;
     color: #00ff9c;
-    font-size: 26px;
-    box-shadow: 0 0 15px rgba(255,165,0,0.3);
+    font-size: 30px;
+
+    box-shadow: 0 0 15px rgba(255,165,0,0.3); /* 🔥 glow */
 }
 
 /* ICONS STACK */
+.platform-icons img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
 .platform-icons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    margin-top: 10px;
+    gap: 60px;   /* increase from 28px */
 }
 
 /* EACH ROW = 2 icons side by side */
 .icon-row {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 100px;
 }
 
-/* EACH ICON BOX */
+.platform-icons img:hover {
+    transform: scale(1.15);
+    transition: 0.2s;
+}
+.center-row {
+    justify-content: center;
+}
 .icon-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 4px;
-}
-
-.icon-box img {
-    width: 35px;
-    height: 35px;
-    object-fit: contain;
 }
 
 .icon-box span {
@@ -776,9 +783,10 @@ body.home-active #homeWidgets {
     font-weight: 600;
 }
 
-.icon-box img:hover {
-    transform: scale(1.15);
-    transition: 0.2s;
+.icon-box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
 .history-popup{
     position:fixed;
