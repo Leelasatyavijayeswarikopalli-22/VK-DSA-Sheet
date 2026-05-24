@@ -732,8 +732,8 @@ body.home-active #homeWidgets {
 /* ✅ RIGHT SIDE COLUMN — CLEAN VERTICAL LAYOUT */
 #progressContainer {
     position: fixed;
-    top: 180px;
-    right: 40px;
+    top: 140px;
+    right: 25px;
     z-index: 1000;
     gap:40px;
     display: flex;              /* 🔥 stack items */
@@ -943,45 +943,49 @@ body.home-active #homeWidgets {
     margin-top: 30px;
 }
 #calendarBox{
-
-    width:180px;      /* smaller calendar */
-
-    padding:12px;     /* reduce inside space */
-
-    margin-left:30px; /* move right */
-
-    border-radius:15px;  /* smaller rounded corners */
+    width:170px;          /* smaller */
+    padding:15px;
 
     background:#1b2238;
 
-    box-shadow:0 0 10px rgba(0,0,0,.4);
+    border-radius:18px;
 
+    margin-left:25px;     /* move right */
+
+    box-shadow:0 0 12px rgba(0,0,0,.4);
 }
+
 
 /* Month */
 .calendar-header{
-    text-align:center;
-    font-size:18px;
-    font-weight:bold;
-
-    margin-bottom:15px;
-}
-
-
-/* S M T W T F S */
-.weekdays{
-    display:grid;
-    grid-template-columns:repeat(7,1fr);
 
     text-align:center;
+
+    font-size:16px;
 
     margin-bottom:12px;
-
-    color:#aaa;
 }
 
 
-/* Dates grid */
+/* S M T W ... */
+.weekdays{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#aaa;
+
+    margin-bottom:10px;
+}
+
+
+/* dates */
 #calendarDays{
 
     display:grid;
@@ -989,21 +993,24 @@ body.home-active #homeWidgets {
     grid-template-columns:
     repeat(7,1fr);
 
-    gap:8px;
+    gap:4px;      /* reduce gap */
 
-    text-align:center;
 }
 
 
-/* Each day */
+/* day */
 .day{
 
-    width:28px;
-    height:28px;
+    width:22px;   /* smaller */
+
+    height:22px;
+
+    font-size:12px;
 
     display:flex;
 
     justify-content:center;
+
     align-items:center;
 
     border-radius:50%;
@@ -1021,14 +1028,12 @@ body.home-active #homeWidgets {
 }
 
 
-/* solved day */
+/* solved */
 .day.done{
 
     background:#0a84ff;
 
     color:white;
-
-    font-weight:bold;
 
 }
 /* Animations */
