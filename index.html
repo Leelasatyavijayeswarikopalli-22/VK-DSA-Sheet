@@ -93,14 +93,37 @@ onclick="openHistory()">
         <!-- LOGIN BUTTON -->
         <button id="loginBtn">Login / Sign Up</button>
 
-        <!-- RIGHT PROGRESS -->
-        <div id="progressContainer">
+       <!-- RIGHT PROGRESS -->
+<div id="progressContainer">
 
-            <div class="progress-circle" id="progressText">
-                0/0
-            </div>
+    <!-- Calendar -->
+    <div id="calendarBox">
 
+        <div class="calendar-header">
+            <span id="monthYear"></span>
         </div>
+
+        <div class="weekdays">
+            <span>S</span>
+            <span>M</span>
+            <span>T</span>
+            <span>W</span>
+            <span>T</span>
+            <span>F</span>
+            <span>S</span>
+        </div>
+
+        <div id="calendarDays"></div>
+
+    </div>
+
+
+    <!-- Progress Circle -->
+    <div class="progress-circle" id="progressText">
+        0/0
+    </div>
+
+</div>
 
         <!-- LOGIN MODAL -->
         <div id="loginModal" class="modal">
