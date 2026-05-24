@@ -588,3 +588,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 });
+function openHistory() {
+    document.getElementById("historyPopup").style.display = "flex";
+}
+
+function closeHistory() {
+    document.getElementById("historyPopup").style.display = "none";
+}
