@@ -942,6 +942,30 @@ body.home-active #homeWidgets {
 .section:first-of-type{
     margin-top: 30px;
 }
+#calendarContainer{
+
+    width:220px;        /* smaller */
+    padding:18px;
+
+    border-radius:20px;
+
+    background:#1b263b;
+
+    margin-bottom:30px;
+
+    overflow:hidden;    /* IMPORTANT */
+}
+
+#calendarContainer{
+
+position:fixed;
+
+top:150px;      /* move up/down */
+right:25px;     /* move more right */
+
+z-index:1000;
+
+}
 #calendarBox{
     width:170px;          /* smaller */
     padding:15px;
@@ -988,12 +1012,16 @@ body.home-active #homeWidgets {
 /* dates */
 #calendarDays{
 
-    display:grid;
+   display:grid;
 
-    grid-template-columns:
-    repeat(7,1fr);
+grid-template-columns:
+repeat(7,1fr);
 
-    gap:4px;      /* reduce gap */
+gap:10px;
+
+justify-items:center;
+
+margin-top:15px;
 
 }
 
@@ -1001,21 +1029,20 @@ body.home-active #homeWidgets {
 /* day */
 .day{
 
-    width:22px;   /* smaller */
+  width:28px;
+height:28px;
 
-    height:22px;
+display:flex;
 
-    font-size:12px;
+align-items:center;
+justify-content:center;
 
-    display:flex;
+border-radius:50%;
 
-    justify-content:center;
+position:relative;
 
-    align-items:center;
+font-size:18px;
 
-    border-radius:50%;
-
-    margin:auto;
 
 }
 
@@ -1047,19 +1074,29 @@ body.home-active #homeWidgets {
 
     border-radius:50%;
 }
+/* TODAY */
+.today{
 
+background:#2ecc71;
+color:white;
+
+}
+
+
+/* TICK */
 .tick{
 
 position:absolute;
 
-bottom:-2px;
-right:-2px;
+bottom:-5px;
+right:-4px;
 
-font-size:12px;
+font-size:11px;
 
 color:#00ff9c;
 
 font-weight:bold;
+
 }
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
