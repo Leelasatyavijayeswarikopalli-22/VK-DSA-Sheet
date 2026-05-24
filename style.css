@@ -710,8 +710,10 @@ body.home-active #homeWidgets {
     flex-direction: column;
     align-items: center;        /* center everything */
 }
-.section {
-    margin-right: 120px;  /* 🔥 prevents overlap without shifting whole layout */
+.main{
+    margin-left:240px;
+    padding:20px;
+    width:calc(100% - 340px);
 }
 .progress-circle {
     width: 150px;
@@ -772,17 +774,6 @@ body.home-active #homeWidgets {
     height: 40px;
     object-fit: contain;
 }
-.history-btn{
-    padding:10px 18px;
-    border:none;
-    border-radius:10px;
-    background:#ffb400;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
-    margin-right:15px;
-}
-
 .history-popup{
     position:fixed;
     top:0;
@@ -796,15 +787,20 @@ body.home-active #homeWidgets {
     justify-content:center;
     align-items:center;
 
-    z-index:9999;
+    z-index:99999;
 }
 
 .history-box{
     width:70%;
+    max-height:80vh;
+    overflow-y:auto;
+
     background:#111827;
     color:white;
     padding:25px;
     border-radius:20px;
+
+    box-shadow:0 0 25px rgba(0,0,0,0.5);
 }
 
 .history-header{
@@ -812,6 +808,15 @@ body.home-active #homeWidgets {
     justify-content:space-between;
     align-items:center;
     margin-bottom:20px;
+}
+
+.history-header button{
+    background:red;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
 }
 
 .history-box table{
@@ -823,6 +828,7 @@ body.home-active #homeWidgets {
 .history-box td{
     padding:15px;
     border-bottom:1px solid #333;
+    text-align:center;
 }
 @media screen and (max-width: 600px) {
     #loginBtn {
@@ -830,7 +836,12 @@ body.home-active #homeWidgets {
         font-size: 12px;
     }
 }
-
+#progressContainer{
+    position:fixed;
+    right:25px;
+    top:120px;
+    width:180px;
+}
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
 @keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
