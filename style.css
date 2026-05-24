@@ -838,7 +838,7 @@ body.home-active #homeWidgets {
     position: fixed;
 
     top: 80px;       /* below login button */
-    right: 80px;     /* same alignment as login */
+    right: 60px;     /* same alignment as login */
 
     padding: 10px 18px;
     font-size: 14px;
