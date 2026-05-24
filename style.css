@@ -94,8 +94,10 @@ overflow-y: auto;
 
 
 /* Tabs */
-.tabs {
-    margin-top: 10px;
+.tabs{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;   /* increase/decrease gap */
 }
 
 .tab {
