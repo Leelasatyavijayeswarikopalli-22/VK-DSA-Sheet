@@ -71,9 +71,16 @@ border-right: 1px solid rgba(255,255,255,0.08);
 /* Main */
 .main {
 margin-left: 250px;
-padding: 18px 30px;
-padding-right: 230px;
-max-width: 1200px;
+padding: 20px 35px;
+padding-right: 260px;
+width: calc(100% - 250px);
+box-sizing: border-box;
+}
+.sidebar {
+top: 0;
+left: 0;
+box-sizing: border-box;
+overflow-y: auto;
 }
 /* ADD THIS 👇 (important fix) */
 @media screen and (min-width: 768px) {
