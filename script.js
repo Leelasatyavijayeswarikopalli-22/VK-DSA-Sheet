@@ -459,6 +459,36 @@ async function loadProblems() {
                 `;
 
                 container.appendChild(div);
+                const savedData =
+    JSON.parse(localStorage.getItem('checkboxes')) || {};
+
+const sectionName =
+    sec.querySelector('.section-header span').innerText;
+
+const problemIndex =
+    Array.from(sec.querySelectorAll('.problem')).indexOf(div);
+
+const doneKey =
+    `${sectionName}-${problemIndex}-done`;
+
+const revisionKey =
+    `${sectionName}-${problemIndex}-revision`;
+
+const doneCheckbox =
+    div.querySelector('.done input[type="checkbox"]');
+
+const revisionCheckbox =
+    div.querySelector('.revision input[type="checkbox"]');
+
+if(doneCheckbox){
+    doneCheckbox.checked =
+        savedData[doneKey] || false;
+}
+
+if(revisionCheckbox){
+    revisionCheckbox.checked =
+        savedData[revisionKey] || false;
+}
 
                 const checkboxes =
                     div.querySelectorAll('input[type="checkbox"]');
