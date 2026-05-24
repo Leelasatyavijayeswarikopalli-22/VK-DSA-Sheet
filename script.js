@@ -590,7 +590,12 @@ function loadHistory() {
         `;
     });
 }
+function closeHistory() {
 
+    document.getElementById("historyPopup").style.display = "none";
+
+    clearInterval(historyInterval);
+}
 function toggleSection(section, event) {
 
     if(event.target.tagName === "INPUT" ||
