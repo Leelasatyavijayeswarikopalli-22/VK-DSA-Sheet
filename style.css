@@ -460,7 +460,7 @@ body.home-active #homeWidgets {
 #loginBtn {
     position: fixed;
     top: 20px;
-    right: 80px;
+    right: 40px;
     padding: 12px 20px;
     font-size: 16px;
     border: none;
