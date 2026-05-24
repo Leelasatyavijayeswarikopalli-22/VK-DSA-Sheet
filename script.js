@@ -529,43 +529,69 @@ function markDone(checkbox, problemName, difficulty) {
     item => item.name !== problemName
 );
 
-if (checkbox.checked) {
+const now = new Date();
 
-    const now = new Date();
+let date =
+`${now.getFullYear()}-${
+now.getMonth()+1}-${
+now.getDate()}`;
+
+let savedDates =
+JSON.parse(
+localStorage.getItem("doneDates")
+) || [];
+
+
+if(checkbox.checked){
 
     const problemData = {
+
         name: problemName,
         difficulty: difficulty,
         time: now.getTime()
+
     };
 
     history.unshift(problemData);
 
 
-    // SAVE DATE FOR CALENDAR
-    let date =
-    `${now.getFullYear()}-${
-    now.getMonth()+1}-${
-    now.getDate()}`;
-
-    let savedDates =
-    JSON.parse(
-    localStorage.getItem("doneDates")
-    ) || [];
-
     if(!savedDates.includes(date)){
 
         savedDates.push(date);
 
-        localStorage.setItem(
-        "doneDates",
-
-        JSON.stringify(savedDates)
-        );
     }
 
-    loadCalendar();
 }
+else{
+
+    // CHECK IF ANY DONE CHECKBOX STILL EXISTS TODAY
+
+    let anyChecked =
+    document.querySelector(
+'.done input[type="checkbox"]:checked'
+);
+
+    if(!anyChecked){
+
+        savedDates =
+        savedDates.filter(
+        d => d !== date
+        );
+
+    }
+
+}
+
+
+localStorage.setItem(
+
+"doneDates",
+
+JSON.stringify(savedDates)
+
+);
+
+loadCalendar();
     localStorage.setItem(
         "practiceHistory",
         JSON.stringify(history)
