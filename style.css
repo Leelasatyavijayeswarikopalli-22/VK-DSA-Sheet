@@ -942,6 +942,59 @@ body.home-active #homeWidgets {
 .section:first-of-type{
     margin-top: 30px;
 }
+#calendarBox{
+    position: fixed;
+    top:150px;
+    right:40px;
+
+    width:220px;
+    padding:20px;
+
+    background:#1b263b;
+    border-radius:20px;
+
+    color:white;
+
+    z-index:1000;
+}
+
+.calendar-header{
+    text-align:center;
+    font-size:20px;
+    margin-bottom:15px;
+}
+
+.calendar-days,
+#calendarDates{
+
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+
+    gap:10px;
+    text-align:center;
+}
+
+#calendarDates div{
+    width:28px;
+    height:28px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+}
+
+/* ticked day */
+.completed{
+    background:#0a84ff;
+    color:white;
+}
+
+/* today */
+.today{
+    background:#00cc66;
+}
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
 @keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
