@@ -66,9 +66,21 @@ loginForm.addEventListener('submit', async e => {
     }
 // Toggle section
 function toggleSection(section, event) {
-    if(event.target.tagName === 'INPUT') return; // ignore clicks on checkboxes
+
+    if (
+        event.target.tagName === 'INPUT' ||
+        event.target.tagName === 'A' ||
+        event.target.tagName === 'IMG'
+    ) {
+        return;
+    }
+
     const content = section.querySelector('.content');
-    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+
+    content.style.display =
+        content.style.display === 'block'
+        ? 'none'
+        : 'block';
 }
 // Tab switching
 
@@ -155,7 +167,10 @@ document.querySelectorAll('.done input[type="checkbox"], .revision input[type="c
     chk.addEventListener('change', () => {
         const sectionName = chk.closest('.section').querySelector('.section-header span').innerText;
         const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
-        const type = chk.closest('.done') ? 'done' : 'revision';
+        const type =
+    chk.closest('.done') !== null
+    ? 'done'
+    : 'revision';
 
         let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
         data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
@@ -378,6 +393,7 @@ function loadNotesLinksBooks() {
         div.classList.add('card');
         div.innerHTML = n;
         notesContainer.appendChild(div);
+        
     });
 
     links.forEach(l => {
@@ -419,6 +435,8 @@ onchange="markDone(this,'${p.title}','Medium')">
                         <label class="revision"><input type="checkbox"></label>
                     `;
                     container.appendChild(div);
+                    updateProgress(sec);
+updateGlobalProgress();
                     const checkboxes = div.querySelectorAll('input[type="checkbox"]');
 
 checkboxes.forEach(chk => {
@@ -474,6 +492,11 @@ const activeTab = active.textContent.replace(/\s/g,'');
 
 function markDone(checkbox, problemName, difficulty) {
 
+    const section = checkbox.closest('.section');
+
+    updateProgress(section);
+    updateGlobalProgress();
+
     if (checkbox.checked) {
 
         let history =
@@ -491,12 +514,10 @@ function markDone(checkbox, problemName, difficulty) {
             "practiceHistory",
             JSON.stringify(history)
         );
-
     }
 
     loadHistory();
 }
-
 function openHistory() {
 
     document.getElementById("historyPopup").style.display = "flex";
@@ -543,6 +564,8 @@ function loadHistory() {
     let tableBody =
         document.getElementById("historyTableBody");
 
+    if (!tableBody) return;
+
     tableBody.innerHTML = "";
 
     history.forEach(item => {
@@ -557,37 +580,6 @@ function loadHistory() {
         `;
     });
 }
-document.addEventListener('DOMContentLoaded', () => {
-
-    loadCheckboxesAndProgress();
-
-    loadNotesLinksBooks();
-
-    loadProblems();
-
-    updateGlobalProgress();
-
-    document.querySelectorAll('.section').forEach(section => {
-
-        if(section.dataset.category !== 'Arrays'){
-            section.style.display = 'none';
-        }
-
-        section.querySelectorAll(
-            '.done input[type="checkbox"], .revision input[type="checkbox"]'
-        ).forEach(checkbox => {
-
-            checkbox.addEventListener('change', () => {
-                updateProgress(section);
-                updateGlobalProgress();
-            });
-
-        });
-
-        updateProgress(section);
-    });
-
-});
 function openHistory() {
     document.getElementById("historyPopup").style.display = "flex";
 }
