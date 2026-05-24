@@ -1146,41 +1146,41 @@ onchange="markDone(this,'Best Time to Buy and Sell Stock','Medium')"></div>
         </div>
 
     </div>
+    <!-- PRACTICE HISTORY POPUP -->
+<div class="history-popup" id="historyPopup">
 
-    <script src="script.js" defer></script>
-    
+    <div class="history-box">
 
-   <div class="history-box">
+        <div class="history-header">
+            <h2>Practice History</h2>
 
-      <div class="history-header">
-         <h2>Practice History</h2>
+            <button onclick="closeHistory()">X</button>
+        </div>
 
-         <button onclick="closeHistory()">X</button>
-      </div>
+        <table>
 
-    <table>
+            <thead>
+                <tr>
+                    <th>Last Submitted</th>
+                    <th>Problem</th>
+                    <th>Status</th>
+                    <th>Difficulty</th>
+                </tr>
+            </thead>
 
-   <thead>
-      <tr>
-         <th>Last Submitted</th>
-         <th>Problem</th>
-         <th>Status</th>
-         <th>Difficulty</th>
-      </tr>
-   </thead>
+            <tbody id="historyTableBody">
 
-   <tbody id="historyTableBody">
+            </tbody>
 
-   </tbody>
+        </table>
 
-</table>
-
-   </div>
+    </div>
 
 </div>
-    
 
+    <script src="script.js" defer></script>
  
+
 
 </body>
 
