@@ -542,28 +542,19 @@ function markDone(checkbox, problemName, difficulty) {
     let history =
         JSON.parse(localStorage.getItem("practiceHistory")) || [];
 
-  if (checkbox.checked) {
+ history = history.filter(
+    item => item.name !== problemName
+);
 
-    const alreadyExists = history.some(
-        item => item.name === problemName
-    );
+if (checkbox.checked) {
 
-    if(!alreadyExists){
+    const problemData = {
+        name: problemName,
+        difficulty: difficulty,
+        time: new Date().getTime()
+    };
 
-        const problemData = {
-            name: problemName,
-            difficulty: difficulty,
-            time: new Date().getTime()
-        };
-
-        history.unshift(problemData);
-    }
-
-} else {
-
-    history = history.filter(
-        item => item.name !== problemName
-    );
+    history.unshift(problemData);
 }
     localStorage.setItem(
         "practiceHistory",
