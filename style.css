@@ -72,8 +72,7 @@ body::before {
 .main {
     margin-left: 240px;
     padding: 20px;
-    padding-right: 160px;  /* ✅ leaves space for right icons */
-    width: calc(100% - 420px);
+    padding-right: 140px;  /* ✅ leaves space for right icons */
 }
 
 /* ADD THIS 👇 (important fix) */
@@ -103,13 +102,8 @@ body::before {
 
 /* Section */
 .section {
-    margin-top: 15px;
-    background: linear-gradient(90deg,#111c33,#0d1627);
-    border-radius: 10px;
-    padding: 15px;
-    cursor: pointer;
+    margin-right: 120px;  /* 🔥 prevents overlap without shifting whole layout */
 }
-
 .section-header {
     display: flex;
     justify-content: space-between;
