@@ -595,3 +595,20 @@ function openHistory() {
 function closeHistory() {
     document.getElementById("historyPopup").style.display = "none";
 }
+function toggleSection(section, event) {
+
+    if(event.target.tagName === "INPUT" ||
+       event.target.tagName === "A" ||
+       event.target.tagName === "IMG") {
+        return;
+    }
+
+    const content = section.querySelector(".content");
+
+    if(content.style.display === "block"){
+        content.style.display = "none";
+    }
+    else{
+        content.style.display = "block";
+    }
+}
