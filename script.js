@@ -531,13 +531,40 @@ function markDone(checkbox, problemName, difficulty) {
 
 if (checkbox.checked) {
 
+    const now = new Date();
+
     const problemData = {
         name: problemName,
         difficulty: difficulty,
-        time: new Date().getTime()
+        time: now.getTime()
     };
 
     history.unshift(problemData);
+
+
+    // SAVE DATE FOR CALENDAR
+    let date =
+    `${now.getFullYear()}-${
+    now.getMonth()+1}-${
+    now.getDate()}`;
+
+    let savedDates =
+    JSON.parse(
+    localStorage.getItem("doneDates")
+    ) || [];
+
+    if(!savedDates.includes(date)){
+
+        savedDates.push(date);
+
+        localStorage.setItem(
+        "doneDates",
+
+        JSON.stringify(savedDates)
+        );
+    }
+
+    loadCalendar();
 }
     localStorage.setItem(
         "practiceHistory",
@@ -754,14 +781,14 @@ function loadCalendar() {
         `${year}-${month+1}-${day}`;
 
 
-        if(saved.includes(dateString)){
+       if(saved.includes(dateString)){
 
-            div.classList.add("done");
+    div.classList.add("done");
 
-            div.innerHTML =
-            "✓";
+    div.innerHTML =
+    `${day}<span class="tick">✓</span>`;
 
-        }
+}
 
 
         calendarDays.appendChild(div);
@@ -777,54 +804,3 @@ loadCalendar();
 
 /* SAVE DATE WHEN DONE CHECKBOX CLICKED */
 
-document
-.querySelectorAll(
-'.done input[type="checkbox"]'
-)
-.forEach(box=>{
-
-box.addEventListener(
-'change',
-
-function(){
-
-if(this.checked){
-
-let now =
-new Date();
-
-let date =
-`${now.getFullYear()}-${
-now.getMonth()+1
-}-${
-now.getDate()
-}`;
-
-
-let saved =
-JSON.parse(
-localStorage.getItem(
-"doneDates"
-)
-) || [];
-
-
-if(!saved.includes(date)){
-
-saved.push(date);
-
-localStorage.setItem(
-"doneDates",
-
-JSON.stringify(saved)
-);
-
-}
-
-loadCalendar();
-
-}
-
-});
-
-});
