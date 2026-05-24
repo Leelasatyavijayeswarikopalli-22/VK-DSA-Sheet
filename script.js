@@ -188,7 +188,9 @@ function loadCheckboxesAndProgress() {
             ['done','revision'].forEach(type => {
                 const key = `${section.querySelector('.section-header span').innerText}-${idx}-${type}`;
                 const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
-                if(data[key] && checkbox) checkbox.checked = true;
+                if(checkbox){
+    checkbox.checked = data[key] || false;
+}
             });
         });
 
@@ -412,59 +414,99 @@ function loadNotesLinksBooks() {
     });
 }
 // CALL load on DOMContentLoaded
+async function loadProblems() {
 
-function loadProblems() {
-    fetch("/problems")
-    .then(res => res.json())
-    .then(data => {
-        document.querySelectorAll(".dynamic-problem").forEach(el => el.remove());
-        data.forEach(p => {
-            const sections = document.querySelectorAll(`.section[data-category="${p.category}"]`);
-            sections.forEach(sec => {
-                const header = sec.querySelector(".section-header span").innerText;
-                if (header === p.section) {
-                    const container = sec.querySelector(".content");
-                    const div = document.createElement("div");
-                    div.className = "problem dynamic-problem";
-                    div.innerHTML = `
-                        <span>${p.title}</span>
-                        <a href="${p.link}" target="_blank">Solve</a>
-                        <label class="done">
-<input type="checkbox"
-onchange="markDone(this,'${p.title}','Medium')">
-</label>
-                        <label class="revision"><input type="checkbox"></label>
-                    `;
-                    container.appendChild(div);
-                    updateProgress(sec);
-updateGlobalProgress();
-                    const checkboxes = div.querySelectorAll('input[type="checkbox"]');
+    const res = await fetch("/problems");
 
-checkboxes.forEach(chk => {
-    chk.addEventListener('change', () => {
-        updateProgress(sec);
-        updateGlobalProgress();
-    });
-});
-                }
-            });
+    const data = await res.json();
+
+    document.querySelectorAll(".dynamic-problem").forEach(el => el.remove());
+
+    data.forEach(p => {
+
+        const sections = document.querySelectorAll(
+            `.section[data-category="${p.category}"]`
+        );
+
+        sections.forEach(sec => {
+
+            const header =
+                sec.querySelector(".section-header span").innerText;
+
+            if (header === p.section) {
+
+                const container = sec.querySelector(".content");
+
+                const div = document.createElement("div");
+
+                div.className = "problem dynamic-problem";
+
+                div.innerHTML = `
+                    <span>${p.title}</span>
+
+                    <a href="${p.link}" target="_blank">
+                        Solve
+                    </a>
+
+                    <label class="done">
+                        <input type="checkbox"
+                        onchange="markDone(this,'${p.title}','Medium')">
+                    </label>
+
+                    <label class="revision">
+                        <input type="checkbox">
+                    </label>
+                `;
+
+                container.appendChild(div);
+
+                const checkboxes =
+                    div.querySelectorAll('input[type="checkbox"]');
+
+                checkboxes.forEach(chk => {
+
+                    chk.addEventListener('change', () => {
+
+                        const sectionName =
+                            sec.querySelector('.section-header span').innerText;
+
+                        const problemIndex =
+                            Array.from(
+                                sec.querySelectorAll('.problem')
+                            ).indexOf(div);
+
+                        const type =
+                            chk.closest('.done') !== null
+                            ? 'done'
+                            : 'revision';
+
+                        let saved =
+                            JSON.parse(
+                                localStorage.getItem('checkboxes')
+                            ) || {};
+
+                        saved[
+                            `${sectionName}-${problemIndex}-${type}`
+                        ] = chk.checked;
+
+                        localStorage.setItem(
+                            'checkboxes',
+                            JSON.stringify(saved)
+                        );
+
+                        updateProgress(sec);
+
+                        updateGlobalProgress();
+                    });
+                });
+
+                updateProgress(sec);
+
+                updateGlobalProgress();
+            }
         });
     });
 }
-
-// Modal login button
-const adminBtn = document.getElementById("adminLoginBtn");
-
-if(adminBtn){
-    adminBtn.addEventListener("click", () => {
-        const username = document.getElementById("adminUsername").value;
-        const password = document.getElementById("adminPassword").value;
-
-        adminLogin(username, password);
-    });
-}
-
-
 // ... rest of your existing checkbox and progress code remains unchanged
 function updateGlobalProgress() {
    const active = document.querySelector('.tab.active');
@@ -500,7 +542,13 @@ function markDone(checkbox, problemName, difficulty) {
     let history =
         JSON.parse(localStorage.getItem("practiceHistory")) || [];
 
-    if (checkbox.checked) {
+  if (checkbox.checked) {
+
+    const alreadyExists = history.some(
+        item => item.name === problemName
+    );
+
+    if(!alreadyExists){
 
         const problemData = {
             name: problemName,
@@ -509,14 +557,14 @@ function markDone(checkbox, problemName, difficulty) {
         };
 
         history.unshift(problemData);
-
-    } else {
-
-        history = history.filter(
-            item => item.name !== problemName
-        );
     }
 
+} else {
+
+    history = history.filter(
+        item => item.name !== problemName
+    );
+}
     localStorage.setItem(
         "practiceHistory",
         JSON.stringify(history)
@@ -621,3 +669,16 @@ function toggleSection(section, event) {
         content.style.display = "block";
     }
 }
+document.addEventListener("DOMContentLoaded", async () => {
+
+    loadNotesLinksBooks();
+
+    await loadProblems();
+
+    loadCheckboxesAndProgress();
+
+    loadHistory();
+
+    updateGlobalProgress();
+
+});
