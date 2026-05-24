@@ -590,13 +590,7 @@ function loadHistory() {
         `;
     });
 }
-function openHistory() {
-    document.getElementById("historyPopup").style.display = "flex";
-}
 
-function closeHistory() {
-    document.getElementById("historyPopup").style.display = "none";
-}
 function toggleSection(section, event) {
 
     if(event.target.tagName === "INPUT" ||
