@@ -1130,20 +1130,15 @@ margin-top:15px;
 
 /* STATS CARD */
 .stats-card{
+    width: 420px;      /* smaller width */
+    padding: 20px;     /* less inside space */
 
-    width:420px;
+    border-radius: 24px;
 
-    background: rgba(255,255,255,0.05);
-
-    border:1px solid rgba(255,255,255,0.08);
-
-    border-radius:22px;
-
-    padding:22px;
-
+    background: rgba(255,255,255,0.06);
     backdrop-filter: blur(10px);
 
-    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
 }
 
 /* top row */
