@@ -536,7 +536,7 @@ function updateGlobalProgress() {
     });
 
     // total solved
-    document.querySelector(".solved-count").innerText = done;
+    document.getElementById("totalSolved").innerText = done;
 
     // circle progress
     document.getElementById("progressText")
@@ -598,18 +598,17 @@ if(checkbox.checked){
 }
 else{
 
-    // CHECK IF ANY DONE CHECKBOX STILL EXISTS TODAY
+    // REMOVE DATE ONLY IF NO CHECKBOX IS CHECKED
 
-    let anyChecked =
-    document.querySelector(
-'.done input[type="checkbox"]:checked'
-);
+    const todayChecked = [...document.querySelectorAll(
+        '.done input[type="checkbox"]:checked'
+    )].length;
 
-    if(!anyChecked){
+    if(todayChecked === 0){
 
         savedDates =
         savedDates.filter(
-        d => d !== date
+            d => d !== date
         );
 
     }
@@ -626,15 +625,16 @@ JSON.stringify(savedDates)
 );
 
 loadCalendar();
-    localStorage.setItem(
-        "practiceHistory",
-        JSON.stringify(history)
-    );
 
-    loadHistory();
+localStorage.setItem(
+    "practiceHistory",
+    JSON.stringify(history)
+);
+
+loadHistory();
 }
-let historyInterval;
 
+let historyInterval;
 function openHistory() {
 
     document.getElementById("historyPopup").style.display = "flex";
