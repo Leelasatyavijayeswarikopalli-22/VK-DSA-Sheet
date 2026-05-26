@@ -492,28 +492,42 @@ async function loadProblems() {
 }
 // ... rest of your existing checkbox and progress code remains unchanged
 function updateGlobalProgress() {
-   const active = document.querySelector('.tab.active');
 
-if(!active) return;
-
-const activeTab = active.textContent.replace(/\s/g,'');
-
-    const sections = document.querySelectorAll(`.section[data-category="${activeTab}"]`);
+    // take ALL sections
+    const sections = document.querySelectorAll('.section');
 
     let total = 0;
     let done = 0;
 
     sections.forEach(section => {
+
         const problems = section.querySelectorAll('.problem');
+
         total += problems.length;
 
         problems.forEach(p => {
-            const doneCheckbox = p.querySelector('.done input[type="checkbox"]');
-            if (doneCheckbox.checked) done++;
+
+            const doneCheckbox =
+                p.querySelector('.done input[type="checkbox"]');
+
+            if(doneCheckbox && doneCheckbox.checked){
+                done++;
+            }
+
         });
+
     });
 
-    document.getElementById("progressText").innerText = `${done}/${total}`;
+    // circle progress
+    document.getElementById("progressText").innerText =
+        `${done}/${total}`;
+
+    // top solved count
+    const solvedEl = document.querySelector(".solved-count");
+
+    if(solvedEl){
+        solvedEl.innerText = done;
+    }
 }
 function markDone(checkbox, problemName, difficulty) {
 
