@@ -184,8 +184,13 @@ function loadCheckboxesAndProgress() {
                 const key = `${category}-${sectionName}-${title}-${type}`;
                 const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
                 if (checkbox) {
-                    checkbox.checked = data[key] || false;
-                }
+
+    checkbox.checked = data[key] || false;
+
+    if(type === "done" && checkbox.checked){
+        markDone(checkbox, title, "Medium");
+    }
+}
             });
         });
 
@@ -731,12 +736,21 @@ function toggleSection(section, event) {
     }
 }
 document.addEventListener("DOMContentLoaded", async () => {
+
     loadNotesLinksBooks();
-    await loadProblems();           // tries backend, skips if fails
-    loadCheckboxesAndProgress();    // loads saved ticks
-    attachStaticCheckboxListeners(); // ✅ NEW: attach save listeners to HTML problems
+
+    await loadProblems();
+
+    attachStaticCheckboxListeners();
+
+    loadCheckboxesAndProgress();
+
     loadHistory();
+
+    loadCalendar();
+
     updateGlobalProgress();
+
 });
 function attachStaticCheckboxListeners() {
     document.querySelectorAll('.section').forEach(section => {
