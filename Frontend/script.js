@@ -134,17 +134,49 @@ function uploadFile() {
     input.value = ""; // reset input
 }
 // Save checkbox state
-document.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach((chk, idx) => {
-    chk.addEventListener('change', () => {
-        const sectionName = chk.closest('.section').querySelector('.section-header span').innerText;
-        const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
-        const type = chk.closest('.done') ? 'done' : 'revision';
+document.querySelectorAll(
+'.done input[type="checkbox"], .revision input[type="checkbox"]'
+).forEach(chk => {
 
-        // Get existing storage
-        let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
-        data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
-        localStorage.setItem('checkboxes', JSON.stringify(data));
+    chk.addEventListener('change', () => {
+
+        const sectionName =
+        chk.closest('.section')
+        .querySelector('.section-header span')
+        .innerText;
+
+        const problemIndex =
+        Array.from(
+            chk.closest('.content')
+            .querySelectorAll('.problem')
+        ).indexOf(chk.closest('.problem'));
+
+        const type =
+        chk.closest('.done')
+        ? 'done'
+        : 'revision';
+
+        let data =
+        JSON.parse(
+            localStorage.getItem('checkboxes')
+        ) || {};
+
+        data[
+            `${sectionName}-${problemIndex}-${type}`
+        ] = chk.checked;
+
+        localStorage.setItem(
+            'checkboxes',
+            JSON.stringify(data)
+        );
+
+        updateProgress(
+            chk.closest('.section')
+        );
+
+        updateGlobalProgress();
     });
+
 });
 // Default load
 document.addEventListener('DOMContentLoaded', () => {
@@ -169,11 +201,27 @@ function loadCheckboxesAndProgress() {
     const data = JSON.parse(localStorage.getItem('checkboxes')) || {};
     document.querySelectorAll('.section').forEach(section => {
         section.querySelectorAll('.problem').forEach((prob, idx) => {
-            ['done','revision'].forEach(type => {
-                const key = `${section.querySelector('.section-header span').innerText}-${idx}-${type}`;
-                const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
-                if(data[key] && checkbox) checkbox.checked = true;
-            });
+           ['done','revision'].forEach(type => {
+
+const key =
+`${section.querySelector(
+'.section-header span'
+).innerText}-${idx}-${type}`;
+
+const checkbox =
+prob.querySelector(
+`.${type}
+input[type="checkbox"]`
+);
+
+if(checkbox){
+
+checkbox.checked =
+data[key] || false;
+
+}
+
+});
         });
 
         // ✅ UPDATE BARS AFTER RESTORING CHECKBOXES
@@ -190,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Call on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', loadCheckboxes);
+document.addEventListener('DOMContentLoaded', loadCheckboxesAndProgress);
 // OPEN LINKS PAGE
 function openLinks() {
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
@@ -345,18 +393,7 @@ function updateProgress(section) {
     headerCount.textContent = `${doneCount}/${total}`;
 }
 // Save checkbox state
-document.querySelectorAll('.done input[type="checkbox"], .revision input[type="checkbox"]').forEach((chk, idx) => {
-    chk.addEventListener('change', () => {
-        const sectionName = chk.closest('.section').querySelector('.section-header span').innerText;
-        const problemIndex = Array.from(chk.closest('.content').querySelectorAll('.problem')).indexOf(chk.closest('.problem'));
-        const type = chk.closest('.done') ? 'done' : 'revision';
 
-        // Get existing storage
-        let data = JSON.parse(localStorage.getItem('checkboxes')) || {};
-        data[`${sectionName}-${problemIndex}-${type}`] = chk.checked;
-        localStorage.setItem('checkboxes', JSON.stringify(data));
-    });
-});
 function saveNotes() {
     const notes = [];
     document.querySelectorAll('#notesContainer .note-card').forEach(n => {
@@ -396,32 +433,46 @@ function loadNotesLinksBooks() {
 }
 
 // CALL load on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', loadNotesLinksBooks);
 function loadProblems() {
     fetch("/problems")
     .then(res => res.json())
     .then(data => {
         data.forEach(p => {
-            const sections = document.querySelectorAll(`.section[data-category="${p.category}"]`);
+            const sections =
+            document.querySelectorAll(
+            `.section[data-category="${p.category}"]`
+            );
+
             sections.forEach(sec => {
-                const header = sec.querySelector(".section-header span").innerText;
-                if (header === p.section) {
-                    const container = sec.querySelector(".content");
-                    const div = document.createElement("div");
+
+                const header =
+                sec.querySelector(
+                ".section-header span"
+                ).innerText;
+
+                if(header === p.section){
+
+                    const container =
+                    sec.querySelector(".content");
+
+                    const div =
+                    document.createElement("div");
+
                     div.className = "problem";
+
                     div.innerHTML = `
-                        <span>${p.title}</span>
-                        <a href="${p.link}" target="_blank">Solve</a>
-                        <label class="done"><input type="checkbox"></label>
-                        <label class="revision"><input type="checkbox"></label>
+                    ...
                     `;
+
                     container.appendChild(div);
                 }
+
             });
+
         });
+
     });
 }
-
 // Modal login button
 document.getElementById("adminLoginBtn").addEventListener("click", () => {
     const username = document.getElementById("adminUsername").value;
@@ -451,4 +502,28 @@ function updateGlobalProgress() {
     document.getElementById("progressText").innerText = `${done}/${total}`;
 }
 toggleAddButton();
-loadProblems();
+
+document.addEventListener(
+    'DOMContentLoaded',
+    loadProblems
+);
+
+document.addEventListener(
+'DOMContentLoaded',
+() => {
+
+loadCheckboxesAndProgress();
+
+setTimeout(() => {
+
+updateGlobalProgress();
+
+document.querySelectorAll(
+'.section'
+).forEach(
+updateProgress
+);
+
+},100);
+
+});
