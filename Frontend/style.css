@@ -43,14 +43,26 @@ body::before {
     transform:translate(-50%,-50%);
 }
 /* Sidebar */
-.sidebar {
+.sidebar{
+    position: fixed;      /* IMPORTANT */
+    top: 0;
+    left: 0;
     width: 220px;
     height: 100vh;
-    background: #0f1b2d;
-    position: fixed;
-    padding: 20px;
-}
 
+    padding: 28px 20px;
+    background: rgba(10,20,40,0.85);
+    backdrop-filter: blur(12px);
+
+    border-right:1px solid rgba(255,255,255,0.08);
+    overflow-y:auto;
+    box-sizing:border-box;
+}
+.sidebar-icons{
+    margin-top:40px;   /* increase this */
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
 .logo {
     font-size: 24px;
     font-weight: bold;
@@ -69,46 +81,59 @@ body::before {
 }
 
 /* Main */
-.main {
-    margin-left: 240px;
-    padding: 20px;
-    padding-right: 140px;  /* 🔥 THIS fixes merging */
-}
+.main{
+    margin-left:240px;   /* sidebar width + gap */
+    padding:20px 35px;
 
-/* ADD THIS 👇 (important fix) */
-@media screen and (min-width: 768px) {
-    .main {
-        margin-left: 260px; /* adds visible gap from sidebar */
-    }
+    padding-right:240px; /* space for right progress */
+    width:auto;          /* remove calc */
+    box-sizing:border-box;
 }
+.sidebar {
+top: 0;
+left: 0;
+box-sizing: border-box;
+overflow-y: auto;
+}
+/* ADD THIS 👇 (important fix) */
+
 
 /* Tabs */
-.tabs {
-    margin-top: 10px;
+.tabs{
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;   /* increase/decrease gap */
 }
 
 .tab {
     display: inline-block;
-    padding: 10px 15px;
+    padding: 12px 22px;
+background: rgba(255,255,255,0.03);
+transition: 0.25s;
     border: 1px solid #2a3a5a;
     border-radius: 8px;
     margin-right: 10px;
     cursor: pointer;
 }
-
+.tab:hover {
+background: rgba(255,255,255,0.08);
+transform: translateY(-2px);
+}
 .tab.active {
     background: #1c2a40;
 }
-
+h1 {
+margin-bottom: 16px;
+font-size: 28px;
+}
 /* Section */
 .section {
-    margin-top: 15px;
-    background: linear-gradient(90deg,#111c33,#0d1627);
-    border-radius: 10px;
-    padding: 15px;
-    cursor: pointer;
+background: rgba(8,15,35,0.45);
+padding: 14px 18px;
+margin-bottom: 18px;
+border-radius: 18px;
+box-shadow: 0 4px 18px rgba(0,0,0,0.25);
 }
-
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -116,10 +141,11 @@ body::before {
 }
 
 .progress {
-    height: 6px;
-    background: #2a3a5a;
-    border-radius: 5px;
-    margin-top: 5px;
+height: 8px;
+background: rgba(255,255,255,0.08);
+border-radius: 20px;
+overflow: hidden;
+margin-top: 10px;
 }
 
 .progress-bar {
@@ -213,9 +239,10 @@ body.home-active #homeWidgets {
     display: grid;
     grid-template-columns: 3fr 1fr 1fr 1fr 1fr; /* MUST MATCH */
     align-items: center;
-    padding: 10px 12px;
+    padding: 16px 14px;
     border-bottom: 1px solid #1c2a40;
     font-size: 14px;
+    min-height:60px;
 }
 
 .tuf-badge {
@@ -433,7 +460,7 @@ body.home-active #homeWidgets {
 #loginBtn {
     position: fixed;
     top: 20px;
-    right: 30px;
+    right: 20px;
     padding: 12px 20px;
     font-size: 16px;
     border: none;
@@ -667,7 +694,7 @@ body.home-active #homeWidgets {
 #loginBtn {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 40px;
     padding: 10px 18px;
     font-size: 14px;
     border-radius: 50px;
@@ -700,19 +727,21 @@ body.home-active #homeWidgets {
     transform: scale(1.05);
     transition: 0.3s;
 }
+
+
+/* ✅ RIGHT SIDE COLUMN — CLEAN VERTICAL LAYOUT */
 #progressContainer {
     position: fixed;
-    top: 110px;
-    right: 30px;
+    top: 140px;
+    right: 20px;
     z-index: 1000;
-
+    gap:40px;
     display: flex;              /* 🔥 stack items */
     flex-direction: column;
     align-items: center;        /* center everything */
 }
-.section {
-    margin-right: 120px;  /* 🔥 prevents overlap without shifting whole layout */
-}
+
+/* CIRCLE */
 .progress-circle {
     width: 150px;
     height: 150px;              /* ✅ SAME as width */
@@ -730,6 +759,8 @@ body.home-active #homeWidgets {
 
     box-shadow: 0 0 15px rgba(255,165,0,0.3); /* 🔥 glow */
 }
+
+/* ICONS STACK */
 .platform-icons img {
     width: 34px;
     height: 34px;
@@ -739,12 +770,14 @@ body.home-active #homeWidgets {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 60px;   /* increase from 28px */
+    gap: 28px;   /* increase from 28px */
 }
+
+/* EACH ROW = 2 icons side by side */
 .icon-row {
     display: flex;
     justify-content: center;
-    gap: 100px;
+    gap: 55px;
 }
 
 .platform-icons img:hover {
@@ -772,13 +805,453 @@ body.home-active #homeWidgets {
     height: 40px;
     object-fit: contain;
 }
+.history-popup{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.7);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:99999;
+}
+
+.history-box{
+    width:70%;
+    max-height:80vh;
+    overflow-y:auto;
+
+    background:#111827;
+    color:white;
+    padding:25px;
+    border-radius:20px;
+
+    box-shadow:0 0 25px rgba(0,0,0,0.5);
+}
+/* Practice History button */
+#historyBtn{
+    position: fixed;
+
+    top: 80px;       /* below login button */
+    right: 20px;     /* same alignment as login */
+
+    padding: 10px 18px;
+    font-size: 14px;
+
+    border: none;
+    border-radius: 50px;
+
+    background: linear-gradient(45deg,#ff9a00,#ffd000);
+    color: black;
+
+    font-weight: 600;
+    cursor: pointer;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+
+    z-index: 1001;
+    transition: 0.3s;
+}
+
+#historyBtn:hover{
+    transform: scale(1.05);
+}
+.history-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.history-header button{
+    background:red;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.history-box table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.history-box th,
+.history-box td{
+    padding:15px;
+    border-bottom:1px solid #333;
+    text-align:center;
+}
 @media screen and (max-width: 600px) {
     #loginBtn {
         padding: 8px 14px;
         font-size: 12px;
     }
 }
+/* ✅ CLEAN RIGHT-SIDE COLUMN */
 
+
+/* CIRCLE */
+.progress-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #1c2a40;
+    border: 3px solid orange;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #00ff9c;
+    font-size: 30px;
+    box-shadow: 0 0 15px rgba(255,165,0,0.3);
+}
+
+/* ICON GRID — 2 per row */
+
+.icon-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.icon-box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.icon-box span {
+    font-size: 11px;
+    color: #aaa;
+    font-weight: 600;
+}
+
+.icon-box img:hover {
+    transform: scale(1.15);
+    transition: 0.2s;
+}
+.section:first-of-type{
+    margin-top: 30px;
+}
+
+
+
+
+/* Month */
+.calendar-header{
+
+    text-align:center;
+
+    font-size:16px;
+
+    margin-bottom:12px;
+}
+
+
+/* S M T W ... */
+.weekdays{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#aaa;
+
+    margin-bottom:10px;
+}
+
+
+/* dates */
+#calendarDays{
+
+   display:grid;
+
+grid-template-columns:
+repeat(7,1fr);
+
+gap:10px;
+
+justify-items:center;
+
+margin-top:15px;
+
+}
+
+
+/* day */
+
+/* CALENDAR */
+#calendarContainer{
+    position: fixed;
+
+    top: 50%;
+    right: 25px;
+
+    transform: translateY(-50%);
+
+    width: 180px;
+    padding: 18px;
+
+    background: #1b2238;
+
+    border-radius: 20px;
+
+    z-index: 1000;
+
+    box-shadow: 0 0 15px rgba(0,0,0,.35);
+}
+/* Month text */
+#calendarBox{
+    width:170px;          /* smaller */
+    padding:15px;
+
+    background:#1b2238;
+
+    border-radius:18px;
+
+    margin-left:25px;     /* move right */
+
+    box-shadow:0 0 12px rgba(0,0,0,.4);
+}
+
+
+/* Month */
+.calendar-header{
+
+    text-align:center;
+
+    font-size:16px;
+
+    margin-bottom:12px;
+}
+
+
+/* S M T W ... */
+.weekdays{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    text-align:center;
+
+    font-size:14px;
+
+    color:#aaa;
+
+    margin-bottom:10px;
+}
+
+
+/* dates */
+#calendarDays{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(7,1fr);
+
+    gap:4px;      /* reduce gap */
+
+}
+
+
+/* day */
+.day{
+
+    width:22px;   /* smaller */
+
+    height:22px;
+
+    font-size:12px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    margin:auto;
+
+}
+
+
+/* today */
+.day.today{
+
+    background:#2ecc71;
+
+}
+
+
+/* solved */
+.day.done{
+
+    background:#0a84ff;
+
+    color:white;
+
+}
+/* TOP AREA */
+.top-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    gap:40px;
+
+    margin-bottom:30px;
+}
+
+/* LEFT SIDE */
+.left-top{
+    flex:1;
+}
+
+/* STATS CARD */
+.stats-card{
+
+    width:420px;
+
+    background: rgba(255,255,255,0.05);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:22px;
+
+    padding:22px;
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+}
+
+/* top row */
+.stats-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+}
+
+/* title */
+.stats-card h3{
+
+    margin:0;
+
+    color:#bdbdbd;
+
+    font-size:24px;
+
+    font-weight:600;
+}
+
+/* solved count */
+.solved-count{
+
+    margin-top:10px;
+
+    display:flex;
+
+    align-items:baseline;
+
+    gap:6px;
+}
+
+.solved-count span:first-child{
+
+    font-size:48px;
+
+    font-weight:700;
+
+    color:#0a84ff;
+}
+
+.problems-text{
+
+    font-size:22px;
+
+    color:#0a84ff;
+}
+
+/* beats */
+.beat-text{
+
+    color:#bdbdbd;
+
+    font-size:20px;
+}
+
+/* difficulty boxes */
+.difficulty-boxes{
+
+    display:flex;
+
+    gap:14px;
+}
+
+/* each box */
+.diff{
+
+    flex:1;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 16px;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,0.06);
+
+    font-size:18px;
+
+    font-weight:600;
+}
+
+/* colors */
+.easy-box span{
+    color:#00ff9c;
+}
+
+.medium-box span{
+    color:#ffb300;
+}
+
+.hard-box span{
+    color:#ff4d4d;
+}
+
+.diff strong{
+    color:white;
+}
 /* Animations */
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
 @keyframes slideIn { from {opacity:0; transform: translateY(-50px)} to {opacity:1; transform: translateY(0)} }
