@@ -170,21 +170,28 @@ function uploadFile() {
 // LOAD CHECKBOXES AND UPDATE BARS
 function loadCheckboxesAndProgress() {
     const data = JSON.parse(localStorage.getItem('checkboxes')) || {};
+    
     document.querySelectorAll('.section').forEach(section => {
-        section.querySelectorAll('.problem').forEach((prob, idx) => {
-            ['done','revision'].forEach(type => {
-                const key = `${section.querySelector('.section-header span').innerText}-${idx}-${type}`;
+        const category = section.dataset.category;
+        const sectionName = section.querySelector('.section-header span').innerText;
+
+        section.querySelectorAll('.problem').forEach(prob => {
+            const titleEl = prob.querySelector('span');
+            if (!titleEl) return;
+            const title = titleEl.innerText.trim();
+
+            ['done', 'revision'].forEach(type => {
+                const key = `${category}-${sectionName}-${title}-${type}`;
                 const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
-                if(checkbox){
-    checkbox.checked = data[key] || false;
-}
+                if (checkbox) {
+                    checkbox.checked = data[key] || false;
+                }
             });
         });
 
-        // ✅ UPDATE BARS AFTER RESTORING CHECKBOXES
         updateProgress(section);
-        updateGlobalProgress(); // 🔥 ADD THIS
     });
+    updateGlobalProgress();
 }
 
 // CALL ON DOMContentLoaded
@@ -402,164 +409,86 @@ function loadNotesLinksBooks() {
 }
 // CALL load on DOMContentLoaded
 async function loadProblems() {
+    try {
+        const res = await fetch("/problems");
+        
+        // ✅ Check if response is OK and is JSON
+        if (!res.ok) {
+            console.log("No backend connected — using static problems only");
+            return;
+        }
+        
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            console.log("Backend not returning JSON — skipping");
+            return;
+        }
 
-    const res = await fetch("/problems");
+        const data = await res.json();
 
-    const data = await res.json();
+        document.querySelectorAll(".dynamic-problem").forEach(el => el.remove());
 
-    document
-        .querySelectorAll(".dynamic-problem")
-        .forEach(el => el.remove());
+        data.forEach(p => {
+            const sections = document.querySelectorAll(
+                `.section[data-category="${p.category}"]`
+            );
 
-    data.forEach(p => {
+            sections.forEach(sec => {
+                const header = sec.querySelector(".section-header span").innerText;
+                if (header !== p.section) return;
 
-        const sections = document.querySelectorAll(
-            `.section[data-category="${p.category}"]`
-        );
-
-        sections.forEach(sec => {
-
-            const header =
-                sec.querySelector(".section-header span").innerText;
-
-            if (header === p.section) {
-
-                const container =
-                    sec.querySelector(".content");
-
-                const div =
-                    document.createElement("div");
-
-                div.className =
-                    "problem dynamic-problem";
-
+                const container = sec.querySelector(".content");
+                const div = document.createElement("div");
+                div.className = "problem dynamic-problem";
                 div.innerHTML = `
                     <span>${p.title}</span>
-
-                    <a href="${p.link}" target="_blank">
-                        Solve
-                    </a>
-
-                    <label class="done">
-                        <input type="checkbox">
-                    </label>
-
-                    <label class="revision">
-                        <input type="checkbox">
-                    </label>
+                    <a href="${p.link}" target="_blank">Solve</a>
+                    <label class="done"><input type="checkbox"></label>
+                    <label class="revision"><input type="checkbox"></label>
                 `;
-
                 container.appendChild(div);
 
-                // LOAD SAVED CHECKBOX STATE
+                const doneKey = `${p.category}-${p.section}-${p.title}-done`;
+                const revisionKey = `${p.category}-${p.section}-${p.title}-revision`;
 
-                const savedData =
-                    JSON.parse(
-                        localStorage.getItem("checkboxes")
-                    ) || {};
+                const savedData = JSON.parse(localStorage.getItem("checkboxes")) || {};
 
-                const sectionName =
-                    sec.querySelector(
-                        ".section-header span"
-                    ).innerText;
+                const doneCheckbox = div.querySelector('.done input[type="checkbox"]');
+                const revisionCheckbox = div.querySelector('.revision input[type="checkbox"]');
 
-                const problemIndex =
-                    Array.from(
-                        sec.querySelectorAll(".problem")
-                    ).indexOf(div);
+                if (doneCheckbox) doneCheckbox.checked = savedData[doneKey] || false;
+                if (revisionCheckbox) revisionCheckbox.checked = savedData[revisionKey] || false;
 
-                const doneKey =
-                    `${sectionName}-${problemIndex}-done`;
+                if (doneCheckbox) {
+                    doneCheckbox.addEventListener("change", () => {
+                        let saved = JSON.parse(localStorage.getItem("checkboxes")) || {};
+                        saved[doneKey] = doneCheckbox.checked;
+                        localStorage.setItem("checkboxes", JSON.stringify(saved));
 
-                const revisionKey =
-                    `${sectionName}-${problemIndex}-revision`;
-
-                const doneCheckbox =
-                    div.querySelector(
-                        '.done input[type="checkbox"]'
-                    );
-
-                const revisionCheckbox =
-                    div.querySelector(
-                        '.revision input[type="checkbox"]'
-                    );
-
-                if(doneCheckbox){
-                    doneCheckbox.checked =
-                        savedData[doneKey] || false;
+                        updateProgress(sec);
+                        updateGlobalProgress();
+                        markDone(doneCheckbox, p.title, "Medium");
+                    });
                 }
 
-                if(revisionCheckbox){
-                    revisionCheckbox.checked =
-                        savedData[revisionKey] || false;
+                if (revisionCheckbox) {
+                    revisionCheckbox.addEventListener("change", () => {
+                        let saved = JSON.parse(localStorage.getItem("checkboxes")) || {};
+                        saved[revisionKey] = revisionCheckbox.checked;
+                        localStorage.setItem("checkboxes", JSON.stringify(saved));
+
+                        updateProgress(sec);
+                        updateGlobalProgress();
+                    });
                 }
-
-                // ADD EVENT LISTENERS
-
-                const checkboxes =
-                    div.querySelectorAll(
-                        'input[type="checkbox"]'
-                    );
-
-                checkboxes.forEach(chk => {
-
-                    chk.addEventListener(
-                        "change",
-                        () => {
-
-                            const sectionName =
-                                sec.querySelector(
-                                    ".section-header span"
-                                ).innerText;
-
-                            const problemIndex =
-                                Array.from(
-                                    sec.querySelectorAll(".problem")
-                                ).indexOf(div);
-
-                            const type =
-                                chk.closest(".done")
-                                ? "done"
-                                : "revision";
-
-                            let saved =
-                                JSON.parse(
-                                    localStorage.getItem("checkboxes")
-                                ) || {};
-
-                            saved[
-                                `${sectionName}-${problemIndex}-${type}`
-                            ] = chk.checked;
-
-                            localStorage.setItem(
-                                "checkboxes",
-                                JSON.stringify(saved)
-                            );
-
-                            updateProgress(sec);
-
-                            updateGlobalProgress();
-
-                            // HISTORY
-
-                            if(chk.closest(".done")){
-
-                                markDone(
-                                    chk,
-                                    p.title,
-                                    "Medium"
-                                );
-                            }
-                        }
-                    );
-                });
 
                 updateProgress(sec);
-
                 updateGlobalProgress();
-            }
+            });
         });
-    });
+    } catch (err) {
+        console.log("Error loading problems from backend:", err);
+    }
 }
 // ... rest of your existing checkbox and progress code remains unchanged
 function updateGlobalProgress() {
@@ -600,16 +529,69 @@ function markDone(checkbox, problemName, difficulty) {
     item => item.name !== problemName
 );
 
-if (checkbox.checked) {
+const now = new Date();
+
+let date =
+`${now.getFullYear()}-${
+now.getMonth()+1}-${
+now.getDate()}`;
+
+let savedDates =
+JSON.parse(
+localStorage.getItem("doneDates")
+) || [];
+
+
+if(checkbox.checked){
 
     const problemData = {
+
         name: problemName,
         difficulty: difficulty,
-        time: new Date().getTime()
+        time: now.getTime()
+
     };
 
     history.unshift(problemData);
+
+
+    if(!savedDates.includes(date)){
+
+        savedDates.push(date);
+
+    }
+
 }
+else{
+
+    // CHECK IF ANY DONE CHECKBOX STILL EXISTS TODAY
+
+    let anyChecked =
+    document.querySelector(
+'.done input[type="checkbox"]:checked'
+);
+
+    if(!anyChecked){
+
+        savedDates =
+        savedDates.filter(
+        d => d !== date
+        );
+
+    }
+
+}
+
+
+localStorage.setItem(
+
+"doneDates",
+
+JSON.stringify(savedDates)
+
+);
+
+loadCalendar();
     localStorage.setItem(
         "practiceHistory",
         JSON.stringify(history)
@@ -715,16 +697,136 @@ function toggleSection(section, event) {
     }
 }
 document.addEventListener("DOMContentLoaded", async () => {
-
     loadNotesLinksBooks();
-
-    await loadProblems();
-
-    loadCheckboxesAndProgress();
-
+    await loadProblems();           // tries backend, skips if fails
+    loadCheckboxesAndProgress();    // loads saved ticks
+    attachStaticCheckboxListeners(); // ✅ NEW: attach save listeners to HTML problems
     loadHistory();
-
     updateGlobalProgress();
-
 });
-now ok ?
+function attachStaticCheckboxListeners() {
+    document.querySelectorAll('.section').forEach(section => {
+        const category = section.dataset.category;
+        const sectionName = section.querySelector('.section-header span').innerText;
+
+        section.querySelectorAll('.problem:not(.dynamic-problem)').forEach(prob => {
+            const titleEl = prob.querySelector('span');
+            if (!titleEl) return;
+            const title = titleEl.innerText.trim();
+
+            ['done', 'revision'].forEach(type => {
+                const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
+                if (!checkbox) return;
+
+                const key = `${category}-${sectionName}-${title}-${type}`;
+
+                // Remove old listeners by cloning
+                const newCheckbox = checkbox.cloneNode(true);
+                checkbox.parentNode.replaceChild(newCheckbox, checkbox);
+
+                newCheckbox.addEventListener('change', () => {
+                    let saved = JSON.parse(localStorage.getItem("checkboxes")) || {};
+                    saved[key] = newCheckbox.checked;
+                    localStorage.setItem("checkboxes", JSON.stringify(saved));
+
+                    updateProgress(section);
+                    updateGlobalProgress();
+
+                    if (type === 'done') {
+                        markDone(newCheckbox, title, "Medium");
+                    }
+                });
+            });
+        });
+    });
+}
+function loadCalendar() {
+
+    const monthYear =
+        document.getElementById("monthYear");
+
+    const calendarDays =
+        document.getElementById("calendarDays");
+
+    const now = new Date();
+
+    let year = now.getFullYear();
+    let month = now.getMonth();
+
+    let firstDay =
+        new Date(year, month, 1).getDay();
+
+    let totalDays =
+        new Date(year, month + 1, 0).getDate();
+
+    monthYear.innerText =
+        now.toLocaleString('default',
+        { month:'long', year:'numeric' });
+
+    calendarDays.innerHTML = "";
+
+    let saved =
+        JSON.parse(
+        localStorage.getItem("doneDates")
+        ) || [];
+
+
+    for(let i=0;i<firstDay;i++){
+
+        calendarDays.innerHTML +=
+        "<div></div>";
+
+    }
+
+
+    for(let day=1; day<=totalDays; day++){
+
+        let div =
+        document.createElement("div");
+
+        div.classList.add("day");
+
+        div.innerText = day;
+
+
+        let today =
+        new Date();
+
+        if(
+        day===today.getDate()
+        &&
+        month===today.getMonth()
+        ){
+
+            div.classList.add("today");
+
+        }
+
+
+        let dateString =
+        `${year}-${month+1}-${day}`;
+
+
+       if(saved.includes(dateString)){
+
+    div.classList.add("done");
+
+    div.innerHTML =
+    `${day}<span class="tick">✓</span>`;
+
+}
+
+
+        calendarDays.appendChild(div);
+
+    }
+
+}
+
+
+loadCalendar();
+
+
+
+/* SAVE DATE WHEN DONE CHECKBOX CLICKED */
+
