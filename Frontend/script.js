@@ -145,11 +145,13 @@ document.querySelectorAll(
         .querySelector('.section-header span')
         .innerText;
 
-        const problemIndex =
-        Array.from(
-            chk.closest('.content')
-            .querySelectorAll('.problem')
-        ).indexOf(chk.closest('.problem'));
+        const problemTitle =
+chk.closest('.problem')
+.querySelector('.title')
+?.innerText ||
+chk.closest('.problem')
+.querySelector('span')
+.innerText;
 
         const type =
         chk.closest('.done')
@@ -203,10 +205,18 @@ function loadCheckboxesAndProgress() {
         section.querySelectorAll('.problem').forEach((prob, idx) => {
            ['done','revision'].forEach(type => {
 
+const problemTitle =
+prob.querySelector('.title')
+?.innerText ||
+prob.querySelector('span')
+.innerText;
+
 const key =
 `${section.querySelector(
 '.section-header span'
-).innerText}-${idx}-${type}`;
+).innerText}
+-${problemTitle}
+-${type}`;
 
 const checkbox =
 prob.querySelector(
