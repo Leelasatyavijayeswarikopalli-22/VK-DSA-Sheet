@@ -492,62 +492,28 @@ async function loadProblems() {
 }
 // ... rest of your existing checkbox and progress code remains unchanged
 function updateGlobalProgress() {
+   const active = document.querySelector('.tab.active');
 
-    const sections = document.querySelectorAll('.section');
+if(!active) return;
+
+const activeTab = active.textContent.replace(/\s/g,'');
+
+    const sections = document.querySelectorAll(`.section[data-category="${activeTab}"]`);
 
     let total = 0;
     let done = 0;
 
-    let easy = 0;
-    let medium = 0;
-    let hard = 0;
-
     sections.forEach(section => {
-
         const problems = section.querySelectorAll('.problem');
-
         total += problems.length;
 
         problems.forEach(p => {
-
-            const checkbox =
-                p.querySelector('.done input[type="checkbox"]');
-
-            if(checkbox && checkbox.checked){
-
-                done++;
-
-                const difficulty =
-                    p.dataset.difficulty;
-
-                if(difficulty === "Easy"){
-                    easy++;
-                }
-                else if(difficulty === "Medium"){
-                    medium++;
-                }
-                else if(difficulty === "Hard"){
-                    hard++;
-                }
-            }
-
+            const doneCheckbox = p.querySelector('.done input[type="checkbox"]');
+            if (doneCheckbox.checked) done++;
         });
-
     });
 
-    // total solved
-    document.getElementById("totalSolved").innerText = done;
-
-    // circle progress
-    document.getElementById("progressText")
-        .innerText = `${done}/${total}`;
-
-    // difficulty counts
-    document.getElementById("easyCount").innerText = easy;
-
-    document.getElementById("mediumCount").innerText = medium;
-
-    document.getElementById("hardCount").innerText = hard;
+    document.getElementById("progressText").innerText = `${done}/${total}`;
 }
 function markDone(checkbox, problemName, difficulty) {
 
@@ -598,17 +564,18 @@ if(checkbox.checked){
 }
 else{
 
-    // REMOVE DATE ONLY IF NO CHECKBOX IS CHECKED
+    // CHECK IF ANY DONE CHECKBOX STILL EXISTS TODAY
 
-    const todayChecked = [...document.querySelectorAll(
-        '.done input[type="checkbox"]:checked'
-    )].length;
+    let anyChecked =
+    document.querySelector(
+'.done input[type="checkbox"]:checked'
+);
 
-    if(todayChecked === 0){
+    if(!anyChecked){
 
         savedDates =
         savedDates.filter(
-            d => d !== date
+        d => d !== date
         );
 
     }
@@ -625,16 +592,15 @@ JSON.stringify(savedDates)
 );
 
 loadCalendar();
+    localStorage.setItem(
+        "practiceHistory",
+        JSON.stringify(history)
+    );
 
-localStorage.setItem(
-    "practiceHistory",
-    JSON.stringify(history)
-);
-
-loadHistory();
+    loadHistory();
 }
-
 let historyInterval;
+
 function openHistory() {
 
     document.getElementById("historyPopup").style.display = "flex";
@@ -863,3 +829,4 @@ loadCalendar();
 
 
 /* SAVE DATE WHEN DONE CHECKBOX CLICKED */
+
