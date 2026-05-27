@@ -138,14 +138,14 @@ document.querySelectorAll(
 '.done input[type="checkbox"], .revision input[type="checkbox"]'
 ).forEach(chk => {
 
-    chk.addEventListener('change', () => {
+chk.addEventListener('change', () => {
 
-        const sectionName =
-        chk.closest('.section')
-        .querySelector('.section-header span')
-        .innerText;
+const sectionName =
+chk.closest('.section')
+.querySelector('.section-header span')
+.innerText;
 
-        const problemTitle =
+const problemTitle =
 chk.closest('.problem')
 .querySelector('.title')
 ?.innerText ||
@@ -153,31 +153,32 @@ chk.closest('.problem')
 .querySelector('span')
 .innerText;
 
-        const type =
-        chk.closest('.done')
-        ? 'done'
-        : 'revision';
+const type =
+chk.closest('.done')
+? 'done'
+: 'revision';
 
-        let data =
-        JSON.parse(
-            localStorage.getItem('checkboxes')
-        ) || {};
+let data =
+JSON.parse(
+localStorage.getItem('checkboxes')
+) || {};
 
-        data[
-            `${sectionName}-${problemIndex}-${type}`
-        ] = chk.checked;
+data[
+`${sectionName}-${problemTitle}-${type}`
+] = chk.checked;
 
-        localStorage.setItem(
-            'checkboxes',
-            JSON.stringify(data)
-        );
+localStorage.setItem(
+'checkboxes',
+JSON.stringify(data)
+);
 
-        updateProgress(
-            chk.closest('.section')
-        );
+updateProgress(
+chk.closest('.section')
+);
 
-        updateGlobalProgress();
-    });
+updateGlobalProgress();
+
+});
 
 });
 // Default load
