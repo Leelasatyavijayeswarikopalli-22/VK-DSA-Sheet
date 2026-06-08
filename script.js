@@ -86,17 +86,24 @@ function toggleSection(section, event) {
 // Tab switching
 
 function switchTab(tab) {
-    const category = tab.textContent.replace(/\s/g,'');
+    const category = tab.textContent.replace(/\s/g, '');
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
 
     document.querySelectorAll('.section').forEach(section => {
-        section.style.display = (section.dataset.category === category) ? 'block' : 'none';
+        const sectionCategory = section.dataset.category.replace(/\s/g, '');
+        section.style.display = (sectionCategory === category) ? 'block' : 'none';
     });
 
     updateGlobalProgress(); // 🔥 important
 }
+document.addEventListener("DOMContentLoaded", function () {
+    const activeTab = document.querySelector(".tab.active");
+    if (activeTab) {
+        switchTab(activeTab);
+    }
+});
 // ✅ NOTES PAGE FUNCTION (OUTSIDE)
 function openNotes() {
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
