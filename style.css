@@ -157,9 +157,10 @@ margin-top: 10px;
 
 /* Hidden content */
 .content {
-    display: block;
+    display: none;
     margin-top: 10px;
 }
+
 
 .header-row span:nth-child(n+2),
 .problem div:not(:first-child) {
