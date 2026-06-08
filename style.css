@@ -157,7 +157,7 @@ margin-top: 10px;
 
 /* Hidden content */
 .content {
-    display: none;
+    display: block;
     margin-top: 10px;
 }
 
