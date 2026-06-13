@@ -86,16 +86,23 @@ function toggleSection(section, event) {
 // Tab switching
 
 function switchTab(tab) {
-    const category = tab.textContent.replace(/\s/g,'');
+    const category = tab.textContent.trim(); // ✅ Use trim() instead of replace
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
 
     document.querySelectorAll('.section').forEach(section => {
-        section.style.display = (section.dataset.category === category) ? 'block' : 'none';
+        if (section.dataset.category === category) {
+            section.style.display = 'block';
+            // Also expand the content inside
+            const content = section.querySelector('.content');
+            if (content) content.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
     });
 
-    updateGlobalProgress(); // 🔥 important
+    updateGlobalProgress();
 }
 // ✅ NOTES PAGE FUNCTION (OUTSIDE)
 function openNotes() {
@@ -112,10 +119,16 @@ function goHome() {
     document.querySelector('.tabs').style.display = 'block';
     document.getElementById('notesPage').style.display = 'none';
     document.getElementById('linksPage').style.display = 'none';
-    document.getElementById('booksPage').style.display = 'none'; // add this
+    document.getElementById('booksPage').style.display = 'none';
 
     document.querySelectorAll('.section').forEach(section => {
-        section.style.display = (section.dataset.category === 'Arrays') ? 'block' : 'none';
+        if (section.dataset.category === 'Arrays') {
+            section.style.display = 'block';
+            const content = section.querySelector('.content');
+            if (content) content.style.display = 'block';
+        } else {
+            section.style.display = 'none';
+        }
     });
 
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
