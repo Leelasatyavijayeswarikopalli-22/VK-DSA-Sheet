@@ -92,10 +92,15 @@ function switchTab(tab) {
     tab.classList.add('active');
 
     document.querySelectorAll('.section').forEach(section => {
-        section.style.display = (section.dataset.category === category) ? 'block' : 'none';
+        if (section.dataset.category === category) {
+            section.style.display = 'block';
+            section.querySelector('.content').style.display = 'block';  // ✅ ADD THIS
+        } else {
+            section.style.display = 'none';
+        }
     });
 
-    updateGlobalProgress(); // 🔥 important
+    updateGlobalProgress();
 }
 // ✅ NOTES PAGE FUNCTION (OUTSIDE)
 function openNotes() {
