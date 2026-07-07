@@ -205,22 +205,12 @@ onclick="openHistory()">
                     </div>
 
                     <!-- LOGIN FORM -->
-                    <form id="loginForm">
-
-                        <input type="text" id="loginUsername" placeholder="Username" required>
-
-                        <input type="password" id="loginPassword" placeholder="Password" required>
-
-                        <button type="submit">Login</button>
-
-                    </form>
-                    <input type="text" id="adminUsername" placeholder="Admin Username">
-
-<input type="password" id="adminPassword" placeholder="Admin Password">
-
-<button type="button" id="adminLoginBtn">
-    Admin Login
-</button>
+                   <form id="loginForm" autocomplete="off">
+    <input type="text" id="loginUsername" placeholder="Username" required autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+    <button type="submit">Login</button>
+</form>
+                   
 
                     <!-- SIGNUP FORM -->
                     <form id="signupForm" style="display:none;">
