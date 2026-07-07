@@ -42,28 +42,217 @@ signupTab.addEventListener('click', () => {
 });
 }
 // Login actions
-if(loginForm){
-loginForm.addEventListener('submit', async e => {
-    e.preventDefault();
+// ============ FIREBASE AUTH ============
 
-    const username = document.getElementById("loginUsername").value;
-    const password = document.getElementById("loginPassword").value;
-
-    const res = await fetch("http://localhost:5000/login",{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({username,password})
+// Wait for firebase to load
+function waitForFirebase() {
+    return new Promise((resolve) => {
+        const check = setInterval(() => {
+            if (window.firebaseAuth) {
+                clearInterval(check);
+                resolve();
+            }
+        }, 100);
     });
-    
+}
 
-    if(res.ok){
-        alert("Admin logged in");
-        window.isAdmin = true;
-    }else{
-        alert("Invalid credentials");
+// SIGNUP
+if(signupForm){
+    signupForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        await waitForFirebase();
+        
+        const name = document.getElementById("signupName").value;
+        const email = document.getElementById("signupEmail").value;
+        const password = document.getElementById("signupPassword").value;
+
+        try {
+            const userCred = await window.firebaseCreateUser(window.firebaseAuth, email, password);
+            
+            // Create user doc in firestore
+            await window.firebaseSetDoc(
+                window.firebaseDoc(window.firebaseDB, "users", userCred.user.uid),
+                {
+                    name: name,
+                    email: email,
+                    checkboxes: {},
+                    notes: [],
+                    links: [],
+                    books: [],
+                    doneDates: [],
+                    practiceHistory: []
+                }
+            );
+            
+            alert("Account created! You are now logged in.");
+            modal.style.display = 'none';
+        } catch(err) {
+            alert("Signup failed: " + err.message);
+        }
+    });
+}
+
+// LOGIN
+if(loginForm){
+    loginForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        await waitForFirebase();
+        
+        const email = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
+
+        try {
+            await window.firebaseSignIn(window.firebaseAuth, email, password);
+            alert("Logged in successfully!");
+            modal.style.display = 'none';
+        } catch(err) {
+            alert("Login failed: " + err.message);
+        }
+    });
+}
+
+// GOOGLE SIGN-IN
+document.addEventListener('DOMContentLoaded', () => {
+    const googleBtn = document.getElementById('googleSignInBtn');
+    if (googleBtn) {
+        googleBtn.addEventListener('click', async () => {
+            await waitForFirebase();
+            try {
+                const result = await window.firebaseGoogleSignIn();
+                
+                // Check if user doc exists, if not create it
+                const userDocRef = window.firebaseDoc(window.firebaseDB, "users", result.user.uid);
+                const userDoc = await window.firebaseGetDoc(userDocRef);
+                
+                if (!userDoc.exists()) {
+                    await window.firebaseSetDoc(userDocRef, {
+                        name: result.user.displayName || "User",
+                        email: result.user.email,
+                        checkboxes: {},
+                        notes: [],
+                        links: [],
+                        books: [],
+                        doneDates: [],
+                        practiceHistory: []
+                    });
+                }
+                
+                alert("Logged in with Google!");
+                modal.style.display = 'none';
+            } catch(err) {
+                alert("Google sign-in failed: " + err.message);
+            }
+        });
     }
 });
+
+// LOGOUT
+async function handleLogout() {
+    await waitForFirebase();
+    try {
+        // Save current data before logout
+        await saveAllToFirebase();
+        await window.firebaseSignOut(window.firebaseAuth);
+        alert("Logged out!");
+        location.reload();
+    } catch(err) {
+        alert("Logout failed: " + err.message);
     }
+}
+window.handleLogout = handleLogout;
+
+// AUTH STATE LISTENER — auto-load data when user logs in
+async function initAuthListener() {
+    await waitForFirebase();
+    
+    window.firebaseOnAuth(window.firebaseAuth, async (user) => {
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const userInfo = document.getElementById('userInfo');
+        const userEmail = document.getElementById('userEmail');
+        
+        if (user) {
+            // User is logged in
+            console.log("User logged in:", user.email);
+            
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'block';
+            if (userInfo) userInfo.style.display = 'block';
+            if (userEmail) userEmail.innerText = user.email;
+            
+            window.currentUser = user;
+            
+            // Load user's data from Firebase
+            await loadFromFirebase(user.uid);
+        } else {
+            // User is logged out
+            if (loginBtn) loginBtn.style.display = 'block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
+            if (userInfo) userInfo.style.display = 'none';
+            
+            window.currentUser = null;
+        }
+    });
+}
+
+// LOAD USER DATA FROM FIREBASE
+async function loadFromFirebase(uid) {
+    try {
+        const userDocRef = window.firebaseDoc(window.firebaseDB, "users", uid);
+        const userDoc = await window.firebaseGetDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+            
+            // Save to localStorage so existing code works
+            localStorage.setItem('checkboxes', JSON.stringify(data.checkboxes || {}));
+            localStorage.setItem('notes', JSON.stringify(data.notes || []));
+            localStorage.setItem('links', JSON.stringify(data.links || []));
+            localStorage.setItem('books', JSON.stringify(data.books || []));
+            localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
+            localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
+            
+            // Reload UI
+            location.reload();
+        }
+    } catch(err) {
+        console.error("Error loading data:", err);
+    }
+}
+
+// SAVE ALL DATA TO FIREBASE
+async function saveAllToFirebase() {
+    if (!window.currentUser) return;
+    
+    try {
+        const userDocRef = window.firebaseDoc(window.firebaseDB, "users", window.currentUser.uid);
+        
+        await window.firebaseSetDoc(userDocRef, {
+            email: window.currentUser.email,
+            checkboxes: JSON.parse(localStorage.getItem('checkboxes') || '{}'),
+            notes: JSON.parse(localStorage.getItem('notes') || '[]'),
+            links: JSON.parse(localStorage.getItem('links') || '[]'),
+            books: JSON.parse(localStorage.getItem('books') || '[]'),
+            doneDates: JSON.parse(localStorage.getItem('doneDates') || '[]'),
+            practiceHistory: JSON.parse(localStorage.getItem('practiceHistory') || '[]')
+        }, { merge: true });
+        
+        console.log("Data saved to Firebase ✅");
+    } catch(err) {
+        console.error("Error saving:", err);
+    }
+}
+window.saveAllToFirebase = saveAllToFirebase;
+
+// AUTO-SAVE every 3 seconds when logged in
+setInterval(() => {
+    if (window.currentUser) {
+        saveAllToFirebase();
+    }
+}, 3000);
+
+// Start auth listener
+initAuthListener();
 // Toggle section
 function toggleSection(section, event) {
 
