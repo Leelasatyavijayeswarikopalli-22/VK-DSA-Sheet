@@ -188,7 +188,7 @@ body::after {
 .main {
     margin-left: 240px;
     padding: 20px 35px;
-    padding-right: 260px;
+    padding-right: 290px;   /* 👈 increase this from 260px to 290px */
     width: auto;
     box-sizing: border-box;
 }
@@ -712,7 +712,7 @@ body.home-active #homeWidgets {
 #progressContainer {
     position: fixed;
     top: 140px;
-    right: 20px;
+    right: 25px;         /* 👈 was 20px, keep small */
     z-index: 1000;
     gap: 25px;
     display: flex;
