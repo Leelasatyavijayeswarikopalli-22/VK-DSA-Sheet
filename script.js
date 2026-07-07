@@ -838,3 +838,12 @@ loadCalendar();
 
 /* SAVE DATE WHEN DONE CHECKBOX CLICKED */
 
+// ============ SIDEBAR ACTIVE MENU SWITCH ============
+document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', function() {
+        // remove active from all
+        document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+        // add active to clicked one
+        this.classList.add('active');
+    });
+});
