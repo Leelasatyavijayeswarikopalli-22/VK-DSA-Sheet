@@ -1118,8 +1118,8 @@ body.home-active #homeWidgets {
 
 #userInfo {
     position: fixed;
-    top: 20px;
-    right: 200px;
+    top: 22px;
+    right: 250px;   /* moved left away from login/logout */
     padding: 10px 18px;
     background: rgba(26, 26, 46, 0.9);
     backdrop-filter: blur(10px);
@@ -1130,4 +1130,32 @@ body.home-active #homeWidgets {
     font-weight: 600;
     z-index: 1001;
     display: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+#userInfo span {
+    color: white;
+}
+#logoutBtn {
+    position: fixed;
+    top: 20px;         /* same as loginBtn */
+    right: 40px;       /* same as loginBtn */
+    padding: 12px 22px;
+    font-size: 14px;
+    border: 1px solid rgba(239,68,68,0.4);
+    border-radius: 50px;
+    background: rgba(26, 26, 46, 0.9);
+    backdrop-filter: blur(10px);
+    color: #ef4444;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    z-index: 1001;
+    transition: 0.3s;
+}
+
+#logoutBtn:hover {
+    background: #ef4444;
+    color: white;
+    border-color: transparent;
+    transform: scale(1.03);
 }
