@@ -162,6 +162,8 @@ async function handleLogout() {
 window.handleLogout = handleLogout;
 
 // AUTH STATE LISTENER — auto-load data when user logs in
+let authInitialized = false;
+
 async function initAuthListener() {
     await waitForFirebase();
     
@@ -172,7 +174,6 @@ async function initAuthListener() {
         const userEmail = document.getElementById('userEmail');
         
         if (user) {
-            // User is logged in
             console.log("User logged in:", user.email);
             
             if (loginBtn) loginBtn.style.display = 'none';
@@ -182,15 +183,18 @@ async function initAuthListener() {
             
             window.currentUser = user;
             
-            // Load user's data from Firebase
-            await loadFromFirebase(user.uid);
+            // Only load data ONCE per session
+            if (!authInitialized) {
+                authInitialized = true;
+                await loadFromFirebase(user.uid);
+            }
         } else {
-            // User is logged out
             if (loginBtn) loginBtn.style.display = 'block';
             if (logoutBtn) logoutBtn.style.display = 'none';
             if (userInfo) userInfo.style.display = 'none';
             
             window.currentUser = null;
+            authInitialized = false;
         }
     });
 }
@@ -204,7 +208,6 @@ async function loadFromFirebase(uid) {
         if (userDoc.exists()) {
             const data = userDoc.data();
             
-            // Save to localStorage so existing code works
             localStorage.setItem('checkboxes', JSON.stringify(data.checkboxes || {}));
             localStorage.setItem('notes', JSON.stringify(data.notes || []));
             localStorage.setItem('links', JSON.stringify(data.links || []));
@@ -212,8 +215,14 @@ async function loadFromFirebase(uid) {
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
             
-            // Reload UI
-            location.reload();
+            // Refresh UI WITHOUT page reload
+            loadCheckboxesAndProgress();
+            attachStaticCheckboxListeners();
+            loadHistory();
+            loadCalendar();
+            updateGlobalProgress();
+            
+            console.log("✅ Data loaded from Firebase");
         }
     } catch(err) {
         console.error("Error loading data:", err);
@@ -249,7 +258,7 @@ setInterval(() => {
     if (window.currentUser) {
         saveAllToFirebase();
     }
-}, 3000);
+}, 15000);  // Every 15 seconds instead of 3
 
 // Start auth listener
 initAuthListener();
