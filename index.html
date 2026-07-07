@@ -11,64 +11,72 @@
 <body>
 
     <!-- SIDEBAR --->
-    <div class="sidebar">
+    <!-- SIDEBAR -->
+<div class="sidebar">
 
-        <div class="logo">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKOFFsJGCOcjQLwjZMUQUI6VlECrn0G4gDRQ&s">
-        </div>
-
-        <div class="menu-item" onclick="goHome()">🏠 Home</div>
-        <div class="menu-item">🔍 Search</div>
-        <div class="menu-item" onclick="openBooks()">📖 Books</div>
-        <div class="menu-item" onclick="openLinks()">🔗 Links</div>
-        <div class="menu-item" onclick="openNotes()">📝 Notes</div>
-        <div class="platform-icons sidebar-icons">
-
-    <div class="icon-row">
-
-        <div class="icon-box">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg">
-            <span>LC</span>
-        </div>
-
-        <div class="icon-box">
-            <img src="https://static.takeuforward.org/content/tuf_logo_F-nFV4asTo">
-            <span>TUF</span>
-        </div>
-
+    <div class="logo">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKOFFsJGCOcjQLwjZMUQUI6VlECrn0G4gDRQ&s">
     </div>
 
-    <div class="icon-row">
-
-        <div class="icon-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg">
-            <span>GFG</span>
-        </div>
-
-        <div class="icon-box">
-            <img src="https://sta.codeforces.com/s/0/favicon-32x32.png">
-            <span>CF</span>
-        </div>
-
+    <div class="menu-item active" onclick="goHome()">
+        <span class="menu-icon">🏠</span> Home
+    </div>
+    <div class="menu-item">
+        <span class="menu-icon">🔍</span> Search
+    </div>
+    <div class="menu-item" onclick="openBooks()">
+        <span class="menu-icon">📖</span> Books
+    </div>
+    <div class="menu-item" onclick="openLinks()">
+        <span class="menu-icon">🔗</span> Links
+    </div>
+    <div class="menu-item" onclick="openNotes()">
+        <span class="menu-icon">📝</span> Notes
     </div>
 
-    <div class="icon-row center-row">
+    <div class="platform-icons sidebar-icons">
+        <div class="platforms-label">Platforms</div>
 
-        <div class="icon-box">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png">
-            <span>HR</span>
+        <div class="icon-row">
+            <div class="icon-box">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg">
+                <span>LC</span>
+            </div>
+            <div class="icon-box">
+                <img src="https://static.takeuforward.org/content/tuf_logo_F-nFV4asTo">
+                <span>TUF</span>
+            </div>
         </div>
 
+        <div class="icon-row">
+            <div class="icon-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg">
+                <span>GFG</span>
+            </div>
+            <div class="icon-box">
+                <img src="https://sta.codeforces.com/s/0/favicon-32x32.png">
+                <span>CF</span>
+            </div>
+        </div>
+
+        <div class="icon-row center-row">
+            <div class="icon-box">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/65/HackerRank_logo.png">
+                <span>HR</span>
+            </div>
+        </div>
     </div>
+
+    <!-- Astronaut Image at Bottom -->
+    <div class="sidebar-astronaut">
+        <img src="https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400&auto=format&fit=crop&q=80" alt="astronaut">
+    </div>
+
+    <button id="addProblemBtn" onclick="addProblem()" style="display:none;">
+        Add Problem
+    </button>
 
 </div>
-        <button id="addProblemBtn" onclick="addProblem()" style="display:none;">
-            Add Problem
-        </button>
-
-      
-
-    </div>
 
     <!-- MAIN -->
     <div class="main">
