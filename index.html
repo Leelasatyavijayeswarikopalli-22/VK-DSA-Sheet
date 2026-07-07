@@ -6,6 +6,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>VK DSA Patterns</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Firebase Scripts -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { 
+        getAuth, 
+        createUserWithEmailAndPassword, 
+        signInWithEmailAndPassword, 
+        signOut, 
+        onAuthStateChanged,
+        GoogleAuthProvider,
+        signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { 
+        getFirestore, 
+        doc, 
+        setDoc, 
+        getDoc 
+    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAuHMO13XHWHsd5RcOWIu2hlBO53gMlJYU",
+        authDomain: "dsa-patterns-hub.firebaseapp.com",
+        projectId: "dsa-patterns-hub",
+        storageBucket: "dsa-patterns-hub.firebasestorage.app",
+        messagingSenderId: "1074822982563",
+        appId: "1:1074822982563:web:60b156055d22d81a9e4816"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // Make available globally
+    window.firebaseAuth = auth;
+    window.firebaseDB = db;
+    window.firebaseCreateUser = createUserWithEmailAndPassword;
+    window.firebaseSignIn = signInWithEmailAndPassword;
+    window.firebaseSignOut = signOut;
+    window.firebaseOnAuth = onAuthStateChanged;
+    window.firebaseGoogleSignIn = () => signInWithPopup(auth, googleProvider);
+    window.firebaseSetDoc = setDoc;
+    window.firebaseGetDoc = getDoc;
+    window.firebaseDoc = doc;
+</script>
 </head>
 
 <body>
@@ -150,6 +195,9 @@
 onclick="openHistory()">
     Practice History
 </button>
+        <button id="logoutBtn" onclick="handleLogout()" style="display:none;">
+    🚪 Logout
+</button>
         <!-- LOGIN BUTTON -->
         <button id="loginBtn">Login / Sign Up</button>
 
@@ -186,50 +234,49 @@ onclick="openHistory()">
 </div>
 
         <!-- LOGIN MODAL -->
-        <div id="loginModal" class="modal">
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
 
-            <div class="modal-content">
+        <div class="modal-header">
+            <h2>Welcome to DSA Patterns Hub</h2>
+            <p>Sign in or create an account to save your progress</p>
+        </div>
 
-                <span class="close">&times;</span>
-
-                <div class="modal-header">
-                    <h2>Welcome to DSA Patterns Hub</h2>
-                    <p>Sign in or create an account to save your progress</p>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="tab-switch">
-                        <button id="loginTab" class="active">Login</button>
-                        <button id="signupTab">Sign Up</button>
-                    </div>
-
-                    <!-- LOGIN FORM -->
-                   <form id="loginForm" autocomplete="off">
-    <input type="text" id="loginUsername" placeholder="Username" required autocomplete="username">
-    <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
-    <button type="submit">Login</button>
-</form>
-                   
-
-                    <!-- SIGNUP FORM -->
-                    <form id="signupForm" style="display:none;">
-
-                        <input type="text" placeholder="Full Name" required>
-                        <input type="email" placeholder="Email ID" required>
-                        <input type="password" placeholder="Password" required>
-                        <input type="tel" placeholder="Phone Number" required>
-                        <input type="text" placeholder="University Name" required>
-
-                        <button type="submit">Sign Up</button>
-
-                    </form>
-
-                </div>
-
+        <div class="modal-body">
+            <div class="tab-switch">
+                <button id="loginTab" class="active">Login</button>
+                <button id="signupTab">Sign Up</button>
             </div>
 
+            <!-- LOGIN FORM -->
+            <form id="loginForm" autocomplete="off">
+                <input type="email" id="loginEmail" placeholder="Email" required autocomplete="email">
+                <input type="password" id="loginPassword" placeholder="Password" required autocomplete="current-password">
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signupForm" autocomplete="off" style="display:none;">
+                <input type="text" id="signupName" placeholder="Full Name" required>
+                <input type="email" id="signupEmail" placeholder="Email ID" required autocomplete="email">
+                <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required autocomplete="new-password">
+                <button type="submit">Sign Up</button>
+            </form>
+
+            <!-- Divider -->
+            <div style="text-align:center; margin:15px 0; color:#8b8ba7; font-size:13px;">
+                — OR —
+            </div>
+
+            <!-- Google Sign-In -->
+            <button id="googleSignInBtn" type="button" style="width:100%; padding:12px; border-radius:50px; border:1px solid #2a2a4a; background:#1a1a2e; color:white; cursor:pointer; font-weight:600; display:flex; align-items:center; justify-content:center; gap:10px;">
+                <img src="https://www.google.com/favicon.ico" style="width:18px; height:18px;">
+                Sign in with Google
+            </button>
         </div>
+    </div>
+</div>
 
         <!-- NOTES PAGE -->
         <div id="notesPage" style="display:none;">
