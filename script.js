@@ -150,9 +150,20 @@ document.addEventListener('DOMContentLoaded', () => {
 async function handleLogout() {
     await waitForFirebase();
     try {
-        // Save current data before logout
+        // Save to Firebase first
         await saveAllToFirebase();
+        
+        // Then sign out
         await window.firebaseSignOut(window.firebaseAuth);
+        
+        // Clear all local data so next user sees empty state
+        localStorage.removeItem('checkboxes');
+        localStorage.removeItem('notes');
+        localStorage.removeItem('links');
+        localStorage.removeItem('books');
+        localStorage.removeItem('doneDates');
+        localStorage.removeItem('practiceHistory');
+        
         alert("Logged out!");
         location.reload();
     } catch(err) {
