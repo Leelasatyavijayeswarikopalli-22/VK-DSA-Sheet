@@ -1159,3 +1159,93 @@ body.home-active #homeWidgets {
     border-color: transparent;
     transform: scale(1.03);
 }
+
+
+/* Profile Picture Styling */
+.user-profile {
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #6c5ce7;
+    object-fit: cover;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-picture:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+}
+
+.profile-tooltip {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgba(20, 20, 40, 0.95);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    z-index: 1000;
+    border: 1px solid #6c5ce7;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.user-profile:hover .profile-tooltip {
+    display: block;
+}
+
+
+/* Profile Picture Styling */
+.user-profile {
+    position: relative;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #6c5ce7;
+    object-fit: cover;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.profile-picture:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+}
+
+.profile-tooltip {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: rgba(20, 20, 40, 0.95);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    z-index: 1000;
+    border: 1px solid #6c5ce7;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.user-profile:hover .profile-tooltip {
+    display: block;
+}
