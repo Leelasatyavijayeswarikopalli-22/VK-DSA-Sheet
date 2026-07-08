@@ -602,16 +602,25 @@ body.home-active #homeWidgets {
 
 /* ============ MODAL ============ */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
+    display: none; 
+    position: fixed; 
+    z-index: 10000; 
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(6px) brightness(0.85);
-    background-color: rgba(0,0,0,0.6);
-    animation: fadeIn 0.3s;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.75); 
+    backdrop-filter: blur(4px);
+
+    /* Flexbox properties to center the child card exactly */
+    align-items: center;
+    justify-content: center;
+}
+
+#profileModal[style*="display: block"],
+#loginModal[style*="display: block"] {
+    display: flex !important;
 }
 
 .modal-content {
