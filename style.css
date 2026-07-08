@@ -926,12 +926,13 @@ body.home-active #homeWidgets {
 }
 
 #historyBtn:hover {
-    background: linear-gradient(135deg, #f97316, #eab308);
-    color: black;
-    border-color: transparent;
-    transform: scale(1.03);
+    background: rgba(255, 193, 7, 0.08);
+    color: #ffd54f;
+    border-color: #ffd54f;
+    box-shadow: 0 0 12px rgba(255, 193, 7, 0.20);
+    transform: translateY(-1px);
+    transition: all 0.3s ease;
 }
-
 .history-header {
     display: flex;
     justify-content: space-between;
