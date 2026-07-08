@@ -1116,7 +1116,7 @@ justify-content: center;
 }
 
 #logoutBtn:hover {
-    background: #ff6b6b;
+    background: #f87171;
     color: white;
     border-color: transparent;
     transform: scale(1.03);
