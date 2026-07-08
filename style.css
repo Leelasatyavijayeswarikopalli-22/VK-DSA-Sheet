@@ -1117,10 +1117,11 @@ justify-content: center;
 
 
 #logoutBtn:hover {
-    background: rgba(26, 26, 46, 0.95);
-    border-color: #ff6b6b;
-    color: #ff6b6b;
-    box-shadow: 0 0 12px rgba(255, 107, 107, 0.35);
+    background: rgba(239, 68, 68, 0.12);
+    color: #ff7b7b;
+    border-color: #ff7b7b;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.25);
+    transform: translateY(-1px);
 }
 #userInfo {
     
