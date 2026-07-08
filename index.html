@@ -186,7 +186,13 @@
             <span class="tab" onclick="switchTab(this)">Bit Manipulation</span>
             <span class="tab" onclick="switchTab(this)">Linked List</span>
         </div>
-<div id="userInfo">👤 <span id="userEmail"></span></div>
+<div class="user-profile" id="userInfo" style="display:none;">
+    <img id="profilePicture" 
+         src="https://ui-avatars.com/api/?name=User&background=6c5ce7&color=fff" 
+         alt="Profile" 
+         class="profile-picture">
+    <div class="profile-tooltip" id="userEmail"></div>
+</div>
         <button id="loginBtn">
     Login / Sign Up
 </button>
