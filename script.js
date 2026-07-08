@@ -179,38 +179,38 @@ async function initAuthListener() {
     await waitForFirebase();
     
     window.firebaseOnAuth(window.firebaseAuth, async (user) => {
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const userInfo = document.getElementById('userInfo');
-        const userEmail = document.getElementById('userEmail');
+    if (user) {
+        console.log("User logged in:", user.email);
+        window.currentUser = user;
         
-        if (user) {
-    console.log("User logged in:", user.email);
-    updateProfileUI(user);
-            
-            window.currentUser = user;
-            
-            // Only load data ONCE per session
-            if (!authInitialized) {
-                authInitialized = true;
-                await loadFromFirebase(user.uid);
-            }
+        // Update circular profile and buttons
+        updateProfileUI(user);
+        
+        if (!authInitialized) {
+            authInitialized = true;
+            await loadFromFirebase(user.uid);
+        }
     } else {
-    localStorage.removeItem('checkboxes');
-    localStorage.removeItem('notes');
-    localStorage.removeItem('links');
-    localStorage.removeItem('books');
-    localStorage.removeItem('doneDates');
-    localStorage.removeItem('practiceHistory');
-    updateProfileUI(null);
-    window.currentUser = null;
-    authInitialized = false;
-    if (typeof loadCheckboxesAndProgress === 'function') {
-        loadCheckboxesAndProgress();
-        updateGlobalProgress();
+        // Clear all session states on logout
+        localStorage.removeItem('checkboxes');
+        localStorage.removeItem('notes');
+        localStorage.removeItem('links');
+        localStorage.removeItem('books');
+        localStorage.removeItem('doneDates');
+        localStorage.removeItem('practiceHistory');
+        
+        window.currentUser = null;
+        authInitialized = false;
+        
+        // Update circular profile and buttons to logged-out state
+        updateProfileUI(null);
+        
+        if (typeof loadCheckboxesAndProgress === 'function') {
+            loadCheckboxesAndProgress();
+            updateGlobalProgress();
+        }
     }
-}
-    });
+});
 }
 
 // LOAD USER DATA FROM FIREBASE
@@ -1070,21 +1070,25 @@ function updateProfileUI(user) {
     const logoutBtn = document.getElementById('logoutBtn');
     
     if (user) {
-        userInfo.style.display = 'flex';
-        loginBtn.style.display = 'none';
-        logoutBtn.style.display = 'block';
+        // User logged in: hide login, show logout and profile circle
+        if (userInfo) userInfo.style.display = 'flex';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'block';
         
+        // Show Google Profile Photo if available, else make default initial letter
         if (user.photoURL) {
             profilePic.src = user.photoURL;
         } else {
             const initial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
-            profilePic.src = 'https://ui-avatars.com/api/?name=' + initial + '&background=6c5ce7&color=fff';
+            profilePic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
         }
-        userEmail.textContent = user.email;
+        
+        if (userEmail) userEmail.textContent = user.email;
     } else {
-        userInfo.style.display = 'none';
-        loginBtn.style.display = 'block';
-        logoutBtn.style.display = 'none';
+        // User logged out: show login, hide logout and profile circle
+        if (userInfo) userInfo.style.display = 'none';
+        if (loginBtn) loginBtn.style.display = 'block';
+        if (logoutBtn) logoutBtn.style.display = 'none';
     }
 }
 
