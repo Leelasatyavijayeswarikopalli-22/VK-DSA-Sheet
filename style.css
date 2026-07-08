@@ -1263,12 +1263,6 @@ body.home-active #homeWidgets {
 }
 
 /* Circular Profile container (controlled by JS display styles) */
-.user-profile {
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
 
 /* Exact circle sizing and border styling */
 .profile-picture {
