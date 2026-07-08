@@ -1191,12 +1191,12 @@ body.home-active #homeWidgets {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    border: 2px solid #fff;
     padding: 0;
     margin: 0;
 
     background: transparent;
-    border: none;
+    
     box-shadow: none;
     border-radius: 50%;
     z-index: 1002;
@@ -1208,7 +1208,7 @@ body.home-active #homeWidgets {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #ffffff;
-    
+    box-sizing: border-box;
     box-shadow: none;
     padding: 0;
     margin: 0;
