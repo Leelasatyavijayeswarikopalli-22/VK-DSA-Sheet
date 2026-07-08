@@ -1208,7 +1208,14 @@ body.home-active #homeWidgets {
     padding: 0;
     margin: 0;
 }
+.profile-picture {
+    transition: all 0.3s ease;
+}
 
+.profile-picture:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+}
 
 .profile-tooltip {
     display: none;
