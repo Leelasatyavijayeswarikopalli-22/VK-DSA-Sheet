@@ -1117,13 +1117,11 @@ justify-content: center;
 
 
 #logoutBtn:hover {
-    background: rgba(239, 68, 68, 0.15);
-    border-color: #ef4444;
-    color: #ff7b7b;
-    box-shadow: 0 0 15px rgba(239, 68, 68, 0.25);
-    transform: scale(1.03);
+    background: rgba(26, 26, 46, 0.95);
+    border-color: #ff6b6b;
+    color: #ff6b6b;
+    box-shadow: 0 0 12px rgba(255, 107, 107, 0.35);
 }
-
 #userInfo {
     
     right : 170 px;   /* moved left away from login/logout */
