@@ -75,6 +75,7 @@ if(signupForm){
                 {
                     name: name,
                     email: email,
+                    phone: "Not Provided",
                     checkboxes: {},
                     notes: [],
                     links: [],
@@ -128,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     await window.firebaseSetDoc(userDocRef, {
                         name: result.user.displayName || "User",
                         email: result.user.email,
+                        phone: result.user.phoneNumber || "Not Provided",
                         checkboxes: {},
                         notes: [],
                         links: [],
@@ -231,6 +233,12 @@ async function loadFromFirebase(uid) {
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
             
+            // Safe fallback updates if database fields missing
+            window.currentUserProfileData = {
+                name: data.name || window.currentUser.displayName || "User",
+                phone: data.phone || window.currentUser.phoneNumber || "Not Provided"
+            };
+
             // Refresh UI WITHOUT page reload
             loadCheckboxesAndProgress();
             attachStaticCheckboxListeners();
@@ -559,6 +567,7 @@ function saveNotes() {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
+// Local Storage helpers
 function saveLinks() {
     const links = [];
     document.querySelectorAll('#linksContainer .card').forEach(l => {
@@ -804,6 +813,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     attachStaticCheckboxListeners(); 
     loadHistory();
     updateGlobalProgress();
+    setupProfileModal(); // Initializes profile modal functionality
 });
 
 function attachStaticCheckboxListeners() {
@@ -917,4 +927,116 @@ function updateProfileUI(user) {
         if (loginBtn) loginBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
     }
+}
+
+// ============ PROFILE MODAL LOGIC ============
+function setupProfileModal() {
+    const userInfoCircle = document.getElementById('userInfo');
+    const profileModal = document.getElementById('profileModal');
+    const closeProfileBtn = document.getElementById('closeProfileModal');
+
+    if (userInfoCircle && profileModal) {
+        userInfoCircle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            calculateAndPopulateProfileDetails();
+            profileModal.style.display = 'block';
+        });
+    }
+
+    if (closeProfileBtn && profileModal) {
+        closeProfileBtn.addEventListener('click', () => {
+            profileModal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target == profileModal) {
+                profileModal.style.display = 'none';
+            }
+        });
+    }
+}
+
+function calculateAndPopulateProfileDetails() {
+    if (!window.currentUser) return;
+
+    const user = window.currentUser;
+    const dbProfile = window.currentUserProfileData || {};
+
+    // Populating general profile information
+    document.getElementById('profileDetailEmail').innerText = user.email || 'N/A';
+    document.getElementById('profileDetailPhone').innerText = user.phoneNumber || dbProfile.phone || 'Not Provided';
+    document.getElementById('profileDetailName').innerText = dbProfile.name || user.displayName || 'Learner';
+
+    const detailPic = document.getElementById('profileDetailPic');
+    if (user.photoURL) {
+        detailPic.src = user.photoURL;
+    } else {
+        const initial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+        detailPic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
+    }
+
+    // Computing aggregate category checkboxes from localstorage state
+    const savedCheckboxData = JSON.parse(localStorage.getItem('checkboxes')) || {};
+    
+    // Explicit tab categories defined on your website structure
+    const targetCategories = ["Arrays", "BinarySearch", "Strings", "Bit Manipulation", "Linked List"];
+    const breakdownContainer = document.getElementById('categoryBreakdown');
+    breakdownContainer.innerHTML = ''; // resets layout lists
+
+    let totalDoneAllTopics = 0;
+    let activeCategoriesCount = 0;
+
+    targetCategories.forEach(category => {
+        // Collect matches matching the checkbox keys pattern: Category-SectionName-ProblemName-done
+        let totalProblemsCount = 0;
+        let solvedProblemsCount = 0;
+
+        // Fetching DOM items to compare structure dynamically
+        const matchingSections = Array.from(document.querySelectorAll('.section'))
+            .filter(section => (section.dataset.category || '').trim() === category);
+
+        matchingSections.forEach(section => {
+            const sectionName = section.querySelector('.section-header span').innerText.trim();
+            const problems = section.querySelectorAll('.problem');
+            totalProblemsCount += problems.length;
+
+            problems.forEach(prob => {
+                const titleEl = prob.querySelector('span');
+                if (!titleEl) return;
+                const title = titleEl.innerText.trim();
+                const checkboxKey = `${category}-${sectionName}-${title}-done`;
+
+                if (savedCheckboxData[checkboxKey] === true) {
+                    solvedProblemsCount++;
+                }
+            });
+        });
+
+        // Add to aggregate counts
+        totalDoneAllTopics += solvedProblemsCount;
+        if (solvedProblemsCount > 0) {
+            activeCategoriesCount++;
+        }
+
+        // Render category visual row metrics if problems exist
+        if (totalProblemsCount > 0) {
+            const percentageFilled = Math.round((solvedProblemsCount / totalProblemsCount) * 100) || 0;
+            const breakdownRow = document.createElement('div');
+            breakdownRow.className = 'breakdown-row';
+            breakdownRow.innerHTML = `
+                <div class="breakdown-info">
+                    <span class="breakdown-name">${category}</span>
+                    <span class="breakdown-count">${solvedProblemsCount}/${totalProblemsCount} (${percentageFilled}%)</span>
+                </div>
+                <div class="breakdown-progress-bg">
+                    <div class="breakdown-progress-fill" style="width: ${percentageFilled}%"></div>
+                </div>
+            `;
+            breakdownContainer.appendChild(breakdownRow);
+        }
+    });
+
+    // Populate stats elements
+    document.getElementById('profileTotalDone').innerText = totalDoneAllTopics;
+    document.getElementById('profileCategoryCount').innerText = `${activeCategoriesCount}/${targetCategories.length}`;
 }
