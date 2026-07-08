@@ -1168,8 +1168,8 @@ body.home-active #homeWidgets {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-left: auto;
-    margin-right: 70px;
+    margin-left: 70px;
+    margin-right: 0px;
 }
 
 .profile-picture {
