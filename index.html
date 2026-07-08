@@ -253,7 +253,53 @@
         </div>
     </div>
 </div>
+<!-- PROFILE DETAILS MODAL -->
+<div id="profileModal" class="modal">
+    <div class="modal-content profile-modal-content">
+        <span class="close" id="closeProfileModal">&times;</span>
+        
+        <div class="modal-header">
+            <h2>Account Details</h2>
+            <p>Your learning progress and profile metrics</p>
+        </div>
 
+        <div class="modal-body">
+            <div class="profile-card-header">
+                <img id="profileDetailPic" src="" alt="User Avatar" class="profile-large-pic">
+                <h3 id="profileDetailName">Guest User</h3>
+                <span class="profile-role-badge">Premium Learner</span>
+            </div>
+
+            <div class="profile-info-grid">
+                <div class="info-item">
+                    <span class="info-label">📧 Email Address</span>
+                    <span class="info-value" id="profileDetailEmail">N/A</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📞 Phone Number</span>
+                    <span class="info-value" id="profileDetailPhone">Not Provided</span>
+                </div>
+            </div>
+
+            <div class="stats-divider">Progress Summary</div>
+
+            <div class="profile-stats-grid">
+                <div class="stat-metric-card">
+                    <span class="metric-num" id="profileTotalDone">0</span>
+                    <span class="metric-label">Total Solved</span>
+                </div>
+                <div class="stat-metric-card">
+                    <span class="metric-num" id="profileCategoryCount">0/5</span>
+                    <span class="metric-label">Active Topics</span>
+                </div>
+            </div>
+
+            <div id="categoryBreakdown" class="category-breakdown-container">
+                <!-- Topic progress bars populated by JS -->
+            </div>
+        </div>
+    </div>
+</div>
         <!-- NOTES PAGE -->
         <div id="notesPage" style="display:none;">
 
