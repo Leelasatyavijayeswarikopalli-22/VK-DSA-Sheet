@@ -233,12 +233,14 @@
             </form>
 
             <!-- SIGNUP FORM -->
-            <form id="signupForm" autocomplete="off" style="display:none;">
-                <input type="text" id="signupName" placeholder="Full Name" required>
-                <input type="email" id="signupEmail" placeholder="Email ID" required autocomplete="email">
-                <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required autocomplete="new-password">
-                <button type="submit">Sign Up</button>
-            </form>
+            <!-- SIGNUP FORM -->
+<form id="signupForm" autocomplete="off" style="display:none;">
+    <input type="text" id="signupName" placeholder="Full Name" required>
+    <input type="tel" id="signupPhone" placeholder="Phone Number" required pattern="[0-9]{10,15}" title="Please enter a valid phone number (10 to 15 digits)">
+    <input type="email" id="signupEmail" placeholder="Email ID" required autocomplete="email">
+    <input type="password" id="signupPassword" placeholder="Password (min 6 chars)" required autocomplete="new-password">
+    <button type="submit">Sign Up</button>
+</form>
 
             <!-- Divider -->
             <div style="text-align:center; margin:15px 0; color:#8b8ba7; font-size:13px;">
