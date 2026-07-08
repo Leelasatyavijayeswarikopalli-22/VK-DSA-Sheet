@@ -1094,7 +1094,7 @@ body.home-active #homeWidgets {
 #logoutBtn {
     position: fixed;
      width: 150px;      /* Increase/decrease as needed */
-    height: 56px;
+    height: 46px;
 
     top: 10px;
     right: 40px;
