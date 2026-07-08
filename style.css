@@ -1095,7 +1095,7 @@ body.home-active #homeWidgets {
     position: fixed;
     top: 140px;
     right: 40px;
-    padding: 12px 45px;
+    padding: 12px 35px;
     font-size: 14px;
     border: 1px solid #2a2a4a;
     border-radius: 50px;
@@ -1124,23 +1124,7 @@ body.home-active #homeWidgets {
 #userInfo span {
     color: white;
 }
-#logoutBtn {
-    position: fixed;
-    top: 20px;         /* same as loginBtn */
-    right: 40px;       /* same as loginBtn */
-    padding: 12px 22px;
-    font-size: 14px;
-    border: 1px solid rgba(239,68,68,0.4);
-    border-radius: 50px;
-    background: rgba(26, 26, 46, 0.9);
-    backdrop-filter: blur(10px);
-    color: #ef4444;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    z-index: 1001;
-    transition: 0.3s;
-}
+
 
 #logoutBtn:hover {
     background: #ef4444;
