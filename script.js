@@ -56,26 +56,27 @@ function waitForFirebase() {
     });
 }
 
-// SIGNUP
+// SIGNUP WITH PHONE NUMBER SAVE
 if(signupForm){
     signupForm.addEventListener('submit', async e => {
         e.preventDefault();
         await waitForFirebase();
         
-        const name = document.getElementById("signupName").value;
-        const email = document.getElementById("signupEmail").value;
+        const name = document.getElementById("signupName").value.trim();
+        const phone = document.getElementById("signupPhone").value.trim();
+        const email = document.getElementById("signupEmail").value.trim();
         const password = document.getElementById("signupPassword").value;
 
         try {
             const userCred = await window.firebaseCreateUser(window.firebaseAuth, email, password);
             
-            // Create user doc in firestore
+            // Create user doc in firestore including phone number
             await window.firebaseSetDoc(
                 window.firebaseDoc(window.firebaseDB, "users", userCred.user.uid),
                 {
                     name: name,
                     email: email,
-                    phone: "Not Provided",
+                    phone: phone,
                     checkboxes: {},
                     notes: [],
                     links: [],
@@ -204,6 +205,7 @@ async function initAuthListener() {
             
             window.currentUser = null;
             authInitialized = false;
+            window.currentUserProfileData = null;
             
             // Safe interface reset
             updateProfileUI(null);
@@ -233,7 +235,7 @@ async function loadFromFirebase(uid) {
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
             
-            // Safe fallback updates if database fields missing
+            // Store profile information in memory
             window.currentUserProfileData = {
                 name: data.name || window.currentUser.displayName || "User",
                 phone: data.phone || window.currentUser.phoneNumber || "Not Provided"
@@ -260,7 +262,7 @@ async function saveAllToFirebase() {
     try {
         const userDocRef = window.firebaseDoc(window.firebaseDB, "users", window.currentUser.uid);
         
-        await window.firebaseSetDoc(userDocRef, {
+        const payload = {
             email: window.currentUser.email,
             checkboxes: JSON.parse(localStorage.getItem('checkboxes') || '{}'),
             notes: JSON.parse(localStorage.getItem('notes') || '[]'),
@@ -268,8 +270,15 @@ async function saveAllToFirebase() {
             books: JSON.parse(localStorage.getItem('books') || '[]'),
             doneDates: JSON.parse(localStorage.getItem('doneDates') || '[]'),
             practiceHistory: JSON.parse(localStorage.getItem('practiceHistory') || '[]')
-        }, { merge: true });
+        };
+
+        // If in-memory custom profile updates exist, ensure we persist them
+        if (window.currentUserProfileData) {
+            payload.name = window.currentUserProfileData.name;
+            payload.phone = window.currentUserProfileData.phone;
+        }
         
+        await window.firebaseSetDoc(userDocRef, payload, { merge: true });
         console.log("Data saved to Firebase ✅");
     } catch(err) {
         console.error("Error saving:", err);
@@ -962,9 +971,9 @@ function calculateAndPopulateProfileDetails() {
     const user = window.currentUser;
     const dbProfile = window.currentUserProfileData || {};
 
-    // Populating general profile information
+    // Populating general profile information with actual registered metrics
     document.getElementById('profileDetailEmail').innerText = user.email || 'N/A';
-    document.getElementById('profileDetailPhone').innerText = user.phoneNumber || dbProfile.phone || 'Not Provided';
+    document.getElementById('profileDetailPhone').innerText = dbProfile.phone || user.phoneNumber || 'Not Provided';
     document.getElementById('profileDetailName').innerText = dbProfile.name || user.displayName || 'Learner';
 
     const detailPic = document.getElementById('profileDetailPic');
