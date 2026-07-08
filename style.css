@@ -1255,10 +1255,10 @@ body.home-active #homeWidgets {
 .profile-buttons-row {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    width: 100%;
-    gap: 12px;
-    margin: 10px 0;
+    justify-content: flex-end !important;
+    width: 100% !important;
+    gap: 10px;
+    padding-right: 10px;
 }
 
 .buttons-group {
@@ -1267,25 +1267,23 @@ body.home-active #homeWidgets {
     gap: 10px;
 }
 
-/* Profile Picture */
 .user-profile {
-    position: relative;
-    display: none;
-    align-items: center;
-    cursor: pointer;
+    position: relative !important;
+    display: none !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    flex-shrink: 0 !important;
 }
 
 .profile-picture {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: 2px solid #6c5ce7;
-    object-fit: cover;
-}
-
-.profile-picture:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    border: 2px solid #6c5ce7 !important;
+    object-fit: cover !important;
 }
 
 .profile-tooltip {
