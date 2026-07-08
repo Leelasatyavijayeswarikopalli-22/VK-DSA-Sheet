@@ -200,13 +200,27 @@ async function initAuthListener() {
                 await loadFromFirebase(user.uid);
             }
         } else {
-            if (loginBtn) loginBtn.style.display = 'block';
-            if (logoutBtn) logoutBtn.style.display = 'none';
-            if (userInfo) userInfo.style.display = 'none';
-            
-            window.currentUser = null;
-            authInitialized = false;
-        }
+    // User logged out - clear local data
+    localStorage.removeItem('checkboxes');
+    localStorage.removeItem('notes');
+    localStorage.removeItem('links');
+    localStorage.removeItem('books');
+    localStorage.removeItem('doneDates');
+    localStorage.removeItem('practiceHistory');
+    
+    if (loginBtn) loginBtn.style.display = 'block';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    if (userInfo) userInfo.style.display = 'none';
+    
+    window.currentUser = null;
+    authInitialized = false;
+    
+    // Refresh UI to show empty state
+    if (typeof loadCheckboxesAndProgress === 'function') {
+        loadCheckboxesAndProgress();
+        updateGlobalProgress();
+    }
+}
     });
 }
 
