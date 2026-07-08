@@ -1208,10 +1208,7 @@ body.home-active #homeWidgets {
     padding: 0;
     margin: 0;
 }
-.profile-picture:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
-}
+
 
 .profile-tooltip {
     display: none;
@@ -1229,9 +1226,7 @@ body.home-active #homeWidgets {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.user-profile:hover .profile-tooltip {
-    display: block;
-}
+
 /* Profile + Buttons Row */
 /* Profile + Buttons Row */
 /* Container holding buttons and profile */
@@ -1267,10 +1262,6 @@ body.home-active #homeWidgets {
     outline: none;         /* Remove outline */
 }
 
-.profile-picture:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
-}
 
 /* Tooltip hovering on top of everything */
 .profile-tooltip {
@@ -1288,8 +1279,6 @@ body.home-active #homeWidgets {
     border: 1px solid #6c5ce7;
 }
 
-.user-profile:hover .profile-tooltip {
-    display: block;
-} 
+
 
 
