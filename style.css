@@ -1168,7 +1168,7 @@ justify-content: center;
 .user-profile {
     position: fixed;
     top: 20px;          /* same as logout button */
-    right: 210px;       /* about 10–15px left of logout */
+    right: 200px;       /* about 10–15px left of logout */
 
     width: 44px;
     height: 44px;
