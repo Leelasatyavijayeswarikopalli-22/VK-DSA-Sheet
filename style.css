@@ -1162,16 +1162,6 @@ body.home-active #homeWidgets {
 
 
 /* Profile Picture Styling */
-.user-profile {
-    position: fixed;
-    top: 15px;
-    right: 120px;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: center;
-    z-index: 1000;
-}
 
 .profile-picture {
     width: 42px;
@@ -1209,12 +1199,14 @@ body.home-active #homeWidgets {
 
 /* Profile Picture Styling */
 .user-profile {
-    position: relative;
+    position: fixed;
+    top: 20px;
+    right: 180px;   /* Increase this to move it further right */
     display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    margin-left: 10px;
+    z-index: 1002;
 }
 
 .profile-picture {
