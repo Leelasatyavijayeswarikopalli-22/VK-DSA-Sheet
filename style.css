@@ -1207,8 +1207,8 @@ body.home-active #homeWidgets {
     height: 44px;
     border-radius: 50%;
     object-fit: cover;
-
-    border: 1.5px solid #6c5ce7;
+    border: 2px solid #ffffff;
+    
     box-shadow: none;
     padding: 0;
     margin: 0;
