@@ -1273,15 +1273,35 @@ justify-content: center;
 }
 /* Profile Details Modal Styling */
 /* Profile Details Modal Styling - Square & Spaced Layout */
+/* Symmetrical & Balanced Square Modal Content */
 .profile-modal-content {
     background: #0f0f1e !important;
     border: 2px solid #6c5ce7 !important;
     box-shadow: 0 0 25px rgba(108, 92, 231, 0.4) !important;
-    width: 600px !important; /* Widened to make it a neat square */
+    width: 600px !important;
     max-width: 90vw !important;
-    padding: 25px !important;
+    
+    /* Equal padding on all four sides (top, right, bottom, left) */
+    padding: 30px !important; 
+    
     border-radius: 12px !important;
     box-sizing: border-box !important;
+}
+
+/* Scrollable Container with balanced bottom margins */
+.category-breakdown-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    
+    /* Slightly reduced to leave perfect breathing room at the bottom */
+    max-height: 120px; 
+    
+    overflow-y: auto;
+    padding-right: 5px;
+    
+    /* Keeps a balanced gap inside the card before the bottom padding */
+    margin-bottom: 5px; 
 }
 
 .profile-card-header {
@@ -1396,14 +1416,7 @@ justify-content: center;
 }
 
 /* Scrollable Container with custom scrollbars for category list */
-.category-breakdown-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 140px; /* Kept concise to prevent pushing the modal down */
-    overflow-y: auto;
-    padding-right: 5px;
-}
+
 
 .category-breakdown-container::-webkit-scrollbar {
     width: 4px;
