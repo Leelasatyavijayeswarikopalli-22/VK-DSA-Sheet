@@ -1110,3 +1110,33 @@ function updateProfileUI(user) {
 firebaseOnAuth((user) => {
     updateProfileUI(user);
 });
+function updateProfileUI(user) {
+    const userInfo = document.getElementById('userInfo');
+    const profilePic = document.getElementById('profilePicture');
+    const userEmail = document.getElementById('userEmail');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (user) {
+        userInfo.style.display = 'flex';
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+        
+        if (user.photoURL) {
+            profilePic.src = user.photoURL;
+        } else {
+            const initial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+            profilePic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
+        }
+        userEmail.textContent = user.email;
+    } else {
+        userInfo.style.display = 'none';
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+    }
+}
+
+firebaseOnAuth((user) => {
+    updateProfileUI(user);
+});
+
