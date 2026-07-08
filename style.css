@@ -1110,6 +1110,9 @@ body.home-active #homeWidgets {
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     z-index: 1001;
     transition: 0.3s;
+    display: flex;
+align-items: center;
+justify-content: center;
 }
 
 #logoutBtn:hover {
