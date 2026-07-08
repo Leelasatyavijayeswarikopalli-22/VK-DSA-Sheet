@@ -1153,10 +1153,7 @@ body.home-active #homeWidgets {
 /* Profile Picture Styling */
 
 
-.profile-picture:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
-}
+
 
 .profile-tooltip {
     display: none;
@@ -1174,9 +1171,7 @@ body.home-active #homeWidgets {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.user-profile:hover .profile-tooltip {
-    display: block;
-}
+
 
 
 /* Profile Picture Styling */
