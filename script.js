@@ -1070,3 +1070,43 @@ document.querySelectorAll('.menu-item').forEach(item => {
         this.classList.add('active');
     });
 });
+
+
+// Profile Picture Handler
+function updateProfileUI(user) {
+    const userInfo = document.getElementById('userInfo');
+    const profilePic = document.getElementById('profilePicture');
+    const userEmail = document.getElementById('userEmail');
+    const loginBtn = document.getElementById('loginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (user) {
+        // User is logged in
+        userInfo.style.display = 'flex';
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'block';
+        
+        // Set profile picture from Google
+        if (user.photoURL) {
+            profilePic.src = user.photoURL;
+        } else {
+            // Default avatar with first letter of email
+            const initial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+            profilePic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
+        }
+        
+        // Set email for tooltip
+        userEmail.textContent = user.email;
+        
+    } else {
+        // User is logged out
+        userInfo.style.display = 'none';
+        loginBtn.style.display = 'block';
+        logoutBtn.style.display = 'none';
+    }
+}
+
+// Add this listener after Firebase init
+firebaseOnAuth((user) => {
+    updateProfileUI(user);
+});
