@@ -1119,7 +1119,7 @@ body.home-active #homeWidgets {
 #userInfo {
     position: fixed;
     top: 22px;
-    left: 250px;   /* moved left away from login/logout */
+    right : 0 px;   /* moved left away from login/logout */
     padding: 10px 18px;
     background: rgba(26, 26, 46, 0.9);
     backdrop-filter: blur(10px);
