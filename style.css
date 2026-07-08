@@ -1093,9 +1093,12 @@ body.home-active #homeWidgets {
 }
 #logoutBtn {
     position: fixed;
-    top: 140px;
+     width: 150px;      /* Increase/decrease as needed */
+    height: 56px;
+
+    top: 20px;
     right: 40px;
-    padding: 12px 35px;
+    padding: 0;
     font-size: 14px;
     border: 1px solid #2a2a4a;
     border-radius: 50px;
