@@ -185,12 +185,8 @@ async function initAuthListener() {
         const userEmail = document.getElementById('userEmail');
         
         if (user) {
-            console.log("User logged in:", user.email);
-            
-            if (loginBtn) loginBtn.style.display = 'none';
-            if (logoutBtn) logoutBtn.style.display = 'block';
-            if (userInfo) userInfo.style.display = 'block';
-            if (userEmail) userEmail.innerText = user.email;
+    console.log("User logged in:", user.email);
+    updateProfileUI(user);
             
             window.currentUser = user;
             
@@ -199,23 +195,16 @@ async function initAuthListener() {
                 authInitialized = true;
                 await loadFromFirebase(user.uid);
             }
-        } else {
-    // User logged out - clear local data
+    } else {
     localStorage.removeItem('checkboxes');
     localStorage.removeItem('notes');
     localStorage.removeItem('links');
     localStorage.removeItem('books');
     localStorage.removeItem('doneDates');
     localStorage.removeItem('practiceHistory');
-    
-    if (loginBtn) loginBtn.style.display = 'block';
-    if (logoutBtn) logoutBtn.style.display = 'none';
-    if (userInfo) userInfo.style.display = 'none';
-    
+    updateProfileUI(null);
     window.currentUser = null;
     authInitialized = false;
-    
-    // Refresh UI to show empty state
     if (typeof loadCheckboxesAndProgress === 'function') {
         loadCheckboxesAndProgress();
         updateGlobalProgress();
