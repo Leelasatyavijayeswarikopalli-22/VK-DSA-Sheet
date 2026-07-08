@@ -1199,8 +1199,8 @@ body.home-active #homeWidgets {
 
 /* Profile Picture Styling */
 .user-profile {
-    width: 56px;
-    height: 56px;
+    width: 42px;
+    height: 42px;
     position: fixed;
     top: 20px;
     right: 180px;   /* Increase this to move it further right */
