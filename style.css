@@ -1252,55 +1252,65 @@ body.home-active #homeWidgets {
 }
 /* Profile + Buttons Row */
 /* Profile + Buttons Row */
+/* Container holding buttons and profile */
 .profile-buttons-row {
     display: flex;
     align-items: center;
-    justify-content: flex-end !important;
-    width: 100% !important;
-    gap: 10px;
+    justify-content: flex-end; /* Pushes everything to the far right */
+    width: 100%;
+    gap: 15px;
+    margin: 15px 0;
     padding-right: 10px;
 }
 
+/* Group containing login, logout, history buttons */
 .buttons-group {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
+/* Circular Profile container (controlled by JS display styles) */
 .user-profile {
-    position: relative !important;
-    display: none !important;
-    align-items: center !important;
-    justify-content: center !important;
-    cursor: pointer !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-    flex-shrink: 0 !important;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
+/* Exact circle sizing and border styling */
 .profile-picture {
-    width: 42px !important;
-    height: 42px !important;
-    border-radius: 50% !important;
-    border: 2px solid #6c5ce7 !important;
-    object-fit: cover !important;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 2px solid #6c5ce7;
+    object-fit: cover;
+    transition: transform 0.2s ease;
 }
 
+.profile-picture:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(108, 92, 231, 0.6);
+}
+
+/* Tooltip hovering on top of everything */
 .profile-tooltip {
     display: none;
     position: absolute;
     top: 50px;
     right: 0;
-    background: rgba(20, 20, 40, 0.95);
+    background: #1a1a2e;
     color: #fff;
-    padding: 10px 14px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     font-size: 13px;
     white-space: nowrap;
-    z-index: 1000;
+    z-index: 9999;
     border: 1px solid #6c5ce7;
 }
 
 .user-profile:hover .profile-tooltip {
     display: block;
-}
+} 
+
+
