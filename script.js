@@ -317,6 +317,7 @@ function openNotes() {
     document.getElementById('notesPage').style.display = 'block';
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'none';
+    document.getElementById('searchPage').style.display = 'none';
 }
 
 function goHome() {
@@ -324,6 +325,7 @@ function goHome() {
     document.getElementById('notesPage').style.display = 'none';
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'none';
+    document.getElementById('searchPage').style.display = 'none';  // 👈 ADD THIS
 
     document.querySelectorAll('.section').forEach(section => {
         section.style.display = (section.dataset.category === 'Arrays') ? 'block' : 'none';
@@ -340,6 +342,7 @@ function openLinks() {
     document.getElementById('notesPage').style.display = 'none';
     document.getElementById('linksPage').style.display = 'block';
     document.getElementById('booksPage').style.display = 'none';
+    document.getElementById('searchPage').style.display = 'none';
 }
 
 function openBooks() {
@@ -348,6 +351,7 @@ function openBooks() {
     document.getElementById('notesPage').style.display = 'none';
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'block';
+    document.getElementById('searchPage').style.display = 'none';
 }
 
 // ============ FILE UPLOAD ============
@@ -1090,4 +1094,190 @@ function calculateAndPopulateProfileDetails() {
 
     document.getElementById('profileTotalDone').innerText = totalDoneAllTopics;
     document.getElementById('profileCategoryCount').innerText = `${activeCategoriesCount}/${targetCategories.length}`;
+}
+
+// ============ SEARCH FUNCTIONALITY ============
+function openSearch() {
+    // Hide all other pages
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    document.querySelector('.tabs').style.display = 'none';
+    document.getElementById('notesPage').style.display = 'none';
+    document.getElementById('linksPage').style.display = 'none';
+    document.getElementById('booksPage').style.display = 'none';
+
+    // Show search page
+    const searchPage = document.getElementById('searchPage');
+    if (searchPage) {
+        searchPage.style.display = 'block';
+        const input = document.getElementById('searchInput');
+        if (input) {
+            input.value = '';
+            input.focus();
+            document.getElementById('searchResults').innerHTML = 
+                '<p class="search-hint">Start typing to search across all topics...</p>';
+        }
+    }
+}
+window.openSearch = openSearch;
+
+function performSearch() {
+    const query = document.getElementById('searchInput').value.trim().toLowerCase();
+    const resultsContainer = document.getElementById('searchResults');
+
+    if (!query) {
+        resultsContainer.innerHTML = 
+            '<p class="search-hint">Start typing to search across all topics...</p>';
+        return;
+    }
+
+    // Collect matches, grouped by topic (category + section)
+    const groupedResults = {};
+
+    document.querySelectorAll('.section').forEach(section => {
+        const category = section.dataset.category || 'Other';
+        const sectionHeaderEl = section.querySelector('.section-header span');
+        const sectionName = sectionHeaderEl ? sectionHeaderEl.innerText.trim() : 'Unknown';
+
+        section.querySelectorAll('.problem').forEach(prob => {
+            const titleEl = prob.querySelector('.title') || prob.querySelector('span');
+            if (!titleEl) return;
+            const title = titleEl.innerText.trim();
+
+            if (title.toLowerCase().includes(query)) {
+                const groupKey = `${category}||${sectionName}`;
+                if (!groupedResults[groupKey]) {
+                    groupedResults[groupKey] = {
+                        category: category,
+                        sectionName: sectionName,
+                        problems: []
+                    };
+                }
+                groupedResults[groupKey].problems.push(prob);
+            }
+        });
+    });
+
+    // Render results
+    const keys = Object.keys(groupedResults);
+    if (keys.length === 0) {
+        resultsContainer.innerHTML = 
+            `<p class="search-no-results">No problems found matching "<strong>${escapeHtml(query)}</strong>"</p>`;
+        return;
+    }
+
+    let html = '';
+    keys.forEach(key => {
+        const group = groupedResults[key];
+        html += `
+            <div class="search-topic-group">
+                <div class="search-topic-title">
+                    ${escapeHtml(group.category)}
+                    <span class="search-topic-subtitle">→ ${escapeHtml(group.sectionName)}</span>
+                </div>
+                <div class="search-result-header">
+                    <span>Problem</span>
+                    <span>Link</span>
+                    <span>Done</span>
+                    <span>Revision</span>
+                    <span>Difficulty</span>
+                </div>
+        `;
+
+        group.problems.forEach(prob => {
+            // Clone the problem row so interactions stay in sync
+            const cloned = prob.cloneNode(true);
+            cloned.classList.add('search-result-row');
+            cloned.classList.remove('problem');
+
+            // Highlight the matched text
+            const titleEl = cloned.querySelector('.title') || cloned.querySelector('span');
+            if (titleEl) {
+                const originalText = titleEl.innerText;
+                const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+                titleEl.innerHTML = originalText.replace(regex, '<span class="search-highlight">$1</span>');
+            }
+
+            // Sync checkbox interactions back to the original problem
+            const originalDoneCb = prob.querySelector('.done input[type="checkbox"]');
+            const originalRevCb = prob.querySelector('.revision input[type="checkbox"]');
+            const clonedDoneCb = cloned.querySelector('.done input[type="checkbox"]');
+            const clonedRevCb = cloned.querySelector('.revision input[type="checkbox"]');
+
+            if (clonedDoneCb && originalDoneCb) {
+                clonedDoneCb.checked = originalDoneCb.checked;
+                clonedDoneCb.addEventListener('change', () => {
+                    originalDoneCb.checked = clonedDoneCb.checked;
+                    originalDoneCb.dispatchEvent(new Event('change'));
+                });
+            }
+
+            if (clonedRevCb && originalRevCb) {
+                clonedRevCb.checked = originalRevCb.checked;
+                clonedRevCb.addEventListener('change', () => {
+                    originalRevCb.checked = clonedRevCb.checked;
+                    originalRevCb.dispatchEvent(new Event('change'));
+                });
+            }
+
+            html += cloned.outerHTML;
+        });
+
+        html += `</div>`;
+    });
+
+    resultsContainer.innerHTML = html;
+
+    // Re-attach listeners because innerHTML wipes them
+    reattachSearchListeners(groupedResults);
+}
+window.performSearch = performSearch;
+
+// After innerHTML wipes bindings, wire up again by matching indices
+function reattachSearchListeners(groupedResults) {
+    const groups = document.querySelectorAll('.search-topic-group');
+    let groupIndex = 0;
+
+    Object.keys(groupedResults).forEach(key => {
+        const group = groupedResults[key];
+        const groupEl = groups[groupIndex++];
+        if (!groupEl) return;
+
+        const resultRows = groupEl.querySelectorAll('.search-result-row');
+        group.problems.forEach((originalProb, idx) => {
+            const clonedRow = resultRows[idx];
+            if (!clonedRow) return;
+
+            const originalDoneCb = originalProb.querySelector('.done input[type="checkbox"]');
+            const originalRevCb = originalProb.querySelector('.revision input[type="checkbox"]');
+            const clonedDoneCb = clonedRow.querySelector('.done input[type="checkbox"]');
+            const clonedRevCb = clonedRow.querySelector('.revision input[type="checkbox"]');
+
+            if (clonedDoneCb && originalDoneCb) {
+                clonedDoneCb.checked = originalDoneCb.checked;
+                clonedDoneCb.addEventListener('change', () => {
+                    originalDoneCb.checked = clonedDoneCb.checked;
+                    originalDoneCb.dispatchEvent(new Event('change'));
+                });
+            }
+
+            if (clonedRevCb && originalRevCb) {
+                clonedRevCb.checked = originalRevCb.checked;
+                clonedRevCb.addEventListener('change', () => {
+                    originalRevCb.checked = clonedRevCb.checked;
+                    originalRevCb.dispatchEvent(new Event('change'));
+                });
+            }
+        });
+    });
+}
+
+// Helpers
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.innerText = text;
+    return div.innerHTML;
+}
+
+function escapeRegex(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
