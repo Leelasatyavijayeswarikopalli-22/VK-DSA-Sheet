@@ -196,11 +196,34 @@ body::after {
 /* ============ TABS ============ */
 .tabs {
     display: flex;
-    gap: 12px;
+    gap: 10px;
     margin-bottom: 25px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;              /* 👈 no wrapping to next line */
+    overflow-x: auto;               /* 👈 horizontal scroll if overflows */
+    overflow-y: hidden;
+    padding: 4px 4px 10px 4px;
+    scrollbar-width: thin;
+    scrollbar-color: #a855f7 transparent;
 }
 
+/* Custom scrollbar for webkit */
+.tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, #a855f7, #06b6d4);
+    border-radius: 10px;
+}
+
+.tabs::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(90deg, #c084fc, #22d3ee);
+}
 .tab {
     display: inline-flex;
     align-items: center;
@@ -214,6 +237,8 @@ body::after {
     font-size: 14px;
     color: #b4b4c8;
     transition: 0.25s;
+    white-space: nowrap;    /* 👈 keep text on one line */
+    flex-shrink: 0;         /* 👈 don't shrink tabs */
 }
 
 .tab:hover {
