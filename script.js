@@ -349,6 +349,7 @@ function openNotes() {
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'none';
     document.getElementById('searchPage').style.display = 'none';
+    renderCuratedContent('notes');
 }
 
 // ============ LINKS PAGE ============
@@ -361,6 +362,7 @@ function openLinks() {
     document.getElementById('linksPage').style.display = 'block';
     document.getElementById('booksPage').style.display = 'none';
     document.getElementById('searchPage').style.display = 'none';
+    renderCuratedContent('links');
 }
 
 // ============ BOOKS PAGE ============
@@ -373,6 +375,7 @@ function openBooks() {
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'block';
     document.getElementById('searchPage').style.display = 'none';
+    renderCuratedContent('books');
 }
 
 // Make globally accessible (in case onclick calls need it)
@@ -1309,3 +1312,83 @@ function escapeHtml(text) {
 function escapeRegex(text) {
     return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
+
+// ============ CURATED CONTENT (Owner/Admin added) ============
+// Edit these arrays to add your own recommended content
+const CURATED_CONTENT = {
+    books: [
+        {
+            name: "Introduction to Algorithms (CLRS)",
+            url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/"
+        },
+        {
+            name: "Cracking the Coding Interview",
+            url: "https://www.crackingthecodinginterview.com/"
+        },
+        {
+            name: "Grokking Algorithms",
+            url: "https://www.manning.com/books/grokking-algorithms"
+        }
+    ],
+    links: [
+        { name: "Striver's A2Z DSA Sheet", url: "https://takeuforward.org/strivers-a2z-dsa-course/strivers-a2z-dsa-course-sheet-2/" },
+        { name: "NeetCode 150", url: "https://neetcode.io/practice" },
+        { name: "LeetCode", url: "https://leetcode.com/" },
+        { name: "GeeksforGeeks DSA", url: "https://www.geeksforgeeks.org/data-structures/" },
+        { name: "Codeforces", url: "https://codeforces.com/" }
+    ],
+    notes: [
+        { name: "Big-O Cheat Sheet", url: "https://www.bigocheatsheet.com/" },
+        { name: "DSA Patterns Guide", url: "https://seanprashad.com/leetcode-patterns/" }
+    ]
+};
+
+// ============ SWITCH CONTENT TAB (Personal / Curated) ============
+function switchContentTab(button, feature, type) {
+    // Update tab buttons
+    const parent = button.parentElement;
+    parent.querySelectorAll('.content-tab').forEach(t => t.classList.remove('active'));
+    button.classList.add('active');
+
+    // Update panels
+    const personalPanel = document.getElementById(`${feature}Personal`);
+    const curatedPanel = document.getElementById(`${feature}Curated`);
+
+    if (type === 'personal') {
+        personalPanel.classList.add('active');
+        curatedPanel.classList.remove('active');
+    } else {
+        curatedPanel.classList.add('active');
+        personalPanel.classList.remove('active');
+        renderCuratedContent(feature);
+    }
+}
+window.switchContentTab = switchContentTab;
+
+// ============ RENDER CURATED CONTENT ============
+function renderCuratedContent(feature) {
+    const containerId = `curated${feature.charAt(0).toUpperCase() + feature.slice(1)}Container`;
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    const items = CURATED_CONTENT[feature] || [];
+    container.innerHTML = '';
+
+    if (items.length === 0) {
+        container.innerHTML = '<p style="color:#8b8ba7; text-align:center; padding:20px;">No curated content yet.</p>';
+        return;
+    }
+
+    items.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <p>${escapeHtml(item.name)}</p>
+            <div class="card-buttons">
+                <a href="${escapeHtml(item.url)}" target="_blank">Open</a>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+window.renderCuratedContent = renderCuratedContent;
