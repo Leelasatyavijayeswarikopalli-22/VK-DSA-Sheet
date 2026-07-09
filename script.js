@@ -334,11 +334,15 @@ function requireLogin(featureName) {
 }
 
 function goHome() {
-    document.querySelector('.tabs').style.display = 'block';
+    // Reset display explicitly to flex (not just 'block')
+    const tabsEl = document.querySelector('.tabs');
+    if (tabsEl) tabsEl.style.display = 'flex';   // 👈 force flex, not block
+
     document.getElementById('notesPage').style.display = 'none';
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'none';
-    document.getElementById('searchPage').style.display = 'none';  // 👈 ADD THIS
+    const searchPage = document.getElementById('searchPage');
+    if (searchPage) searchPage.style.display = 'none';
 
     document.querySelectorAll('.section').forEach(section => {
         section.style.display = (section.dataset.category === 'Arrays') ? 'block' : 'none';
@@ -347,7 +351,9 @@ function goHome() {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab')[0].classList.add('active');
     updateGlobalProgress();
+    updateTotalSolvedStats();
 }
+window.goHome = goHome;
 // ============ NOTES PAGE ============
 function openNotes() {
     if (!requireLogin("Notes")) return;
