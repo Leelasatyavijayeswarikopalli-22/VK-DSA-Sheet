@@ -2306,3 +2306,24 @@ justify-content: center;
         order: 99;
     }
 }
+
+
+/* DESKTOP: keep "Problem" on new line */
+.hero-title .problem-word {
+    display: block;
+    color: white;
+    background: none;
+    -webkit-text-fill-color: white;
+}
+
+/* MOBILE: put "Problem" inline with "To Solve Any" */
+@media screen and (max-width: 768px) {
+    .hero-title .problem-word {
+        display: inline;
+    }
+
+    .left-top .hero-title {
+        font-size: 28px !important;
+        line-height: 1.25 !important;
+    }
+}
