@@ -310,57 +310,89 @@
     </div>
 </div>
         <!-- NOTES PAGE -->
-        <div id="notesPage" style="display:none;">
+        <!-- NOTES PAGE -->
+<div id="notesPage" style="display:none;">
+    <h2>📝 Notes</h2>
+    
+    <div class="content-tabs">
+        <button class="content-tab active" onclick="switchContentTab(this, 'notes', 'personal')">
+            📝 My Notes
+        </button>
+        <button class="content-tab" onclick="switchContentTab(this, 'notes', 'curated')">
+            📖 Study Guides
+        </button>
+    </div>
 
-            <h2>📒 My Notes</h2>
-
-            <div class="upload-box">
-
-                <input type="file" id="fileInput" accept="application/pdf,image/*">
-
-                <button onclick="uploadFile()">Upload</button>
-
-            </div>
-
-            <div id="notesContainer" class="notes-container"></div>
-
+    <!-- Personal Notes -->
+    <div id="notesPersonal" class="content-panel active">
+        <div class="upload-box">
+            <input type="file" id="fileInput" accept="application/pdf,image/*">
+            <button onclick="uploadFile()">Upload</button>
         </div>
+        <div id="notesContainer" class="notes-container"></div>
+    </div>
 
-        <!-- LINKS PAGE -->
-        <div id="linksPage" style="display:none;">
+    <!-- Curated Notes -->
+    <div id="notesCurated" class="content-panel">
+        <div class="curated-info">✨ Handpicked study materials by VK</div>
+        <div id="curatedNotesContainer" class="notes-container"></div>
+    </div>
+</div>
 
-            <h2>🔗 My Links</h2>
+<!-- LINKS PAGE -->
+<div id="linksPage" style="display:none;">
+    <h2>🔗 Links</h2>
+    
+    <div class="content-tabs">
+        <button class="content-tab active" onclick="switchContentTab(this, 'links', 'personal')">
+            🔖 My Bookmarks
+        </button>
+        <button class="content-tab" onclick="switchContentTab(this, 'links', 'curated')">
+            🌐 Curated Resources
+        </button>
+    </div>
 
-            <div class="upload-box">
-
-                <input type="text" id="linkInput" placeholder="Enter URL">
-
-                <button onclick="addLink()">Add Link</button>
-
-            </div>
-
-            <div id="linksContainer" class="links-container"></div>
-
+    <div id="linksPersonal" class="content-panel active">
+        <div class="upload-box">
+            <input type="text" id="linkInput" placeholder="Enter URL">
+            <button onclick="addLink()">Add Link</button>
         </div>
+        <div id="linksContainer" class="links-container"></div>
+    </div>
 
-        <!-- BOOKS PAGE -->
-        <div id="booksPage" style="display:none;">
+    <div id="linksCurated" class="content-panel">
+        <div class="curated-info">✨ Best DSA resources hand-picked by VK</div>
+        <div id="curatedLinksContainer" class="links-container"></div>
+    </div>
+</div>
 
-            <h2>📖 My Books</h2>
+<!-- BOOKS PAGE -->
+<div id="booksPage" style="display:none;">
+    <h2>📖 Books</h2>
+    
+    <div class="content-tabs">
+        <button class="content-tab active" onclick="switchContentTab(this, 'books', 'personal')">
+            📚 My Library
+        </button>
+        <button class="content-tab" onclick="switchContentTab(this, 'books', 'curated')">
+            ⭐ Recommended Books
+        </button>
+    </div>
 
-            <div class="upload-box">
-
-                <input type="text" id="bookNameInput" placeholder="Enter Book Name">
-
-                <input type="file" id="bookFileInput" accept="application/pdf,image/*">
-
-                <button onclick="addBook()">Add Book</button>
-
-            </div>
-
-            <div id="booksContainer" class="books-container"></div>
-
+    <div id="booksPersonal" class="content-panel active">
+        <div class="upload-box">
+            <input type="text" id="bookNameInput" placeholder="Enter Book Name">
+            <input type="file" id="bookFileInput" accept="application/pdf,image/*">
+            <button onclick="addBook()">Add Book</button>
         </div>
+        <div id="booksContainer" class="books-container"></div>
+    </div>
+
+    <div id="booksCurated" class="content-panel">
+        <div class="curated-info">✨ Top DSA books recommended by VK</div>
+        <div id="curatedBooksContainer" class="books-container"></div>
+    </div>
+</div>
         <!-- SEARCH PAGE -->
 <div id="searchPage" style="display:none;">
     <h2>🔍 Search Problems</h2>
