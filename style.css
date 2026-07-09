@@ -228,7 +228,25 @@ body::after {
     color: white;
     box-shadow: 0 0 15px rgba(99,102,241,0.3);
 }
+.hero-title {
+  color: #ffffff;              /* ALL white */
+  font-size: 2rem;             /* smaller — was probably 3rem+ */
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0;
+}
 
+.hero-subtitle {
+  color: #cbd5e1;              /* light gray */
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
+  font-weight: 400;
+}
+
+.level-up {
+  color: #3b82f6;              /* blue accent */
+  font-weight: 500;
+}
 h1 {
     margin-bottom: 16px;
     font-size: 28px;
