@@ -2203,3 +2203,106 @@ justify-content: center;
         padding: 16px !important;
     }
 }
+
+/* ============================================
+   📱 MOBILE CUSTOM ORDER (below 768px only)
+   Desktop layout stays UNTOUCHED
+   ============================================ */
+@media screen and (max-width: 768px) {
+
+    /* Convert .main into a flex column with custom ordering */
+    .main {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 1️⃣ HEADING FIRST */
+    .top-header {
+        order: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Reorder inside top-header: title first, stats card later */
+    .left-top {
+        order: 1;
+    }
+
+    .stats-card {
+        order: 3; /* moved below buttons + calendar */
+    }
+
+    /* Change heading to 2 lines on mobile: "All DSA Patterns" + "To Solve Any Problem" */
+    .left-top .hero-title {
+        font-size: 30px !important;
+        line-height: 1.2 !important;
+    }
+
+    .left-top .hero-title br {
+        display: none; /* remove desktop line breaks */
+    }
+
+    /* Add a manual line break after "Patterns" using a colored pseudo separator */
+    .left-top .hero-title .gradient-text::before {
+        content: "\A"; /* forces new line before gradient text */
+        white-space: pre;
+    }
+
+    /* 2️⃣ BUTTONS ROW (Practice History + Logout + User) */
+    .profile-buttons-row {
+        order: 2;
+        justify-content: center;
+        margin: 5px 0 15px 0;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    /* 3️⃣ PROGRESS CONTAINER (Calendar + Circle) */
+    #progressContainer {
+        order: 3;
+        margin: 10px auto 20px auto !important;
+        flex-direction: column !important;
+        align-items: center;
+    }
+
+    /* 4️⃣ STATS CARD moves after calendar */
+    .top-header .stats-card {
+        order: 4;
+        margin-top: 15px;
+    }
+
+    /* Move stats card out of top-header visually using order on parent */
+    /* Since top-header wraps title + stats, we split them: */
+    .top-header {
+        display: contents; /* makes children direct children of .main */
+    }
+
+    .left-top { order: 1; }
+    .profile-buttons-row { order: 2; }
+    #progressContainer { order: 3; }
+    .stats-card { order: 4; margin: 0 0 20px 0; width: 100%; box-sizing: border-box; }
+
+    /* 5️⃣ TABS */
+    .tabs {
+        order: 5;
+        margin: 10px 0 20px 0 !important;
+    }
+
+    /* 6️⃣ ALL SECTIONS (question rows) */
+    .section {
+        order: 6;
+    }
+
+    /* Other pages keep their normal order */
+    #notesPage,
+    #linksPage,
+    #booksPage,
+    #searchPage {
+        order: 7;
+    }
+
+    .modal {
+        order: 99;
+    }
+}
