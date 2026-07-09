@@ -1049,3 +1049,55 @@ function calculateAndPopulateProfileDetails() {
     document.getElementById('profileTotalDone').innerText = totalDoneAllTopics;
     document.getElementById('profileCategoryCount').innerText = `${activeCategoriesCount}/${targetCategories.length}`;
 }
+// ============ CALCULATE TOTAL SOLVED STATS ============
+function updateTotalSolvedStats() {
+    let totalSolved = 0;
+    let easyCount = 0;
+    let medCount = 0;
+    let hardCount = 0;
+    let totalProblems = 0;
+
+    // Loop through ALL sections in ALL categories
+    document.querySelectorAll('.section').forEach(section => {
+        const problems = section.querySelectorAll('.problem');
+        
+        problems.forEach(prob => {
+            totalProblems++;
+            
+            const doneCheckbox = prob.querySelector('.done input[type="checkbox"]');
+            const difficultyEl = prob.querySelector('.difficulty');
+            
+            if (doneCheckbox && doneCheckbox.checked) {
+                totalSolved++;
+                
+                // Read difficulty from the DOM
+                if (difficultyEl) {
+                    const diffText = difficultyEl.innerText.trim().toLowerCase();
+                    if (diffText === 'easy') easyCount++;
+                    else if (diffText === 'medium') medCount++;
+                    else if (diffText === 'hard') hardCount++;
+                }
+            }
+        });
+    });
+
+    // Update the DOM
+    const totalEl = document.getElementById('totalSolved');
+    const easyEl = document.getElementById('easyCount');
+    const medEl = document.getElementById('medCount');
+    const hardEl = document.getElementById('hardCount');
+    const beatsEl = document.getElementById('beatsPercent');
+
+    if (totalEl) totalEl.innerText = totalSolved;
+    if (easyEl) easyEl.innerText = easyCount;
+    if (medEl) medEl.innerText = medCount;
+    if (hardEl) hardEl.innerText = hardCount;
+
+    // Calculate beats % (percent of total problems solved)
+    if (beatsEl && totalProblems > 0) {
+        const percent = ((totalSolved / totalProblems) * 100).toFixed(1);
+        beatsEl.innerText = percent;
+    }
+}
+
+window.updateTotalSolvedStats = updateTotalSolvedStats;
