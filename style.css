@@ -230,7 +230,7 @@ body::after {
 }
 .hero-title {
   color: #ffffff;
-    font-size: 46px;          /* ⬆ increased from 32px */
+    font-size: 42px;          /* ⬆ increased from 32px */
     font-weight: 800;
     line-height: 1.15;        /* tighter for large text */
     margin: 0;
@@ -994,7 +994,7 @@ body.home-active #homeWidgets {
 
 .left-top {
     color: #ffffff;
-    font-size: 46px;          /* ⬆ increased from 32px */
+    font-size: 42px;          /* ⬆ increased from 32px */
     font-weight: 800;
     line-height: 1.15;        /* tighter for large text */
     margin: 0;
