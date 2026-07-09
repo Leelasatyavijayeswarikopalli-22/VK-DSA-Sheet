@@ -236,11 +236,12 @@ h1 {
 
 /* Heading gradient */
 .gradient-text {
-    background: linear-gradient(90deg, #a855f7, #ec4899);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  background: linear-gradient(90deg, #a855f7, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
+.highlight { color: #3b82f6; }
 
 .subtitle {
     color: #8b8ba7;
