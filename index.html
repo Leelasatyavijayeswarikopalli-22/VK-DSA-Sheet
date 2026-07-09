@@ -66,8 +66,8 @@
     <div class="menu-item active" onclick="goHome()">
         <span class="menu-icon">🏠</span> Home
     </div>
-    <div class="menu-item">
-        <span class="menu-icon">🔍</span> Search
+    <div class="menu-item" onclick="openSearch()">
+    <span class="menu-icon">🔍</span> Search
     </div>
     <div class="menu-item" onclick="openBooks()">
         <span class="menu-icon">📖</span> Books
@@ -361,7 +361,18 @@
             <div id="booksContainer" class="books-container"></div>
 
         </div>
+        <!-- SEARCH PAGE -->
+<div id="searchPage" style="display:none;">
+    <h2>🔍 Search Problems</h2>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search problems by name..." oninput="performSearch()">
+    </div>
 
+    <div id="searchResults" class="search-results">
+        <p class="search-hint">Start typing to search across all topics...</p>
+    </div>
+</div>
       
         <!-- ========================= -->
         <!-- ARRAYS SECTION -->
