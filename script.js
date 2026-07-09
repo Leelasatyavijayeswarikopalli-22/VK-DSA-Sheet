@@ -180,24 +180,32 @@ async function initAuthListener() {
                 await loadFromFirebase(user.uid);
             }
         } else {
-            localStorage.removeItem('checkboxes');
-            localStorage.removeItem('notes');
-            localStorage.removeItem('links');
-            localStorage.removeItem('books');
-            localStorage.removeItem('doneDates');
-            localStorage.removeItem('practiceHistory');
+    localStorage.removeItem('checkboxes');
+    localStorage.removeItem('notes');
+    localStorage.removeItem('links');
+    localStorage.removeItem('books');
+    localStorage.removeItem('doneDates');
+    localStorage.removeItem('practiceHistory');
 
-            window.currentUser = null;
-            authInitialized = false;
-            window.currentUserProfileData = null;
-            updateProfileUI(null);
+    window.currentUser = null;
+    authInitialized = false;
+    window.currentUserProfileData = null;
+    updateProfileUI(null);
 
-            if (typeof loadCheckboxesAndProgress === 'function') {
-                loadCheckboxesAndProgress();
-                updateGlobalProgress();
-                updateTotalSolvedStats();
-            }
-        }
+    // Clear all containers so previous user's data disappears
+    const notesContainer = document.getElementById('notesContainer');
+    const linksContainer = document.getElementById('linksContainer');
+    const booksContainer = document.getElementById('booksContainer');
+    if (notesContainer) notesContainer.innerHTML = '';
+    if (linksContainer) linksContainer.innerHTML = '';
+    if (booksContainer) booksContainer.innerHTML = '';
+
+    if (typeof loadCheckboxesAndProgress === 'function') {
+        loadCheckboxesAndProgress();
+        updateGlobalProgress();
+        updateTotalSolvedStats();
+    }
+}
     });
 }
 
@@ -228,6 +236,7 @@ async function loadFromFirebase(uid) {
             loadCalendar();
             updateGlobalProgress();
             updateTotalSolvedStats();
+            loadNotesLinksBooks();  // 👈 ADD THIS LINE — renders user's saved items
 
             console.log("✅ Data loaded from Firebase");
         }
@@ -387,6 +396,8 @@ window.requireLogin = requireLogin;
 
 // ============ FILE UPLOAD ============
 function uploadFile() {
+    if (!requireLogin("Notes")) return;
+
     const input = document.getElementById("fileInput");
     if (!input.files.length) {
         alert("Select a file first!");
@@ -404,8 +415,8 @@ function uploadFile() {
             <img src="${url}" style="max-width:100%; border-radius:8px; margin-bottom:10px;">
             <p>${file.name}</p>
             <div class="card-buttons">
-                <a href="${url}" target="_blank">View Image</a>
-                <button onclick="this.closest('.card').remove(); saveNotes();">Remove</button>
+                <a href="${url}" target="_blank">View</a>
+                <button onclick="deleteCard(this, 'notes')">Delete</button>
             </div>
         `;
     } else {
@@ -413,7 +424,7 @@ function uploadFile() {
             <p>${file.name}</p>
             <div class="card-buttons">
                 <a href="${url}" target="_blank">Open PDF</a>
-                <button onclick="this.closest('.card').remove(); saveNotes();">Remove</button>
+                <button onclick="deleteCard(this, 'notes')">Delete</button>
             </div>
         `;
     }
@@ -421,7 +432,10 @@ function uploadFile() {
     container.appendChild(card);
     input.value = "";
     saveNotes();
+    if (window.currentUser) saveAllToFirebase();
 }
+window.uploadFile = uploadFile;
+
 
 // ============ LOAD CHECKBOXES + PROGRESS ============
 function loadCheckboxesAndProgress() {
@@ -499,8 +513,10 @@ function addProblem() {
         .then(() => loadProblems());
 }
 
-// ============ LINKS ============
+// ============ ADD LINK ============
 function addLink() {
+    if (!requireLogin("Links")) return;
+
     const input = document.getElementById("linkInput");
     const url = input.value.trim();
     if (!url) { alert("Enter a link!"); return; }
@@ -512,16 +528,20 @@ function addLink() {
         <p>${url}</p>
         <div class="card-buttons">
             <a href="${url}" target="_blank">Open Link</a>
-            <button onclick="this.closest('.card').remove(); saveLinks();">Remove</button>
+            <button onclick="deleteCard(this, 'links')">Delete</button>
         </div>
     `;
     container.appendChild(card);
     input.value = "";
     saveLinks();
+    if (window.currentUser) saveAllToFirebase();
 }
+window.addLink = addLink;
 
-// ============ BOOKS ============
+// ============ ADD BOOK ============
 function addBook() {
+    if (!requireLogin("Books")) return;
+
     const nameInput = document.getElementById("bookNameInput");
     const fileInput = document.getElementById("bookFileInput");
     const name = nameInput.value.trim();
@@ -538,7 +558,7 @@ function addBook() {
         <p>${name}</p>
         <div class="card-buttons">
             <a href="${url}" target="_blank">Open PDF</a>
-           <button onclick="this.closest('.card').remove(); saveBooks();">Remove</button>
+            <button onclick="deleteCard(this, 'books')">Delete</button>
         </div>
     `;
     container.appendChild(card);
@@ -546,8 +566,24 @@ function addBook() {
     nameInput.value = "";
     fileInput.value = "";
     saveBooks();
+    if (window.currentUser) saveAllToFirebase();
 }
+window.addBook = addBook;
 
+// ============ UNIVERSAL DELETE (safer than inline onclick) ============
+function deleteCard(button, type) {
+    if (!confirm("Are you sure you want to delete this?")) return;
+
+    const card = button.closest('.card');
+    if (card) card.remove();
+
+    if (type === 'notes') saveNotes();
+    else if (type === 'links') saveLinks();
+    else if (type === 'books') saveBooks();
+
+    if (window.currentUser) saveAllToFirebase();
+}
+window.deleteCard = deleteCard;
 // ============ UPDATE PROGRESS BARS ============
 function updateProgress(section) {
     const doneBar = section.querySelector('.done-bar');
@@ -611,27 +647,33 @@ function loadNotesLinksBooks() {
     const linksContainer = document.getElementById('linksContainer');
     const booksContainer = document.getElementById('booksContainer');
 
+    // Clear existing content first (prevents duplicates on reload)
+    if (notesContainer) notesContainer.innerHTML = '';
+    if (linksContainer) linksContainer.innerHTML = '';
+    if (booksContainer) booksContainer.innerHTML = '';
+
     notes.forEach(n => {
         const div = document.createElement('div');
         div.classList.add('card');
         div.innerHTML = n;
-        notesContainer.appendChild(div);
+        if (notesContainer) notesContainer.appendChild(div);
     });
 
     links.forEach(l => {
         const div = document.createElement('div');
         div.classList.add('card');
         div.innerHTML = l;
-        linksContainer.appendChild(div);
+        if (linksContainer) linksContainer.appendChild(div);
     });
 
     books.forEach(b => {
         const div = document.createElement('div');
         div.classList.add('card');
         div.innerHTML = b;
-        booksContainer.appendChild(div);
+        if (booksContainer) booksContainer.appendChild(div);
     });
 }
+window.loadNotesLinksBooks = loadNotesLinksBooks;
 
 // ============ LOAD DYNAMIC PROBLEMS FROM BACKEND ============
 async function loadProblems() {
