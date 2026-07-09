@@ -1499,3 +1499,126 @@ justify-content: center;
     width: 0%;
     transition: width 0.5s ease-out;
 }
+
+/* ============ SEARCH PAGE ============ */
+#searchPage {
+    background: linear-gradient(135deg, #1a0f2e, #0b1220);
+    padding: 25px;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
+#searchPage h2 {
+    margin: 0 0 20px 0;
+    color: white;
+}
+
+.search-box {
+    margin-bottom: 20px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(15, 15, 35, 0.9);
+    border: 1px solid #2a2a4a;
+    border-radius: 12px;
+    color: white;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    transition: 0.3s;
+}
+
+.search-box input:focus {
+    border-color: #a855f7;
+    box-shadow: 0 0 15px rgba(168,85,247,0.3);
+}
+
+.search-box input::placeholder {
+    color: #8b8ba7;
+}
+
+.search-hint {
+    color: #8b8ba7;
+    text-align: center;
+    font-size: 14px;
+    padding: 20px;
+}
+
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.search-topic-group {
+    background: rgba(18, 18, 42, 0.75);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 14px;
+    padding: 15px 20px;
+}
+
+.search-topic-title {
+    color: #a855f7;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-topic-subtitle {
+    color: #8b8ba7;
+    font-size: 12px;
+    font-weight: 400;
+    margin-left: 8px;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.search-result-row {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    align-items: center;
+    padding: 14px 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 14px;
+}
+
+.search-result-row:last-child {
+    border-bottom: none;
+}
+
+.search-result-header {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr 1fr;
+    padding: 10px;
+    font-size: 13px;
+    color: #8b8ba7;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 5px;
+}
+
+.search-result-header span {
+    text-align: center;
+}
+
+.search-result-header span:first-child {
+    text-align: left;
+}
+
+.search-no-results {
+    text-align: center;
+    color: #8b8ba7;
+    padding: 40px;
+    font-size: 14px;
+}
+
+.search-highlight {
+    background: rgba(168,85,247,0.3);
+    color: #fff;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
