@@ -229,11 +229,12 @@ body::after {
     box-shadow: 0 0 15px rgba(99,102,241,0.3);
 }
 .hero-title {
-  color: #ffffff;              /* ALL white */
-  font-size: 2rem;             /* smaller — was probably 3rem+ */
-  font-weight: 800;
-  line-height: 1.15;
-  margin: 0;
+  color: #ffffff;
+    font-size: 52px;          /* ⬆ increased from 32px */
+    font-weight: 800;
+    line-height: 1.15;        /* tighter for large text */
+    margin: 0;
+    letter-spacing: -1px;
 }
 
 .hero-subtitle {
@@ -992,10 +993,21 @@ body.home-active #homeWidgets {
 }
 
 .left-top {
-    flex: 1;
+    color: #ffffff;
+    font-size: 52px;          /* ⬆ increased from 32px */
+    font-weight: 800;
+    line-height: 1.15;        /* tighter for large text */
+    margin: 0;
+    letter-spacing: -1px;
 }
 
-
+.left-top .hero-subtitle {
+    color: #cbd5e1;
+    font-size: 16px;          /* ⬆ increased from 14px */
+    margin-top: 20px;         /* ⬆ more spacing */
+    margin-bottom: 0;
+    font-weight: 400;
+}
 
 /* STATS CARD */
 .stats-card {
