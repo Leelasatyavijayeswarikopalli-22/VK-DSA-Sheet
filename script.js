@@ -1318,7 +1318,7 @@ function escapeRegex(text) {
 const CURATED_CONTENT = {
     books: [
         {
-            name: "Introduction to Algorithms (CLRS)",
+            name: "Introduction to Algorithms",
             url: "https://mitpress.mit.edu/9780262046305/introduction-to-algorithms/"
         },
         {
