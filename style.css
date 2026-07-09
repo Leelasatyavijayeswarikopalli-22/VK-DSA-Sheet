@@ -1834,3 +1834,372 @@ justify-content: center;
 #notesPage .content-tab.active::after {
     background: linear-gradient(90deg, #ec4899, #a855f7);
 }
+
+/* ============================================
+   📱 MOBILE RESPONSIVE STYLES
+   ============================================ */
+
+/* Tablet & smaller (below 1024px) */
+@media screen and (max-width: 1024px) {
+    .main {
+        padding-right: 35px;
+    }
+    
+    #progressContainer {
+        position: static;
+        flex-direction: row;
+        justify-content: center;
+        margin: 20px 0;
+        gap: 20px;
+    }
+
+    .top-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .stats-card {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* ============ MOBILE (below 768px) ============ */
+@media screen and (max-width: 768px) {
+
+    /* SIDEBAR — Convert to top bar / hamburger style */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -260px;
+        width: 240px;
+        height: 100vh;
+        transition: left 0.3s ease;
+        z-index: 9999;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+    }
+
+    .sidebar.mobile-open {
+        left: 0;
+    }
+
+    /* Hamburger menu button */
+    .mobile-menu-btn {
+        display: flex !important;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        width: 42px;
+        height: 42px;
+        background: rgba(26, 26, 46, 0.95);
+        border: 1px solid #a855f7;
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 10000;
+        box-shadow: 0 4px 12px rgba(168,85,247,0.3);
+    }
+
+    /* Overlay when sidebar is open */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 9998;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    /* MAIN — full width */
+    .main {
+        margin-left: 0 !important;
+        padding: 70px 15px 15px 15px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* TOP HEADER — stack vertically */
+    .top-header {
+        flex-direction: column;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .left-top .hero-title {
+        font-size: 32px !important;
+        line-height: 1.15;
+    }
+
+    .left-top .hero-subtitle {
+        font-size: 13px !important;
+    }
+
+    /* STATS CARD — full width */
+    .stats-card {
+        width: 100% !important;
+        padding: 16px !important;
+        box-sizing: border-box;
+    }
+
+    .stats-card h3 {
+        font-size: 15px;
+    }
+
+    .solved-count span:first-child {
+        font-size: 32px !important;
+    }
+
+    .problems-text,
+    .beat-text {
+        font-size: 13px !important;
+    }
+
+    .difficulty-boxes {
+        gap: 8px;
+    }
+
+    .diff {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+    /* TABS — smaller, wrap nicely */
+    .tabs {
+        gap: 8px !important;
+        margin-bottom: 20px !important;
+        row-gap: 8px !important;
+    }
+
+    .tab {
+        padding: 8px 14px !important;
+        font-size: 12px !important;
+    }
+
+    /* PROFILE + BUTTONS ROW */
+    .profile-buttons-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 10px 0;
+    }
+
+    #loginBtn,
+    #historyBtn,
+    #logoutBtn {
+        position: static !important;
+        padding: 8px 18px !important;
+        font-size: 12px !important;
+        width: auto !important;
+        height: auto !important;
+    }
+
+    .user-profile {
+        position: static !important;
+    }
+
+    /* PROGRESS CONTAINER — move under content */
+    #progressContainer {
+        position: static !important;
+        flex-direction: row;
+        justify-content: center;
+        margin: 25px auto;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    #calendarBox {
+        width: 180px;
+        padding: 14px;
+    }
+
+    .progress-circle {
+        width: 130px;
+        height: 130px;
+        font-size: 26px;
+    }
+
+    /* SECTIONS — reduce padding */
+    .section {
+        padding: 14px 12px;
+    }
+
+    .section-header {
+        gap: 8px;
+    }
+
+    .section-header > span:nth-of-type(1) {
+        font-size: 14px;
+    }
+
+    /* PROBLEM ROW — vertical stack on mobile */
+    .header-row {
+        display: none; /* hide table headers on mobile */
+    }
+
+    .problem {
+        display: grid;
+        grid-template-columns: 1fr auto auto auto auto;
+        gap: 8px;
+        padding: 14px 8px;
+        font-size: 12px;
+        align-items: center;
+    }
+
+    .problem .title {
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .tuf-badge {
+        width: 34px;
+        padding: 4px;
+        font-size: 10px;
+    }
+
+    .done input[type="checkbox"],
+    .revision input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .difficulty {
+        font-size: 10px !important;
+        padding: 3px 6px !important;
+    }
+
+    /* SEARCH PAGE */
+    #searchPage,
+    #notesPage,
+    #linksPage,
+    #booksPage {
+        padding: 15px !important;
+    }
+
+    .search-result-row {
+        grid-template-columns: 1fr auto auto auto auto;
+        gap: 6px;
+        padding: 10px 6px;
+        font-size: 11px;
+    }
+
+    .search-result-header {
+        display: none;
+    }
+
+    /* CONTENT TABS (Books/Links/Notes) */
+    .content-tabs {
+        gap: 4px;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .content-tab {
+        padding: 10px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Upload box - stack vertically */
+    .upload-box {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .upload-box input,
+    .upload-box button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Cards grid tighter */
+    .notes-container,
+    .books-container,
+    .links-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    /* MODAL fixes */
+    .modal-content,
+    .profile-modal-content {
+        width: 95vw !important;
+        padding: 20px !important;
+    }
+
+    .profile-stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    /* Calendar */
+    .day {
+        width: 20px;
+        height: 20px;
+        font-size: 11px;
+    }
+}
+
+/* ============ SMALL PHONES (below 480px) ============ */
+@media screen and (max-width: 480px) {
+    .left-top .hero-title {
+        font-size: 26px !important;
+    }
+
+    .solved-count span:first-child {
+        font-size: 28px !important;
+    }
+
+    .tab {
+        padding: 7px 12px !important;
+        font-size: 11px !important;
+    }
+
+    .section-header > span:nth-of-type(1) {
+        font-size: 13px;
+    }
+
+    .problem {
+        grid-template-columns: 1fr auto auto;
+        gap: 6px;
+    }
+
+    /* Hide revision column on very small screens (keeps done + difficulty) */
+    .problem .revision {
+        display: none;
+    }
+
+    .header-row {
+        display: none;
+    }
+
+    .tuf-badge {
+        width: 30px;
+        padding: 3px;
+        font-size: 9px;
+    }
+
+    #calendarBox {
+        width: 100%;
+        max-width: 260px;
+    }
+
+    .progress-circle {
+        width: 110px;
+        height: 110px;
+        font-size: 22px;
+    }
+
+    .modal-content {
+        padding: 16px !important;
+    }
+}
