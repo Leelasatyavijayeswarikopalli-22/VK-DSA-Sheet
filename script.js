@@ -311,13 +311,17 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ============ PAGE NAVIGATION ============
-function openNotes() {
-    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-    document.querySelector('.tabs').style.display = 'none';
-    document.getElementById('notesPage').style.display = 'block';
-    document.getElementById('linksPage').style.display = 'none';
-    document.getElementById('booksPage').style.display = 'none';
-    document.getElementById('searchPage').style.display = 'none';
+// ============ HELPER: Check if user is logged in ============
+function requireLogin(featureName) {
+    if (!window.currentUser) {
+        alert(`Please log in to access ${featureName}.`);
+        const loginModal = document.getElementById('loginModal');
+        if (loginModal) {
+            loginModal.style.display = 'block';
+        }
+        return false;
+    }
+    return true;
 }
 
 function goHome() {
@@ -335,8 +339,22 @@ function goHome() {
     document.querySelectorAll('.tab')[0].classList.add('active');
     updateGlobalProgress();
 }
+// ============ NOTES PAGE ============
+function openNotes() {
+    if (!requireLogin("Notes")) return;
 
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    document.querySelector('.tabs').style.display = 'none';
+    document.getElementById('notesPage').style.display = 'block';
+    document.getElementById('linksPage').style.display = 'none';
+    document.getElementById('booksPage').style.display = 'none';
+    document.getElementById('searchPage').style.display = 'none';
+}
+
+// ============ LINKS PAGE ============
 function openLinks() {
+    if (!requireLogin("Links")) return;
+
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
     document.querySelector('.tabs').style.display = 'none';
     document.getElementById('notesPage').style.display = 'none';
@@ -345,7 +363,10 @@ function openLinks() {
     document.getElementById('searchPage').style.display = 'none';
 }
 
+// ============ BOOKS PAGE ============
 function openBooks() {
+    if (!requireLogin("Books")) return;
+
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
     document.querySelector('.tabs').style.display = 'none';
     document.getElementById('notesPage').style.display = 'none';
@@ -353,6 +374,13 @@ function openBooks() {
     document.getElementById('booksPage').style.display = 'block';
     document.getElementById('searchPage').style.display = 'none';
 }
+
+// Make globally accessible (in case onclick calls need it)
+window.openNotes = openNotes;
+window.openLinks = openLinks;
+window.openBooks = openBooks;
+window.requireLogin = requireLogin;
+
 
 // ============ FILE UPLOAD ============
 function uploadFile() {
