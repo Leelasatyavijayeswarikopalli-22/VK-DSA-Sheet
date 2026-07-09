@@ -572,21 +572,17 @@ body.home-active #homeWidgets {
     color: #fff;
 }
 
-#notesPage, #booksPage, #linksPage {
-    background: linear-gradient(135deg, #1a0f2e, #0b1220);
+#notesPage,
+#linksPage,
+#booksPage {
+    background: linear-gradient(135deg, #1a0f2e, #0b1220) !important;
     padding: 25px;
     border-radius: 16px;
     margin-top: 20px;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
-#linksPage {
-    background: linear-gradient(135deg, #0f2e1a, #0b1220);
-}
 
-#booksPage {
-    background: linear-gradient(135deg, #1a0f2e, #0b1220) !important;
-}
 
 /* ============ LOGIN BUTTON ============ */
 #loginBtn {
@@ -1817,4 +1813,18 @@ justify-content: center;
 .upload-box button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 18px rgba(168, 85, 247, 0.5);
+}
+/* Books — Purple/Blue accent (default) */
+#booksPage .content-tab.active::after {
+    background: linear-gradient(90deg, #a855f7, #06b6d4);
+}
+
+/* Links — Cyan/Green accent */
+#linksPage .content-tab.active::after {
+    background: linear-gradient(90deg, #06b6d4, #22c55e);
+}
+
+/* Notes — Pink/Purple accent */
+#notesPage .content-tab.active::after {
+    background: linear-gradient(90deg, #ec4899, #a855f7);
 }
