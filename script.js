@@ -1,4 +1,4 @@
-// Modal elements
+// ============ MODAL ELEMENTS ============
 const loginBtn = document.getElementById('loginBtn');
 const modal = document.getElementById('loginModal');
 const closeBtn = modal ? modal.querySelector('.close') : null;
@@ -8,26 +8,26 @@ const loginForm = document.getElementById('loginForm');
 const signupForm = document.getElementById('signupForm');
 
 // Open modal
-if(loginBtn && modal){
+if (loginBtn && modal) {
     loginBtn.addEventListener('click', () => {
         modal.style.display = 'block';
     });
 }
 
-if(closeBtn && modal){
+if (closeBtn && modal) {
     closeBtn.addEventListener('click', () => {
         modal.style.display = 'none';
     });
 
     window.addEventListener('click', e => {
-        if(e.target == modal){
+        if (e.target == modal) {
             modal.style.display = 'none';
         }
     });
 }
 
 // Switch tabs
-if(loginTab && signupTab && loginForm && signupForm){
+if (loginTab && signupTab && loginForm && signupForm) {
     loginTab.addEventListener('click', () => {
         loginTab.classList.add('active');
         signupTab.classList.remove('active');
@@ -43,8 +43,6 @@ if(loginTab && signupTab && loginForm && signupForm){
 }
 
 // ============ FIREBASE AUTH ============
-
-// Wait for firebase to load
 function waitForFirebase() {
     return new Promise((resolve) => {
         const check = setInterval(() => {
@@ -56,12 +54,12 @@ function waitForFirebase() {
     });
 }
 
-// SIGNUP WITH PHONE NUMBER SAVE
-if(signupForm){
+// SIGNUP
+if (signupForm) {
     signupForm.addEventListener('submit', async e => {
         e.preventDefault();
         await waitForFirebase();
-        
+
         const name = document.getElementById("signupName").value.trim();
         const phone = document.getElementById("signupPhone").value.trim();
         const email = document.getElementById("signupEmail").value.trim();
@@ -69,8 +67,6 @@ if(signupForm){
 
         try {
             const userCred = await window.firebaseCreateUser(window.firebaseAuth, email, password);
-            
-            // Create user doc in firestore including phone number
             await window.firebaseSetDoc(
                 window.firebaseDoc(window.firebaseDB, "users", userCred.user.uid),
                 {
@@ -85,21 +81,20 @@ if(signupForm){
                     practiceHistory: []
                 }
             );
-            
             alert("Account created! You are now logged in.");
             modal.style.display = 'none';
-        } catch(err) {
+        } catch (err) {
             alert("Signup failed: " + err.message);
         }
     });
 }
 
 // LOGIN
-if(loginForm){
+if (loginForm) {
     loginForm.addEventListener('submit', async e => {
         e.preventDefault();
         await waitForFirebase();
-        
+
         const email = document.getElementById("loginEmail").value;
         const password = document.getElementById("loginPassword").value;
 
@@ -107,7 +102,7 @@ if(loginForm){
             await window.firebaseSignIn(window.firebaseAuth, email, password);
             alert("Logged in successfully!");
             modal.style.display = 'none';
-        } catch(err) {
+        } catch (err) {
             alert("Login failed: " + err.message);
         }
     });
@@ -121,11 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
             await waitForFirebase();
             try {
                 const result = await window.firebaseGoogleSignIn();
-                
-                // Check if user doc exists, if not create it
                 const userDocRef = window.firebaseDoc(window.firebaseDB, "users", result.user.uid);
                 const userDoc = await window.firebaseGetDoc(userDocRef);
-                
+
                 if (!userDoc.exists()) {
                     await window.firebaseSetDoc(userDocRef, {
                         name: result.user.displayName || "User",
@@ -139,10 +132,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         practiceHistory: []
                     });
                 }
-                
                 alert("Logged in with Google!");
                 modal.style.display = 'none';
-            } catch(err) {
+            } catch (err) {
                 alert("Google sign-in failed: " + err.message);
             }
         });
@@ -153,67 +145,57 @@ document.addEventListener('DOMContentLoaded', () => {
 async function handleLogout() {
     await waitForFirebase();
     try {
-        // Save to Firebase first
         await saveAllToFirebase();
-        
-        // Then sign out
         await window.firebaseSignOut(window.firebaseAuth);
-        
-        // Clear all local data so next user sees empty state
+
         localStorage.removeItem('checkboxes');
         localStorage.removeItem('notes');
         localStorage.removeItem('links');
         localStorage.removeItem('books');
         localStorage.removeItem('doneDates');
         localStorage.removeItem('practiceHistory');
-        
+
         alert("Logged out!");
         location.reload();
-    } catch(err) {
+    } catch (err) {
         alert("Logout failed: " + err.message);
     }
 }
 window.handleLogout = handleLogout;
 
-// AUTH STATE LISTENER — auto-load data when user logs in
+// AUTH STATE LISTENER
 let authInitialized = false;
 
 async function initAuthListener() {
     await waitForFirebase();
-    
+
     window.firebaseOnAuth(window.firebaseAuth, async (user) => {
         if (user) {
             console.log("User logged in:", user.email);
             window.currentUser = user;
-            
-            // Safe, dynamic interface updates
             updateProfileUI(user);
-            
-            // Only load data ONCE per session
+
             if (!authInitialized) {
                 authInitialized = true;
                 await loadFromFirebase(user.uid);
             }
         } else {
-            // User logged out - clear local data
             localStorage.removeItem('checkboxes');
             localStorage.removeItem('notes');
             localStorage.removeItem('links');
             localStorage.removeItem('books');
             localStorage.removeItem('doneDates');
             localStorage.removeItem('practiceHistory');
-            
+
             window.currentUser = null;
             authInitialized = false;
             window.currentUserProfileData = null;
-            
-            // Safe interface reset
             updateProfileUI(null);
-            
-            // Refresh UI to show empty state
+
             if (typeof loadCheckboxesAndProgress === 'function') {
                 loadCheckboxesAndProgress();
                 updateGlobalProgress();
+                updateTotalSolvedStats();
             }
         }
     });
@@ -224,33 +206,32 @@ async function loadFromFirebase(uid) {
     try {
         const userDocRef = window.firebaseDoc(window.firebaseDB, "users", uid);
         const userDoc = await window.firebaseGetDoc(userDocRef);
-        
+
         if (userDoc.exists()) {
             const data = userDoc.data();
-            
+
             localStorage.setItem('checkboxes', JSON.stringify(data.checkboxes || {}));
             localStorage.setItem('notes', JSON.stringify(data.notes || []));
             localStorage.setItem('links', JSON.stringify(data.links || []));
             localStorage.setItem('books', JSON.stringify(data.books || []));
             localStorage.setItem('doneDates', JSON.stringify(data.doneDates || []));
             localStorage.setItem('practiceHistory', JSON.stringify(data.practiceHistory || []));
-            
-            // Store profile information in memory
+
             window.currentUserProfileData = {
                 name: data.name || window.currentUser.displayName || "User",
                 phone: data.phone || window.currentUser.phoneNumber || "Not Provided"
             };
 
-            // Refresh UI WITHOUT page reload
             loadCheckboxesAndProgress();
             attachStaticCheckboxListeners();
             loadHistory();
             loadCalendar();
             updateGlobalProgress();
-            
+            updateTotalSolvedStats();
+
             console.log("✅ Data loaded from Firebase");
         }
-    } catch(err) {
+    } catch (err) {
         console.error("Error loading data:", err);
     }
 }
@@ -258,10 +239,10 @@ async function loadFromFirebase(uid) {
 // SAVE ALL DATA TO FIREBASE
 async function saveAllToFirebase() {
     if (!window.currentUser) return;
-    
+
     try {
         const userDocRef = window.firebaseDoc(window.firebaseDB, "users", window.currentUser.uid);
-        
+
         const payload = {
             email: window.currentUser.email,
             checkboxes: JSON.parse(localStorage.getItem('checkboxes') || '{}'),
@@ -272,31 +253,29 @@ async function saveAllToFirebase() {
             practiceHistory: JSON.parse(localStorage.getItem('practiceHistory') || '[]')
         };
 
-        // If in-memory custom profile updates exist, ensure we persist them
         if (window.currentUserProfileData) {
             payload.name = window.currentUserProfileData.name;
             payload.phone = window.currentUserProfileData.phone;
         }
-        
+
         await window.firebaseSetDoc(userDocRef, payload, { merge: true });
         console.log("Data saved to Firebase ✅");
-    } catch(err) {
+    } catch (err) {
         console.error("Error saving:", err);
     }
 }
 window.saveAllToFirebase = saveAllToFirebase;
 
-// AUTO-SAVE every 15 seconds when logged in
+// AUTO-SAVE
 setInterval(() => {
     if (window.currentUser) {
         saveAllToFirebase();
     }
 }, 15000);
 
-// Start auth listener
 initAuthListener();
 
-// Toggle section
+// ============ SECTION TOGGLE ============
 function toggleSection(section, event) {
     if (
         event.target.tagName === 'INPUT' ||
@@ -305,12 +284,11 @@ function toggleSection(section, event) {
     ) {
         return;
     }
-
     const content = section.querySelector('.content');
     content.style.display = content.style.display === 'block' ? 'none' : 'block';
 }
 
-// Tab switching
+// ============ TAB SWITCHING ============
 function switchTab(tab) {
     const category = tab.textContent.replace(/\s/g, '');
 
@@ -332,17 +310,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-// ✅ NOTES PAGE FUNCTION (OUTSIDE)
+// ============ PAGE NAVIGATION ============
 function openNotes() {
     document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
     document.querySelector('.tabs').style.display = 'none';
-
     document.getElementById('notesPage').style.display = 'block';
     document.getElementById('linksPage').style.display = 'none';
     document.getElementById('booksPage').style.display = 'none';
 }
 
-// ✅ HOME FUNCTION
 function goHome() {
     document.querySelector('.tabs').style.display = 'block';
     document.getElementById('notesPage').style.display = 'none';
@@ -358,7 +334,23 @@ function goHome() {
     updateGlobalProgress();
 }
 
-// Upload
+function openLinks() {
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    document.querySelector('.tabs').style.display = 'none';
+    document.getElementById('notesPage').style.display = 'none';
+    document.getElementById('linksPage').style.display = 'block';
+    document.getElementById('booksPage').style.display = 'none';
+}
+
+function openBooks() {
+    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
+    document.querySelector('.tabs').style.display = 'none';
+    document.getElementById('notesPage').style.display = 'none';
+    document.getElementById('linksPage').style.display = 'none';
+    document.getElementById('booksPage').style.display = 'block';
+}
+
+// ============ FILE UPLOAD ============
 function uploadFile() {
     const input = document.getElementById("fileInput");
     if (!input.files.length) {
@@ -372,7 +364,7 @@ function uploadFile() {
     const card = document.createElement("div");
     card.className = "card";
 
-    if(file.type.startsWith("image")) {
+    if (file.type.startsWith("image")) {
         card.innerHTML = `
             <img src="${url}" style="max-width:100%; border-radius:8px; margin-bottom:10px;">
             <p>${file.name}</p>
@@ -396,10 +388,10 @@ function uploadFile() {
     saveNotes();
 }
 
-// LOAD CHECKBOXES AND UPDATE BARS
+// ============ LOAD CHECKBOXES + PROGRESS ============
 function loadCheckboxesAndProgress() {
     const data = JSON.parse(localStorage.getItem('checkboxes')) || {};
-    
+
     document.querySelectorAll('.section').forEach(section => {
         const category = section.dataset.category;
         const sectionName = section.querySelector('.section-header span').innerText;
@@ -421,50 +413,40 @@ function loadCheckboxesAndProgress() {
         updateProgress(section);
     });
     updateGlobalProgress();
+    updateTotalSolvedStats();
 }
 
-// OPEN LINKS PAGE
-function openLinks() {
-    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-    document.querySelector('.tabs').style.display = 'none';
-    document.getElementById('notesPage').style.display = 'none';
-    document.getElementById('linksPage').style.display = 'block';
-    document.getElementById('booksPage').style.display = 'none';
-}
-
-//Admin access
+// ============ ADMIN ============
 window.isAdmin = false;
 window.username = "";
 
-// Admin login
 function adminLogin(username, password) {
     fetch("http://localhost:5000/admin-login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-            window.isAdmin = data.role === "admin";
-            window.username = username;
-            alert("Login successful!");
-            toggleAddButton();
-        } else {
-            alert("Login failed");
-        }
-    });
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                window.isAdmin = data.role === "admin";
+                window.username = username;
+                alert("Login successful!");
+                toggleAddButton();
+            } else {
+                alert("Login failed");
+            }
+        });
 }
 
-// Toggle Add button visibility
 function toggleAddButton() {
     const btn = document.getElementById("addProblemBtn");
     if (!btn) return;
     btn.style.display = window.isAdmin ? "block" : "none";
 }
 
-function addProblem(){
-    if(!window.isAdmin){
+function addProblem() {
+    if (!window.isAdmin) {
         alert("Admin only");
         return;
     }
@@ -474,19 +456,19 @@ function addProblem(){
     const category = prompt("Category (Arrays / Strings / DP)");
     const section = prompt("Section name (same as header)");
 
-    fetch("http://localhost:5000/add-problem",{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
+    fetch("http://localhost:5000/add-problem", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title, link, category, section })
     })
-    .then(()=> loadProblems());
+        .then(() => loadProblems());
 }
 
-// ADD LINK FUNCTION
+// ============ LINKS ============
 function addLink() {
     const input = document.getElementById("linkInput");
     const url = input.value.trim();
-    if(!url) { alert("Enter a link!"); return; }
+    if (!url) { alert("Enter a link!"); return; }
 
     const container = document.getElementById("linksContainer");
     const card = document.createElement("div");
@@ -503,24 +485,15 @@ function addLink() {
     saveLinks();
 }
 
-// OPEN BOOKS PAGE
-function openBooks() {
-    document.querySelectorAll('.section').forEach(sec => sec.style.display = 'none');
-    document.querySelector('.tabs').style.display = 'none';
-    document.getElementById('notesPage').style.display = 'none';
-    document.getElementById('linksPage').style.display = 'none';
-    document.getElementById('booksPage').style.display = 'block';
-}
-
-// ADD BOOK FUNCTION
+// ============ BOOKS ============
 function addBook() {
     const nameInput = document.getElementById("bookNameInput");
     const fileInput = document.getElementById("bookFileInput");
     const name = nameInput.value.trim();
     const file = fileInput.files[0];
 
-    if(!name) { alert("Enter book name!"); return; }
-    if(!file) { alert("Select file!"); return; }
+    if (!name) { alert("Enter book name!"); return; }
+    if (!file) { alert("Select file!"); return; }
 
     const container = document.getElementById("booksContainer");
     const url = URL.createObjectURL(file);
@@ -540,6 +513,7 @@ function addBook() {
     saveBooks();
 }
 
+// ============ UPDATE PROGRESS BARS ============
 function updateProgress(section) {
     const doneBar = section.querySelector('.done-bar');
     const revisionBar = section.querySelector('.revision-bar');
@@ -554,20 +528,21 @@ function updateProgress(section) {
     problems.forEach(p => {
         const doneCheckbox = p.querySelector('.done input[type="checkbox"]');
         const revisionCheckbox = p.querySelector('.revision input[type="checkbox"]');
-        if (doneCheckbox.checked) doneCount++;
-        if (revisionCheckbox.checked) revisionCount++;
+        if (doneCheckbox && doneCheckbox.checked) doneCount++;
+        if (revisionCheckbox && revisionCheckbox.checked) revisionCount++;
     });
 
     const donePercent = (doneCount / total) * 100;
     const revisionPercent = (revisionCount / total) * 100;
 
-    doneBar.style.width = donePercent + '%';
-    revisionBar.style.width = revisionPercent + '%';
+    if (doneBar) doneBar.style.width = donePercent + '%';
+    if (revisionBar) revisionBar.style.width = revisionPercent + '%';
 
     const headerCount = section.querySelector('.section-header span:nth-child(2)');
-    headerCount.textContent = `${doneCount}/${total}`;
+    if (headerCount) headerCount.textContent = `${doneCount}/${total}`;
 }
 
+// ============ LOCAL STORAGE HELPERS ============
 function saveNotes() {
     const notes = [];
     document.querySelectorAll('#notesContainer .card').forEach(n => {
@@ -576,7 +551,6 @@ function saveNotes() {
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
-// Local Storage helpers
 function saveLinks() {
     const links = [];
     document.querySelectorAll('#linksContainer .card').forEach(l => {
@@ -624,7 +598,7 @@ function loadNotesLinksBooks() {
     });
 }
 
-// CALL load on DOMContentLoaded
+// ============ LOAD DYNAMIC PROBLEMS FROM BACKEND ============
 async function loadProblems() {
     try {
         const res = await fetch("/problems");
@@ -632,7 +606,7 @@ async function loadProblems() {
             console.log("No backend connected — using static problems only");
             return;
         }
-        
+
         const contentType = res.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
             console.log("Backend not returning JSON — skipping");
@@ -656,6 +630,7 @@ async function loadProblems() {
                     <a href="${p.link}" target="_blank">Solve</a>
                     <label class="done"><input type="checkbox"></label>
                     <label class="revision"><input type="checkbox"></label>
+                    <div class="difficulty ${(p.difficulty || 'medium').toLowerCase()}">${p.difficulty || 'Medium'}</div>
                 `;
                 container.appendChild(div);
 
@@ -677,7 +652,8 @@ async function loadProblems() {
 
                         updateProgress(sec);
                         updateGlobalProgress();
-                        markDone(doneCheckbox, p.title, "Medium");
+                        updateTotalSolvedStats();
+                        markDone(doneCheckbox, p.title, p.difficulty || "Medium");
                     });
                 }
 
@@ -689,11 +665,13 @@ async function loadProblems() {
 
                         updateProgress(sec);
                         updateGlobalProgress();
+                        updateTotalSolvedStats();
                     });
                 }
 
                 updateProgress(sec);
                 updateGlobalProgress();
+                updateTotalSolvedStats();
             });
         });
     } catch (err) {
@@ -701,6 +679,7 @@ async function loadProblems() {
     }
 }
 
+// ============ GLOBAL PROGRESS (right-side circle) ============
 function updateGlobalProgress() {
     const active = document.querySelector('.tab.active');
     if (!active) return;
@@ -726,19 +705,79 @@ function updateGlobalProgress() {
     if (progressEl) progressEl.innerText = `${done}/${total}`;
 }
 
+// ============ TOTAL SOLVED STATS (Top Stats Card) ============
+function updateTotalSolvedStats() {
+    let totalSolved = 0;
+    let easyCount = 0;
+    let medCount = 0;
+    let hardCount = 0;
+    let totalProblems = 0;
+
+    document.querySelectorAll('.section').forEach(section => {
+        const problems = section.querySelectorAll('.problem');
+
+        problems.forEach(prob => {
+            totalProblems++;
+
+            const doneCheckbox = prob.querySelector('.done input[type="checkbox"]');
+            const difficultyEl = prob.querySelector('.difficulty');
+
+            if (doneCheckbox && doneCheckbox.checked) {
+                totalSolved++;
+
+                if (difficultyEl) {
+                    const diffText = difficultyEl.innerText.trim().toLowerCase();
+                    if (diffText === 'easy') easyCount++;
+                    else if (diffText === 'medium') medCount++;
+                    else if (diffText === 'hard') hardCount++;
+                }
+            }
+        });
+    });
+
+    const totalEl = document.getElementById('totalSolved');
+    const easyEl = document.getElementById('easyCount');
+    const medEl = document.getElementById('medCount');
+    const hardEl = document.getElementById('hardCount');
+    const beatsEl = document.getElementById('beatsPercent');
+
+    if (totalEl) totalEl.innerText = totalSolved;
+    if (easyEl) easyEl.innerText = easyCount;
+    if (medEl) medEl.innerText = medCount;
+    if (hardEl) hardEl.innerText = hardCount;
+
+    if (beatsEl && totalProblems > 0) {
+        const percent = ((totalSolved / totalProblems) * 100).toFixed(1);
+        beatsEl.innerText = percent;
+    } else if (beatsEl) {
+        beatsEl.innerText = "0";
+    }
+}
+window.updateTotalSolvedStats = updateTotalSolvedStats;
+
+// ============ MARK DONE ============
 function markDone(checkbox, problemName, difficulty) {
+    const problemRow = checkbox.closest('.problem');
+
+    // Auto-detect difficulty from DOM (overrides hardcoded value)
+    const diffEl = problemRow ? problemRow.querySelector('.difficulty') : null;
+    if (diffEl) {
+        difficulty = diffEl.innerText.trim();
+    }
+
     const section = checkbox.closest('.section');
     updateProgress(section);
     updateGlobalProgress();
+    updateTotalSolvedStats();
 
     let history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
     history = history.filter(item => item.name !== problemName);
 
     const now = new Date();
-    let date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()}`;
+    let date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
     let savedDates = JSON.parse(localStorage.getItem("doneDates")) || [];
 
-    if(checkbox.checked){
+    if (checkbox.checked) {
         const problemData = {
             name: problemName,
             difficulty: difficulty,
@@ -746,12 +785,12 @@ function markDone(checkbox, problemName, difficulty) {
         };
         history.unshift(problemData);
 
-        if(!savedDates.includes(date)){
+        if (!savedDates.includes(date)) {
             savedDates.push(date);
         }
     } else {
         let anyChecked = document.querySelector('.done input[type="checkbox"]:checked');
-        if(!anyChecked){
+        if (!anyChecked) {
             savedDates = savedDates.filter(d => d !== date);
         }
     }
@@ -762,6 +801,7 @@ function markDone(checkbox, problemName, difficulty) {
     loadHistory();
 }
 
+// ============ HISTORY ============
 let historyInterval;
 function openHistory() {
     document.getElementById("historyPopup").style.display = "flex";
@@ -815,16 +855,19 @@ function closeHistory() {
     clearInterval(historyInterval);
 }
 
+// ============ DOM READY ============
 document.addEventListener("DOMContentLoaded", async () => {
     loadNotesLinksBooks();
-    await loadProblems();           
-    loadCheckboxesAndProgress();    
-    attachStaticCheckboxListeners(); 
+    await loadProblems();
+    loadCheckboxesAndProgress();
+    attachStaticCheckboxListeners();
     loadHistory();
     updateGlobalProgress();
-    setupProfileModal(); // Initializes profile modal functionality
+    updateTotalSolvedStats();
+    setupProfileModal();
 });
 
+// ============ STATIC CHECKBOX LISTENERS ============
 function attachStaticCheckboxListeners() {
     document.querySelectorAll('.section').forEach(section => {
         const category = section.dataset.category;
@@ -835,14 +878,18 @@ function attachStaticCheckboxListeners() {
             if (!titleEl) return;
             const title = titleEl.innerText.trim();
 
+            // Auto-detect difficulty from DOM
+            const diffEl = prob.querySelector('.difficulty');
+            const difficulty = diffEl ? diffEl.innerText.trim() : "Medium";
+
             ['done', 'revision'].forEach(type => {
                 const checkbox = prob.querySelector(`.${type} input[type="checkbox"]`);
                 if (!checkbox) return;
 
                 const key = `${category}-${sectionName}-${title}-${type}`;
 
-                // Safe cloned listeners
                 const newCheckbox = checkbox.cloneNode(true);
+                newCheckbox.checked = checkbox.checked;
                 checkbox.parentNode.replaceChild(newCheckbox, checkbox);
 
                 newCheckbox.addEventListener('change', () => {
@@ -852,9 +899,10 @@ function attachStaticCheckboxListeners() {
 
                     updateProgress(section);
                     updateGlobalProgress();
+                    updateTotalSolvedStats();
 
                     if (type === 'done') {
-                        markDone(newCheckbox, title, "Medium");
+                        markDone(newCheckbox, title, difficulty);
                     }
                 });
             });
@@ -862,9 +910,12 @@ function attachStaticCheckboxListeners() {
     });
 }
 
+// ============ CALENDAR ============
 function loadCalendar() {
     const monthYear = document.getElementById("monthYear");
     const calendarDays = document.getElementById("calendarDays");
+    if (!monthYear || !calendarDays) return;
+
     const now = new Date();
 
     let year = now.getFullYear();
@@ -872,27 +923,27 @@ function loadCalendar() {
     let firstDay = new Date(year, month, 1).getDay();
     let totalDays = new Date(year, month + 1, 0).getDate();
 
-    monthYear.innerText = now.toLocaleString('default', { month:'long', year:'numeric' });
+    monthYear.innerText = now.toLocaleString('default', { month: 'long', year: 'numeric' });
     calendarDays.innerHTML = "";
 
     let saved = JSON.parse(localStorage.getItem("doneDates")) || [];
 
-    for(let i=0; i<firstDay; i++){
+    for (let i = 0; i < firstDay; i++) {
         calendarDays.innerHTML += "<div></div>";
     }
 
-    for(let day=1; day<=totalDays; day++){
+    for (let day = 1; day <= totalDays; day++) {
         let div = document.createElement("div");
         div.classList.add("day");
         div.innerText = day;
 
         let today = new Date();
-        if(day===today.getDate() && month===today.getMonth()){
+        if (day === today.getDate() && month === today.getMonth()) {
             div.classList.add("today");
         }
 
-        let dateString = `${year}-${month+1}-${day}`;
-        if(saved.includes(dateString)){
+        let dateString = `${year}-${month + 1}-${day}`;
+        if (saved.includes(dateString)) {
             div.classList.add("done");
             div.innerHTML = `${day}<span class="tick">✓</span>`;
         }
@@ -904,32 +955,32 @@ loadCalendar();
 
 // ============ SIDEBAR ACTIVE MENU SWITCH ============
 document.querySelectorAll('.menu-item').forEach(item => {
-    item.addEventListener('click', function() {
+    item.addEventListener('click', function () {
         document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
         this.classList.add('active');
     });
 });
 
-// Dynamic Profile UI Renderer
+// ============ PROFILE UI ============
 function updateProfileUI(user) {
     const userInfo = document.getElementById('userInfo');
     const profilePic = document.getElementById('profilePicture');
     const userEmail = document.getElementById('userEmail');
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-    
+
     if (user) {
         if (userInfo) userInfo.style.display = 'flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
-        
+
         if (user.photoURL) {
             profilePic.src = user.photoURL;
         } else {
             const initial = user.email ? user.email.charAt(0).toUpperCase() : 'U';
             profilePic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
         }
-        
+
         if (userEmail) userEmail.textContent = user.email;
     } else {
         if (userInfo) userInfo.style.display = 'none';
@@ -938,7 +989,7 @@ function updateProfileUI(user) {
     }
 }
 
-// ============ PROFILE MODAL LOGIC ============
+// ============ PROFILE MODAL ============
 function setupProfileModal() {
     const userInfoCircle = document.getElementById('userInfo');
     const profileModal = document.getElementById('profileModal');
@@ -971,7 +1022,6 @@ function calculateAndPopulateProfileDetails() {
     const user = window.currentUser;
     const dbProfile = window.currentUserProfileData || {};
 
-    // Populating general profile information with actual registered metrics
     document.getElementById('profileDetailEmail').innerText = user.email || 'N/A';
     document.getElementById('profileDetailPhone').innerText = dbProfile.phone || user.phoneNumber || 'Not Provided';
     document.getElementById('profileDetailName').innerText = dbProfile.name || user.displayName || 'Learner';
@@ -984,23 +1034,18 @@ function calculateAndPopulateProfileDetails() {
         detailPic.src = `https://ui-avatars.com/api/?name=${initial}&background=6c5ce7&color=fff`;
     }
 
-    // Computing aggregate category checkboxes from localstorage state
     const savedCheckboxData = JSON.parse(localStorage.getItem('checkboxes')) || {};
-    
-    // Explicit tab categories defined on your website structure
     const targetCategories = ["Arrays", "BinarySearch", "Strings", "Bit Manipulation", "Linked List"];
     const breakdownContainer = document.getElementById('categoryBreakdown');
-    breakdownContainer.innerHTML = ''; // resets layout lists
+    breakdownContainer.innerHTML = '';
 
     let totalDoneAllTopics = 0;
     let activeCategoriesCount = 0;
 
     targetCategories.forEach(category => {
-        // Collect matches matching the checkbox keys pattern: Category-SectionName-ProblemName-done
         let totalProblemsCount = 0;
         let solvedProblemsCount = 0;
 
-        // Fetching DOM items to compare structure dynamically
         const matchingSections = Array.from(document.querySelectorAll('.section'))
             .filter(section => (section.dataset.category || '').trim() === category);
 
@@ -1021,13 +1066,11 @@ function calculateAndPopulateProfileDetails() {
             });
         });
 
-        // Add to aggregate counts
         totalDoneAllTopics += solvedProblemsCount;
         if (solvedProblemsCount > 0) {
             activeCategoriesCount++;
         }
 
-        // Render category visual row metrics if problems exist
         if (totalProblemsCount > 0) {
             const percentageFilled = Math.round((solvedProblemsCount / totalProblemsCount) * 100) || 0;
             const breakdownRow = document.createElement('div');
@@ -1045,59 +1088,6 @@ function calculateAndPopulateProfileDetails() {
         }
     });
 
-    // Populate stats elements
     document.getElementById('profileTotalDone').innerText = totalDoneAllTopics;
     document.getElementById('profileCategoryCount').innerText = `${activeCategoriesCount}/${targetCategories.length}`;
 }
-// ============ CALCULATE TOTAL SOLVED STATS ============
-function updateTotalSolvedStats() {
-    let totalSolved = 0;
-    let easyCount = 0;
-    let medCount = 0;
-    let hardCount = 0;
-    let totalProblems = 0;
-
-    // Loop through ALL sections in ALL categories
-    document.querySelectorAll('.section').forEach(section => {
-        const problems = section.querySelectorAll('.problem');
-        
-        problems.forEach(prob => {
-            totalProblems++;
-            
-            const doneCheckbox = prob.querySelector('.done input[type="checkbox"]');
-            const difficultyEl = prob.querySelector('.difficulty');
-            
-            if (doneCheckbox && doneCheckbox.checked) {
-                totalSolved++;
-                
-                // Read difficulty from the DOM
-                if (difficultyEl) {
-                    const diffText = difficultyEl.innerText.trim().toLowerCase();
-                    if (diffText === 'easy') easyCount++;
-                    else if (diffText === 'medium') medCount++;
-                    else if (diffText === 'hard') hardCount++;
-                }
-            }
-        });
-    });
-
-    // Update the DOM
-    const totalEl = document.getElementById('totalSolved');
-    const easyEl = document.getElementById('easyCount');
-    const medEl = document.getElementById('medCount');
-    const hardEl = document.getElementById('hardCount');
-    const beatsEl = document.getElementById('beatsPercent');
-
-    if (totalEl) totalEl.innerText = totalSolved;
-    if (easyEl) easyEl.innerText = easyCount;
-    if (medEl) medEl.innerText = medCount;
-    if (hardEl) hardEl.innerText = hardCount;
-
-    // Calculate beats % (percent of total problems solved)
-    if (beatsEl && totalProblems > 0) {
-        const percent = ((totalSolved / totalProblems) * 100).toFixed(1);
-        beatsEl.innerText = percent;
-    }
-}
-
-window.updateTotalSolvedStats = updateTotalSolvedStats;
