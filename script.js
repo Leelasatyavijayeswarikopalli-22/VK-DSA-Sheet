@@ -987,6 +987,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     updateGlobalProgress();
     updateTotalSolvedStats();
     setupProfileModal();
+    attachLoginGuardToCheckboxes();
 });
 
 // ============ STATIC CHECKBOX LISTENERS ============
@@ -1090,13 +1091,16 @@ function updateProfileUI(user) {
     const userEmail = document.getElementById('userEmail');
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
-    const historyBtn = document.getElementById('historyBtn');  // 👈 add this
+    const historyBtn = document.getElementById('historyBtn');
 
     if (user) {
+        // 👇 Add class to body when logged in
+        document.body.classList.add('user-logged-in');
+        
         if (userInfo) userInfo.style.display = 'flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
-        if (historyBtn) historyBtn.style.display = 'block';  // 👈 show on login
+        if (historyBtn) historyBtn.style.display = 'block';
 
         if (user.photoURL) {
             profilePic.src = user.photoURL;
@@ -1107,10 +1111,13 @@ function updateProfileUI(user) {
 
         if (userEmail) userEmail.textContent = user.email;
     } else {
+        // 👇 Remove class when logged out
+        document.body.classList.remove('user-logged-in');
+        
         if (userInfo) userInfo.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
-        if (historyBtn) historyBtn.style.display = 'none';  // 👈 hide on logout
+        if (historyBtn) historyBtn.style.display = 'none';
     }
 }
 
@@ -1669,3 +1676,63 @@ function getFriendlyError(error) {
 }
 
 window.getFriendlyError = getFriendlyError;
+// ============================================
+// 🔒 BLOCK CHECKBOX TICKING WITHOUT LOGIN
+// ============================================
+function attachLoginGuardToCheckboxes() {
+    document.querySelectorAll('.problem input[type="checkbox"]').forEach(checkbox => {
+        // Prevent duplicate listeners
+        if (checkbox.dataset.guardAttached) return;
+        checkbox.dataset.guardAttached = "true";
+
+        checkbox.addEventListener('click', function(e) {
+            if (!window.currentUser) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // Show tooltip near the checkbox
+                showLoginTooltip(this);
+                
+                // Also show a toast
+                showToast('Please log in to track your progress', 'warning', '🔒 Login Required');
+                
+                // Optional: auto-open login modal after 500ms
+                setTimeout(() => {
+                    const loginModal = document.getElementById('loginModal');
+                    if (loginModal) loginModal.style.display = 'block';
+                }, 800);
+                
+                return false;
+            }
+        });
+    });
+}
+window.attachLoginGuardToCheckboxes = attachLoginGuardToCheckboxes;
+
+// ============ TOOLTIP: "Login to Mark as Completed" ============
+function showLoginTooltip(element) {
+    // Remove existing tooltip
+    const existing = document.querySelector('.login-tooltip-floating');
+    if (existing) existing.remove();
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'login-tooltip-floating';
+    tooltip.innerHTML = '🔒 Login to Mark as Completed';
+    document.body.appendChild(tooltip);
+
+    // Position near the checkbox
+    const rect = element.getBoundingClientRect();
+    tooltip.style.top = (rect.top + window.scrollY - 45) + 'px';
+    tooltip.style.left = (rect.left + window.scrollX - 100) + 'px';
+
+    // Auto-hide after 2.5s
+    setTimeout(() => {
+        tooltip.classList.add('fade-out');
+        setTimeout(() => tooltip.remove(), 300);
+    }, 2500);
+}
+
+// Call the guard after every checkbox load
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(attachLoginGuardToCheckboxes, 500);
+});
