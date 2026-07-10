@@ -65,6 +65,24 @@ if (signupForm) {
         const email = document.getElementById("signupEmail").value.trim();
         const password = document.getElementById("signupPassword").value;
 
+        // Client-side validation
+        if (!name) {
+            showToast('Please enter your name', 'warning');
+            return;
+        }
+        if (!phone || phone.length < 10) {
+            showToast('Please enter a valid phone number', 'warning');
+            return;
+        }
+        if (!email) {
+            showToast('Please enter your email', 'warning');
+            return;
+        }
+        if (password.length < 6) {
+            showToast('Password must be at least 6 characters', 'warning');
+            return;
+        }
+
         try {
             const userCred = await window.firebaseCreateUser(window.firebaseAuth, email, password);
             await window.firebaseSetDoc(
@@ -84,7 +102,7 @@ if (signupForm) {
             showToast('Your account is ready to use!', 'success', 'Account Created');
             modal.style.display = 'none';
         } catch (err) {
-            showToast(err.message, 'error', 'Signup Failed');
+            showToast(getFriendlyError(err), 'error', 'Signup Failed');
         }
     });
 }
@@ -95,15 +113,25 @@ if (loginForm) {
         e.preventDefault();
         await waitForFirebase();
 
-        const email = document.getElementById("loginEmail").value;
+        const email = document.getElementById("loginEmail").value.trim();
         const password = document.getElementById("loginPassword").value;
+
+        // Client-side validation first
+        if (!email) {
+            showToast('Please enter your email', 'warning');
+            return;
+        }
+        if (!password) {
+            showToast('Please enter your password', 'warning');
+            return;
+        }
 
         try {
             await window.firebaseSignIn(window.firebaseAuth, email, password);
             showToast('Welcome back! 🎉', 'success', 'Logged In');
             modal.style.display = 'none';
         } catch (err) {
-            showToast(err.message, 'error', 'Login Failed');
+            showToast(getFriendlyError(err), 'error', 'Login Failed');
         }
     });
 }
@@ -113,31 +141,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const googleBtn = document.getElementById('googleSignInBtn');
     if (googleBtn) {
         googleBtn.addEventListener('click', async () => {
-            await waitForFirebase();
-            try {
-                const result = await window.firebaseGoogleSignIn();
-                const userDocRef = window.firebaseDoc(window.firebaseDB, "users", result.user.uid);
-                const userDoc = await window.firebaseGetDoc(userDocRef);
+    await waitForFirebase();
+    try {
+        const result = await window.firebaseGoogleSignIn();
+        const userDocRef = window.firebaseDoc(window.firebaseDB, "users", result.user.uid);
+        const userDoc = await window.firebaseGetDoc(userDocRef);
 
-                if (!userDoc.exists()) {
-                    await window.firebaseSetDoc(userDocRef, {
-                        name: result.user.displayName || "User",
-                        email: result.user.email,
-                        phone: result.user.phoneNumber || "Not Provided",
-                        checkboxes: {},
-                        notes: [],
-                        links: [],
-                        books: [],
-                        doneDates: [],
-                        practiceHistory: []
-                    });
-                }
-                showToast('Signed in with Google', 'success');
-                modal.style.display = 'none';
-            } catch (err) {
-                showToast(err.message, 'error', 'Google Sign-in Failed');
-            }
-        });
+        if (!userDoc.exists()) {
+            await window.firebaseSetDoc(userDocRef, {
+                name: result.user.displayName || "User",
+                email: result.user.email,
+                phone: result.user.phoneNumber || "Not Provided",
+                checkboxes: {},
+                notes: [],
+                links: [],
+                books: [],
+                doneDates: [],
+                practiceHistory: []
+            });
+        }
+        showToast('Signed in with Google', 'success', 'Welcome!');
+        modal.style.display = 'none';
+    } catch (err) {
+        showToast(getFriendlyError(err), 'error', 'Sign-in Failed');
+    }
+});
     }
 });
 
@@ -156,9 +184,9 @@ async function handleLogout() {
         localStorage.removeItem('practiceHistory');
 
         showToast('See you soon! 👋', 'info', 'Logged Out');
-        location.reload();
+        setTimeout(() => location.reload(), 1200); // small delay so user sees the toast
     } catch (err) {
-        showToast(err.message, 'error', 'Logout Failed');
+        showToast(getFriendlyError(err), 'error', 'Logout Failed');
     }
 }
 window.handleLogout = handleLogout;
