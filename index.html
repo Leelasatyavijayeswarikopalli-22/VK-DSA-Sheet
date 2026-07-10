@@ -5585,63 +5585,60 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
 
 </div>
       </div>
-    <!-- PRACTICE HISTORY POPUP -->
-<div class="history-popup" id="historyPopup">
 
+        <!-- ============ PRACTICE HISTORY POPUP ============ -->
+<div id="historyPopup" class="history-popup">
     <div class="history-box">
-
+        <!-- Header with gradient -->
         <div class="history-header">
-            <h2>Practice History</h2>
-
-            <button onclick="closeHistory()">X</button>
+            <div class="history-header-left">
+                <div class="history-icon">📊</div>
+                <div>
+                    <h2>Practice History</h2>
+                    <p class="history-subtitle">Your DSA journey timeline</p>
+                </div>
+            </div>
+            <button class="history-close-btn" onclick="closeHistory()">✕</button>
         </div>
 
-        <table>
+        <!-- Quick Stats Bar -->
+        <div class="history-stats-bar">
+            <div class="history-stat">
+                <span class="history-stat-num" id="histTotalSolved">0</span>
+                <span class="history-stat-label">Total Solved</span>
+            </div>
+            <div class="history-stat">
+                <span class="history-stat-num easy" id="histEasyCount">0</span>
+                <span class="history-stat-label">Easy</span>
+            </div>
+            <div class="history-stat">
+                <span class="history-stat-num medium" id="histMedCount">0</span>
+                <span class="history-stat-label">Medium</span>
+            </div>
+            <div class="history-stat">
+                <span class="history-stat-num hard" id="histHardCount">0</span>
+                <span class="history-stat-label">Hard</span>
+            </div>
+        </div>
 
-            <thead>
-                <tr>
-                    <th>Last Submitted</th>
-                    <th>Problem</th>
-                    <th>Status</th>
-                    <th>Difficulty</th>
-                </tr>
-            </thead>
-
-            <tbody id="historyTableBody">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</div>
-
-    <script src="script.js" defer></script>
- 
-
-
-</body>
-<!-- ============ CUSTOM TOAST NOTIFICATION ============ -->
-<div id="customToast" class="custom-toast">
-    <div class="toast-icon"></div>
-    <div class="toast-content">
-        <div class="toast-title"></div>
-        <div class="toast-message"></div>
-    </div>
-    <button class="toast-close" onclick="hideToast()">×</button>
-</div>
-
-<!-- ============ CUSTOM CONFIRM MODAL ============ -->
-<div id="customConfirm" class="custom-confirm-overlay">
-    <div class="custom-confirm-box">
-        <div class="confirm-icon">⚠️</div>
-        <h3 class="confirm-title">Are you sure?</h3>
-        <p class="confirm-message">This action cannot be undone.</p>
-        <div class="confirm-buttons">
-            <button class="confirm-btn cancel" onclick="handleConfirm(false)">Cancel</button>
-            <button class="confirm-btn ok" onclick="handleConfirm(true)">Confirm</button>
+        <!-- Scrollable Table Area -->
+        <div class="history-table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>⏱️ Last Submitted</th>
+                        <th>💡 Problem</th>
+                        <th>✅ Status</th>
+                        <th>🎯 Difficulty</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody"></tbody>
+            </table>
+            <div id="historyEmpty" class="history-empty" style="display:none;">
+                <div class="empty-icon">📭</div>
+                <p>No practice history yet</p>
+                <span>Start solving problems to see your progress here!</span>
+            </div>
         </div>
     </div>
 </div>
-</html>
