@@ -1051,11 +1051,13 @@ function updateProfileUI(user) {
     const userEmail = document.getElementById('userEmail');
     const loginBtn = document.getElementById('loginBtn');
     const logoutBtn = document.getElementById('logoutBtn');
+    const historyBtn = document.getElementById('historyBtn');  // 👈 add this
 
     if (user) {
         if (userInfo) userInfo.style.display = 'flex';
         if (loginBtn) loginBtn.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
+        if (historyBtn) historyBtn.style.display = 'block';  // 👈 show on login
 
         if (user.photoURL) {
             profilePic.src = user.photoURL;
@@ -1069,6 +1071,7 @@ function updateProfileUI(user) {
         if (userInfo) userInfo.style.display = 'none';
         if (loginBtn) loginBtn.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
+        if (historyBtn) historyBtn.style.display = 'none';  // 👈 hide on logout
     }
 }
 
