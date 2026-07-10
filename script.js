@@ -957,20 +957,51 @@ function getTimeAgo(timestamp) {
 function loadHistory() {
     let history = JSON.parse(localStorage.getItem("practiceHistory")) || [];
     let tableBody = document.getElementById("historyTableBody");
+    let emptyState = document.getElementById("historyEmpty");
     if (!tableBody) return;
+
+    // Update stats bar
+    const totalEl = document.getElementById('histTotalSolved');
+    const easyEl = document.getElementById('histEasyCount');
+    const medEl = document.getElementById('histMedCount');
+    const hardEl = document.getElementById('histHardCount');
+
+    let easy = 0, med = 0, hard = 0;
+    history.forEach(item => {
+        const d = (item.difficulty || '').toLowerCase();
+        if (d === 'easy') easy++;
+        else if (d === 'medium') med++;
+        else if (d === 'hard') hard++;
+    });
+
+    if (totalEl) totalEl.innerText = history.length;
+    if (easyEl) easyEl.innerText = easy;
+    if (medEl) medEl.innerText = med;
+    if (hardEl) hardEl.innerText = hard;
+
+    // Empty state
+    if (history.length === 0) {
+        tableBody.innerHTML = '';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+    }
+
+    if (emptyState) emptyState.style.display = 'none';
 
     tableBody.innerHTML = "";
     history.forEach(item => {
+        const diff = (item.difficulty || 'medium').toLowerCase();
         tableBody.innerHTML += `
             <tr>
-                <td>${getTimeAgo(item.time)}</td>
-                <td>${item.name}</td>
-                <td>Accepted</td>
-                <td>${item.difficulty}</td>
+                <td data-label="Time"><span class="hist-time">🕐 ${getTimeAgo(item.time)}</span></td>
+                <td data-label="Problem"><span class="hist-problem">${item.name}</span></td>
+                <td data-label="Status"><span class="hist-status">Accepted</span></td>
+                <td data-label="Difficulty"><span class="hist-diff ${diff}">${item.difficulty || 'Medium'}</span></td>
             </tr>
         `;
     });
 }
+window.loadHistory = loadHistory;
 
 function closeHistory() {
     document.getElementById("historyPopup").style.display = "none";
