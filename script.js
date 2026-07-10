@@ -1584,3 +1584,60 @@ function handleConfirm(result) {
 
 window.showConfirm = showConfirm;
 window.handleConfirm = handleConfirm;
+
+
+
+// ============================================
+// ✨ FRIENDLY ERROR MESSAGE TRANSLATOR
+// ============================================
+function getFriendlyError(error) {
+    const errorCode = error?.code || '';
+    const errorMsg = error?.message || String(error);
+
+    // Firebase Auth error codes → friendly messages
+    const errorMap = {
+        // Login errors
+        'auth/invalid-credential': 'Invalid email or password',
+        'auth/wrong-password': 'Invalid password',
+        'auth/user-not-found': 'No account found with this email',
+        'auth/invalid-email': 'Invalid email address',
+        'auth/user-disabled': 'This account has been disabled',
+        'auth/too-many-requests': 'Too many failed attempts. Please try again later',
+        'auth/network-request-failed': 'Network error. Check your internet connection',
+
+        // Signup errors
+        'auth/email-already-in-use': 'This email is already registered',
+        'auth/weak-password': 'Password must be at least 6 characters',
+        'auth/operation-not-allowed': 'This sign-in method is not enabled',
+        'auth/missing-password': 'Please enter a password',
+        'auth/missing-email': 'Please enter an email address',
+
+        // Google sign-in
+        'auth/popup-closed-by-user': 'Sign-in window was closed',
+        'auth/popup-blocked': 'Popup was blocked by your browser',
+        'auth/cancelled-popup-request': 'Sign-in was cancelled',
+        'auth/account-exists-with-different-credential': 'An account already exists with this email',
+
+        // Other
+        'auth/requires-recent-login': 'Please log in again to continue',
+        'auth/invalid-verification-code': 'Invalid verification code',
+        'auth/expired-action-code': 'This link has expired',
+        'auth/internal-error': 'Something went wrong. Please try again'
+    };
+
+    // Return mapped message or clean up raw message
+    if (errorMap[errorCode]) {
+        return errorMap[errorCode];
+    }
+
+    // Fallback: strip "Firebase:" and "auth/xxx" from message
+    let cleanMsg = errorMsg
+        .replace(/Firebase:\s*/gi, '')
+        .replace(/\(auth\/[^)]+\)/gi, '')
+        .replace(/Error\s*:?\s*/gi, '')
+        .trim();
+
+    return cleanMsg || 'Something went wrong. Please try again';
+}
+
+window.getFriendlyError = getFriendlyError;
