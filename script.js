@@ -1471,3 +1471,105 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ============================================
+// ✨ CUSTOM TOAST NOTIFICATIONS
+// ============================================
+let toastTimeout;
+
+function showToast(message, type = 'info', title = '', duration = 4000) {
+    const toast = document.getElementById('customToast');
+    if (!toast) return;
+
+    const titleEl = toast.querySelector('.toast-title');
+    const messageEl = toast.querySelector('.toast-message');
+    const iconEl = toast.querySelector('.toast-icon');
+
+    // Default titles per type
+    const defaultTitles = {
+        success: 'Success!',
+        error: 'Oops!',
+        warning: 'Heads up',
+        info: 'Info'
+    };
+
+    // Icons per type
+    const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '!',
+        info: 'i'
+    };
+
+    // Reset classes
+    toast.className = 'custom-toast';
+    void toast.offsetWidth; // trigger reflow to restart animation
+
+    // Apply new type
+    toast.classList.add(type);
+    titleEl.textContent = title || defaultTitles[type];
+    messageEl.textContent = message;
+    iconEl.textContent = icons[type];
+
+    // Show
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Auto-hide
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => hideToast(), duration);
+}
+
+function hideToast() {
+    const toast = document.getElementById('customToast');
+    if (toast) toast.classList.remove('show');
+}
+
+window.showToast = showToast;
+window.hideToast = hideToast;
+
+// ============================================
+// ✨ CUSTOM CONFIRM DIALOG (returns Promise)
+// ============================================
+let confirmResolver = null;
+
+function showConfirm(options = {}) {
+    return new Promise((resolve) => {
+        const overlay = document.getElementById('customConfirm');
+        if (!overlay) {
+            resolve(false);
+            return;
+        }
+
+        const box = overlay.querySelector('.custom-confirm-box');
+        const icon = overlay.querySelector('.confirm-icon');
+        const title = overlay.querySelector('.confirm-title');
+        const message = overlay.querySelector('.confirm-message');
+        const okBtn = overlay.querySelector('.confirm-btn.ok');
+        const cancelBtn = overlay.querySelector('.confirm-btn.cancel');
+
+        // Configure
+        icon.textContent = options.icon || '⚠️';
+        title.textContent = options.title || 'Are you sure?';
+        message.textContent = options.message || 'This action cannot be undone.';
+        okBtn.textContent = options.okText || 'Confirm';
+        cancelBtn.textContent = options.cancelText || 'Cancel';
+
+        // Danger styling for destructive actions
+        okBtn.classList.remove('danger');
+        if (options.danger) okBtn.classList.add('danger');
+
+        confirmResolver = resolve;
+        overlay.classList.add('show');
+    });
+}
+
+function handleConfirm(result) {
+    const overlay = document.getElementById('customConfirm');
+    if (overlay) overlay.classList.remove('show');
+    if (confirmResolver) {
+        confirmResolver(result);
+        confirmResolver = null;
+    }
+}
+
+window.showConfirm = showConfirm;
+window.handleConfirm = handleConfirm;
