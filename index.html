@@ -166,10 +166,14 @@
              <span class="tab" onclick="switchTab(this)">Two Pointers</span>
     <span class="tab" onclick="switchTab(this)">Sliding Window</span>
     <span class="tab" onclick="switchTab(this)">Stacks Queues</span>
+             <span class="tab" onclick="switchTab(this)">Greedy Algorithms</span>
     <span class="tab" onclick="switchTab(this)">Heaps</span>
     <span class="tab" onclick="switchTab(this)">Binary Trees</span>
     <span class="tab" onclick="switchTab(this)">BST</span>
     <span class="tab" onclick="switchTab(this)">Graphs</span>
+             <span class="tab" onclick="switchTab(this)">Tries</span>
+             <span class="tab" onclick="switchTab(this)">DP</span>
+            
         </div>
 <!-- Profile + Buttons Row -->
 <!-- Profile + Buttons Row -->
@@ -5585,6 +5589,8 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
 
 </div>
       </div>
+
+
     <!-- ========================= -->
 <!-- TWO POINTERS SECTION -->
 <!-- ========================= -->
@@ -6344,7 +6350,301 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
     </div>
 </div>
 
+<!-- ========================= -->
+<!-- GREEDY ALGORITHMS SECTION -->
+<!-- ========================= -->
 
+<!-- Greedy Basics / Activity Selection -->
+<div class="section" data-category="Greedy" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Activity Selection / Intervals</span>
+        <span>0/8</span>
+    </div>
+    <div class="progress"><div class="progress-bar done-bar"></div></div>
+    <div class="progress"><div class="progress-bar revision-bar"></div></div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <div class="problem">
+            <span class="title">N Meetings in One Room</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/n-meetings-in-one-room-1587115620/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'N Meetings in One Room','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Non-overlapping Intervals</span>
+            <div class="center"><a href="https://leetcode.com/problems/non-overlapping-intervals/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Non-overlapping Intervals','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Merge Intervals</span>
+            <div class="center"><a href="https://leetcode.com/problems/merge-intervals/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Merge Intervals','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Insert Interval</span>
+            <div class="center"><a href="https://leetcode.com/problems/insert-interval/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Insert Interval','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Minimum Platforms</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Platforms','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Meeting Rooms II (Min Conference Rooms)</span>
+            <div class="center"><a href="https://takeuforward.org/plus/dsa/problems/meeting-rooms-ii" target="_blank"><div class="tuf-badge">TUF</div></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Meeting Rooms II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Minimum Number of Arrows to Burst Balloons</span>
+            <div class="center"><a href="https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Min Arrows to Burst Balloons','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Job Sequencing Problem</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Job Sequencing Problem','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- Greedy on Arrays -->
+<div class="section" data-category="Greedy" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Greedy on Arrays</span>
+        <span>0/8</span>
+    </div>
+    <div class="progress"><div class="progress-bar done-bar"></div></div>
+    <div class="progress"><div class="progress-bar revision-bar"></div></div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <div class="problem">
+            <span class="title">Assign Cookies</span>
+            <div class="center"><a href="https://leetcode.com/problems/assign-cookies/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Assign Cookies','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Fractional Knapsack</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/fractional-knapsack-1587115620/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Fractional Knapsack','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Jump Game</span>
+            <div class="center"><a href="https://leetcode.com/problems/jump-game/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Jump Game','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Jump Game II</span>
+            <div class="center"><a href="https://leetcode.com/problems/jump-game-ii/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Jump Game II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Best Time to Buy and Sell Stock II</span>
+            <div class="center"><a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy Sell Stock II Greedy','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Gas Station</span>
+            <div class="center"><a href="https://leetcode.com/problems/gas-station/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Gas Station','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Candy</span>
+            <div class="center"><a href="https://leetcode.com/problems/candy/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Candy','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Lemonade Change</span>
+            <div class="center"><a href="https://leetcode.com/problems/lemonade-change/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Lemonade Change','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+    </div>
+</div>
+
+<!-- Greedy on Strings & Numbers -->
+<div class="section" data-category="Greedy" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Greedy on Strings & Numbers</span>
+        <span>0/6</span>
+    </div>
+    <div class="progress"><div class="progress-bar done-bar"></div></div>
+    <div class="progress"><div class="progress-bar revision-bar"></div></div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <div class="problem">
+            <span class="title">Valid Parenthesis String</span>
+            <div class="center"><a href="https://leetcode.com/problems/valid-parenthesis-string/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Valid Parenthesis String','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Largest Number</span>
+            <div class="center"><a href="https://leetcode.com/problems/largest-number/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Largest Number','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Remove K Digits</span>
+            <div class="center"><a href="https://leetcode.com/problems/remove-k-digits/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Remove K Digits','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Minimum Coins (Greedy)</span>
+            <div class="center"><a href="https://takeuforward.org/plus/dsa/problems/minimum-coins-greedy" target="_blank"><div class="tuf-badge">TUF</div></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Coins Greedy','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Optimal Partition of String</span>
+            <div class="center"><a href="https://leetcode.com/problems/optimal-partition-of-string/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Optimal Partition of String','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Shortest Job First (SJF) Scheduling</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/shortest-job-first/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'SJF Scheduling','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+    </div>
+</div>
+
+<!-- Huffman / Advanced Greedy -->
+<div class="section" data-category="Greedy" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Advanced Greedy</span>
+        <span>0/5</span>
+    </div>
+    <div class="progress"><div class="progress-bar done-bar"></div></div>
+    <div class="progress"><div class="progress-bar revision-bar"></div></div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <div class="problem">
+            <span class="title">Huffman Encoding</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/huffman-encoding3345/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Huffman Encoding','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Hand of Straights</span>
+            <div class="center"><a href="https://leetcode.com/problems/hand-of-straights/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Hand of Straights','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Queue Reconstruction by Height</span>
+            <div class="center"><a href="https://leetcode.com/problems/queue-reconstruction-by-height/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Queue Reconstruction by Height','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">Minimum Number of Coins by GFG</span>
+            <div class="center"><a href="https://practice.geeksforgeeks.org/problems/-minimum-number-of-coins4426/1" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Coins GFG','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <div class="problem">
+            <span class="title">IPO (Maximize Capital)</span>
+            <div class="center"><a href="https://leetcode.com/problems/ipo/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'IPO Maximize Capital','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+    </div>
+</div>
 <!-- ========================= -->
 <!-- HEAPS SECTION -->
 <!-- ========================= -->
@@ -7513,6 +7813,1046 @@ onchange="markDone(this,'Minimum Window Sort','Medium')"></div>
             <span class="title">Number of Operations to Make Network Connected</span>
             <div class="center"><a href="https://leetcode.com/problems/number-of-operations-to-make-network-connected/" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon"></a></div>
             <div class="done"><input type="checkbox" onchange="markDone(this,'Operations to Make Network Connected','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+    <!-- ========================= -->
+<!-- TRIES SECTION -->
+<!-- ========================= -->
+
+<!-- Trie Implementation Section -->
+<div class="section" data-category="Tries" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Trie Implementation</span>
+        <span>0/4</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Implement Trie (Prefix Tree) -->
+        <div class="problem">
+            <span class="title">Implement Trie (Prefix Tree)</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/implement-trie-prefix-tree/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Implement Trie (Prefix Tree)','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Implement Trie II (TUF) -->
+        <div class="problem">
+            <span class="title">Implement Trie II (Prefix Tree)</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/implement-trie-ii" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Implement Trie II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Trie Insert and Search (GFG) -->
+        <div class="problem">
+            <span class="title">Trie | Insert and Search</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/trie-insert-and-search0651/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Trie Insert and Search','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Design Add and Search Words -->
+        <div class="problem">
+            <span class="title">Design Add and Search Words</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/design-add-and-search-words-data-structure/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Design Add and Search Words','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- Prefix & Word Problems Section -->
+<div class="section" data-category="Tries" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Prefix & Word Problems</span>
+        <span>0/5</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Longest Word in Dictionary -->
+        <div class="problem">
+            <span class="title">Longest Word in Dictionary</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-word-in-dictionary/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Word in Dictionary','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Longest Common Prefix -->
+        <div class="problem">
+            <span class="title">Longest Common Prefix</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-common-prefix/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Common Prefix','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <!-- Number of Distinct Substrings (TUF) -->
+        <div class="problem">
+            <span class="title">Count Distinct Substrings</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/number-of-distinct-substrings-in-a-string" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Count Distinct Substrings','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Word Break -->
+        <div class="problem">
+            <span class="title">Word Break</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/word-break/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Word Break','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Replace Words -->
+        <div class="problem">
+            <span class="title">Replace Words</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/replace-words/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Replace Words','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- Bit Trie (XOR) Problems Section -->
+<div class="section" data-category="Tries" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Bit Trie (XOR) Problems</span>
+        <span>0/4</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Maximum XOR of Two Numbers -->
+        <div class="problem">
+            <span class="title">Maximum XOR of Two Numbers</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Maximum XOR of Two Numbers','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Maximum XOR With an Element -->
+        <div class="problem">
+            <span class="title">Maximum XOR With an Element From Array</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/maximum-xor-with-an-element-from-array/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Maximum XOR With an Element From Array','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Maximum XOR of Two Numbers (TUF) -->
+        <div class="problem">
+            <span class="title">Maximum XOR of Two Numbers (Trie)</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/maximum-xor-of-two-numbers-in-an-array" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Maximum XOR of Two Numbers Trie','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Count Pairs With XOR (GFG) -->
+        <div class="problem">
+            <span class="title">Count Pairs With Given XOR</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/count-pairs-with-given-xor/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Count Pairs With Given XOR','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+    <!-- ========================= -->
+<!-- DYNAMIC PROGRAMMING SECTION -->
+<!-- ========================= -->
+
+<!-- 1D DP (Basics) Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>1D DP (Basics)</span>
+        <span>0/6</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Climbing Stairs -->
+        <div class="problem">
+            <span class="title">Climbing Stairs</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/climbing-stairs/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Climbing Stairs','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <!-- Frog Jump (TUF) -->
+        <div class="problem">
+            <span class="title">Frog Jump</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/frog-jump" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Frog Jump','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Frog Jump with K Distance (TUF) -->
+        <div class="problem">
+            <span class="title">Frog Jump with K Distances</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/frog-jump-with-k-distances" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Frog Jump with K Distances','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- House Robber -->
+        <div class="problem">
+            <span class="title">House Robber</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/house-robber/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'House Robber','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- House Robber II -->
+        <div class="problem">
+            <span class="title">House Robber II</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/house-robber-ii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'House Robber II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Maximum Sum of Non-Adjacent (GFG) -->
+        <div class="problem">
+            <span class="title">Max Sum of Non-Adjacent Elements</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/maximum-sum-of-non-adjacent-elements/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Max Sum of Non-Adjacent Elements','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- 2D / Grid DP Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>2D / Grid DP</span>
+        <span>0/6</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Unique Paths -->
+        <div class="problem">
+            <span class="title">Unique Paths</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/unique-paths/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Unique Paths','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Unique Paths II -->
+        <div class="problem">
+            <span class="title">Unique Paths II (Obstacles)</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/unique-paths-ii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Unique Paths II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Minimum Path Sum -->
+        <div class="problem">
+            <span class="title">Minimum Path Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/minimum-path-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Path Sum','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Triangle -->
+        <div class="problem">
+            <span class="title">Triangle (Minimum Path)</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/triangle/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Triangle Minimum Path','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Cherry Pickup II (TUF) -->
+        <div class="problem">
+            <span class="title">Cherry Pickup II (3D DP)</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/chocolates-pickup" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Cherry Pickup II','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Minimum Falling Path Sum -->
+        <div class="problem">
+            <span class="title">Minimum Falling Path Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/minimum-falling-path-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Falling Path Sum','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- DP on Subsequences / Knapsack Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>DP on Subsequences (Knapsack)</span>
+        <span>0/7</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Subset Sum (GFG) -->
+        <div class="problem">
+            <span class="title">Subset Sum Problem</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/subset-sum-problem-1611555638/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Subset Sum Problem','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Partition Equal Subset Sum -->
+        <div class="problem">
+            <span class="title">Partition Equal Subset Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/partition-equal-subset-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Partition Equal Subset Sum','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- 0/1 Knapsack (GFG) -->
+        <div class="problem">
+            <span class="title">0 / 1 Knapsack</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/0-1-knapsack-problem0945/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'0 1 Knapsack','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Coin Change -->
+        <div class="problem">
+            <span class="title">Coin Change (Min Coins)</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/coin-change/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Coin Change Min Coins','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Coin Change II -->
+        <div class="problem">
+            <span class="title">Coin Change II (No. of Ways)</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/coin-change-ii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Coin Change II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Target Sum -->
+        <div class="problem">
+            <span class="title">Target Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/target-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Target Sum','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Rod Cutting (GFG) -->
+        <div class="problem">
+            <span class="title">Rod Cutting</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/rod-cutting0840/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Rod Cutting','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- DP on Strings Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>DP on Strings</span>
+        <span>0/7</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Longest Common Subsequence -->
+        <div class="problem">
+            <span class="title">Longest Common Subsequence</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-common-subsequence/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Common Subsequence','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Longest Common Substring (GFG) -->
+        <div class="problem">
+            <span class="title">Longest Common Substring</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/longest-common-substring1452/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Common Substring','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Longest Palindromic Subsequence -->
+        <div class="problem">
+            <span class="title">Longest Palindromic Subsequence</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-palindromic-subsequence/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Palindromic Subsequence','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Edit Distance -->
+        <div class="problem">
+            <span class="title">Edit Distance</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/edit-distance/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Edit Distance','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Distinct Subsequences -->
+        <div class="problem">
+            <span class="title">Distinct Subsequences</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/distinct-subsequences/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Distinct Subsequences','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Wildcard Matching -->
+        <div class="problem">
+            <span class="title">Wildcard Matching</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/wildcard-matching/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Wildcard Matching','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Minimum Insertions to Palindrome (TUF) -->
+        <div class="problem">
+            <span class="title">Min Insertions to Make Palindrome</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/minimum-insertions-to-make-string-palindrome" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Min Insertions to Make Palindrome','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+    </div>
+</div>
+
+<!-- DP on Stocks Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>DP on Stocks</span>
+        <span>0/6</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Best Time to Buy and Sell Stock -->
+        <div class="problem">
+            <span class="title">Best Time to Buy and Sell Stock</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Best Time to Buy and Sell Stock','Easy')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty easy">Easy</div>
+        </div>
+
+        <!-- Stock II -->
+        <div class="problem">
+            <span class="title">Buy and Sell Stock II</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy and Sell Stock II','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Stock III -->
+        <div class="problem">
+            <span class="title">Buy and Sell Stock III</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy and Sell Stock III','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Stock IV -->
+        <div class="problem">
+            <span class="title">Buy and Sell Stock IV</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy and Sell Stock IV','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Stock with Cooldown -->
+        <div class="problem">
+            <span class="title">Buy and Sell Stock with Cooldown</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy and Sell Stock with Cooldown','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Stock with Transaction Fee -->
+        <div class="problem">
+            <span class="title">Buy and Sell Stock with Fee</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-transaction-fee/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Buy and Sell Stock with Fee','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- DP on LIS Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>DP on LIS (Longest Increasing Subsequence)</span>
+        <span>0/5</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Longest Increasing Subsequence -->
+        <div class="problem">
+            <span class="title">Longest Increasing Subsequence</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-increasing-subsequence/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest Increasing Subsequence','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Printing LIS (TUF) -->
+        <div class="problem">
+            <span class="title">Printing Longest Increasing Subseq</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/printing-longest-increasing-subsequence" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Printing LIS','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Largest Divisible Subset -->
+        <div class="problem">
+            <span class="title">Largest Divisible Subset</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/largest-divisible-subset/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Largest Divisible Subset','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Longest String Chain -->
+        <div class="problem">
+            <span class="title">Longest String Chain</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/longest-string-chain/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Longest String Chain','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Number of LIS -->
+        <div class="problem">
+            <span class="title">Number of Longest Increasing Subseq</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/number-of-longest-increasing-subsequence/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Number of LIS','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- Partition / MCM DP Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>Partition DP (MCM Pattern)</span>
+        <span>0/6</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Matrix Chain Multiplication (GFG) -->
+        <div class="problem">
+            <span class="title">Matrix Chain Multiplication</span>
+            <div class="center">
+                <a href="https://www.geeksforgeeks.org/problems/matrix-chain-multiplication0303/1" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/43/GeeksforGeeks.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Matrix Chain Multiplication','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Minimum Cost to Cut a Stick -->
+        <div class="problem">
+            <span class="title">Minimum Cost to Cut a Stick</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/minimum-cost-to-cut-a-stick/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Minimum Cost to Cut a Stick','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Burst Balloons -->
+        <div class="problem">
+            <span class="title">Burst Balloons</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/burst-balloons/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Burst Balloons','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Palindrome Partitioning II -->
+        <div class="problem">
+            <span class="title">Palindrome Partitioning II</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/palindrome-partitioning-ii/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Palindrome Partitioning II','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Boolean Evaluation (TUF) -->
+        <div class="problem">
+            <span class="title">Evaluate Boolean Expression to True</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/evaluate-boolean-expression-to-true" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Evaluate Boolean Expression to True','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Partition Array for Max Sum -->
+        <div class="problem">
+            <span class="title">Partition Array for Maximum Sum</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/partition-array-for-maximum-sum/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Partition Array for Maximum Sum','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+    </div>
+</div>
+
+<!-- DP on Squares / Misc Section -->
+<div class="section" data-category="DP" onclick="toggleSection(this, event)">
+    <div class="section-header">
+        <span>DP on Squares & Misc</span>
+        <span>0/4</span>
+    </div>
+    <div class="progress">
+        <div class="progress-bar done-bar"></div>
+    </div>
+    <div class="progress">
+        <div class="progress-bar revision-bar"></div>
+    </div>
+    <div class="content">
+        <div class="header-row">
+            <span>Problem</span>
+            <span style="text-align:center;">Link</span>
+            <span style="text-align:center;">Done</span>
+            <span style="text-align:center;">Revision</span>
+            <span style="text-align:center;">Difficulty</span>
+        </div>
+
+        <!-- Maximal Square -->
+        <div class="problem">
+            <span class="title">Maximal Square</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/maximal-square/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Maximal Square','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Count Square Submatrices -->
+        <div class="problem">
+            <span class="title">Count Square Submatrices with All Ones</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/count-square-submatrices-with-all-ones/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Count Square Submatrices','Medium')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty medium">Medium</div>
+        </div>
+
+        <!-- Maximal Rectangle -->
+        <div class="problem">
+            <span class="title">Maximal Rectangle</span>
+            <div class="center">
+                <a href="https://leetcode.com/problems/maximal-rectangle/" target="_blank">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/leetcode/leetcode-original.svg" class="icon">
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Maximal Rectangle','Hard')"></div>
+            <div class="revision"><input type="checkbox"></div>
+            <div class="difficulty hard">Hard</div>
+        </div>
+
+        <!-- Ninja's Training (TUF) -->
+        <div class="problem">
+            <span class="title">Ninja's Training</span>
+            <div class="center">
+                <a href="https://takeuforward.org/plus/dsa/problems/ninjas-training" target="_blank">
+                    <div class="tuf-badge">TUF</div>
+                </a>
+            </div>
+            <div class="done"><input type="checkbox" onchange="markDone(this,'Ninjas Training','Medium')"></div>
             <div class="revision"><input type="checkbox"></div>
             <div class="difficulty medium">Medium</div>
         </div>
