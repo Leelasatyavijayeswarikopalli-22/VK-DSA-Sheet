@@ -81,10 +81,10 @@ if (signupForm) {
                     practiceHistory: []
                 }
             );
-            alert("Account created! You are now logged in.");
+            showToast('Your account is ready to use!', 'success', 'Account Created');
             modal.style.display = 'none';
         } catch (err) {
-            alert("Signup failed: " + err.message);
+            showToast(err.message, 'error', 'Signup Failed');
         }
     });
 }
@@ -100,10 +100,10 @@ if (loginForm) {
 
         try {
             await window.firebaseSignIn(window.firebaseAuth, email, password);
-            alert("Logged in successfully!");
+            showToast('Welcome back! 🎉', 'success', 'Logged In');
             modal.style.display = 'none';
         } catch (err) {
-            alert("Login failed: " + err.message);
+            showToast(err.message, 'error', 'Login Failed');
         }
     });
 }
@@ -132,10 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         practiceHistory: []
                     });
                 }
-                alert("Logged in with Google!");
+                showToast('Signed in with Google', 'success');
                 modal.style.display = 'none';
             } catch (err) {
-                alert("Google sign-in failed: " + err.message);
+                showToast(err.message, 'error', 'Google Sign-in Failed');
             }
         });
     }
@@ -155,10 +155,10 @@ async function handleLogout() {
         localStorage.removeItem('doneDates');
         localStorage.removeItem('practiceHistory');
 
-        alert("Logged out!");
+        showToast('See you soon! 👋', 'info', 'Logged Out');
         location.reload();
     } catch (err) {
-        alert("Logout failed: " + err.message);
+        showToast(err.message, 'error', 'Logout Failed');
     }
 }
 window.handleLogout = handleLogout;
@@ -323,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // ============ HELPER: Check if user is logged in ============
 function requireLogin(featureName) {
     if (!window.currentUser) {
-        alert(`Please log in to access ${featureName}.`);
+        showToast(`Login required to access ${featureName}`, 'warning', '🔒 Access Restricted');
         const loginModal = document.getElementById('loginModal');
         if (loginModal) {
             loginModal.style.display = 'block';
@@ -406,7 +406,7 @@ function uploadFile() {
 
     const input = document.getElementById("fileInput");
     if (!input.files.length) {
-        alert("Select a file first!");
+        showToast('Please select a file to upload', 'warning');
         return;
     }
 
@@ -525,7 +525,7 @@ function addLink() {
 
     const input = document.getElementById("linkInput");
     const url = input.value.trim();
-    if (!url) { alert("Enter a link!"); return; }
+    if (!url) { showToast('Please enter a valid URL', 'warning'); return; }
 
     const container = document.getElementById("linksContainer");
     const card = document.createElement("div");
@@ -553,8 +553,8 @@ function addBook() {
     const name = nameInput.value.trim();
     const file = fileInput.files[0];
 
-    if (!name) { alert("Enter book name!"); return; }
-    if (!file) { alert("Select file!"); return; }
+    if (!name) { showToast('Please enter a book name', 'warning'); return; }
+    if (!file) { showToast('Please select a file', 'warning'); return; }
 
     const container = document.getElementById("booksContainer");
     const url = URL.createObjectURL(file);
@@ -577,8 +577,17 @@ function addBook() {
 window.addBook = addBook;
 
 // ============ UNIVERSAL DELETE (safer than inline onclick) ============
-function deleteCard(button, type) {
-    if (!confirm("Are you sure you want to delete this?")) return;
+async function deleteCard(button, type) {
+    const confirmed = await showConfirm({
+        icon: '🗑️',
+        title: 'Delete this item?',
+        message: 'This action cannot be undone. Are you sure?',
+        okText: 'Delete',
+        cancelText: 'Cancel',
+        danger: true
+    });
+
+    if (!confirmed) return;
 
     const card = button.closest('.card');
     if (card) card.remove();
@@ -588,6 +597,8 @@ function deleteCard(button, type) {
     else if (type === 'books') saveBooks();
 
     if (window.currentUser) saveAllToFirebase();
+
+    showToast('Item deleted successfully', 'success');
 }
 window.deleteCard = deleteCard;
 // ============ UPDATE PROGRESS BARS ============
